@@ -14,6 +14,9 @@
     overlayOpen: null,
     orbCardOpen: null,
     caseStudyOpen: null,
+    lightboxOpen: false,
+    lightboxImages: [],
+    lightboxIndex: 0,
     mouseX: 0,
     mouseY: 0,
     reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
@@ -254,6 +257,7 @@
 
   // ---- Overlays ----
   function openOverlay(id) {
+    if (state.overlayOpen) closeOverlay();
     const overlay = document.getElementById(id);
     if (!overlay) return;
     overlay.classList.add('is-open');
@@ -382,6 +386,10 @@
       challenge: 'LawGoat was being built from scratch with no existing design language. The engineering team was already writing UI code, so every day without a system meant more inconsistency to clean up later. I needed a way to design and ship components fast enough to stay ahead of development.',
       solution: 'Used Figma MCP to build components directly in Figma through Claude, then translated each one to React using Claude CLI within Cursor. Every component went through the full GitHub PR process — branch, review, merge. This kept design and code perfectly in sync from day one.',
       tools: ['Figma MCP', 'Claude CLI', 'Cursor', 'React', 'GitHub'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/3b82f6?text=Design+System', alt: 'Design system overview' },
+        { src: 'https://placehold.co/800x500/0a0a14/3b82f6?text=Components', alt: 'Component library' },
+      ],
     },
     'lawgoat-ai-chat': {
       title: 'AI Chat UX',
@@ -390,6 +398,9 @@
       challenge: 'Attorneys don\'t trust black-box AI. They need to see sources, understand reasoning, and verify citations before relying on any output. A generic chatbot UI would\'ve been immediately dismissed by our target users.',
       solution: 'Designed a chat experience that surfaces inline citations, expandable source previews, and confidence indicators alongside every AI response. Iterated through user testing with practicing attorneys to nail the trust signals. Built the frontend using Claude CLI in Cursor, shipping through GitHub PRs.',
       tools: ['Figma', 'Claude CLI', 'Cursor', 'React', 'GitHub'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/3b82f6?text=AI+Chat', alt: 'AI chat interface' },
+      ],
     },
     'lawgoat-case-mgmt': {
       title: 'Case Management',
@@ -398,6 +409,11 @@
       challenge: 'Legal workflows are non-linear and vary wildly between practice areas. A rigid pipeline would break for half our users. I needed a system flexible enough for different workflows while still providing structure and accountability.',
       solution: 'Designed a kanban-style board with configurable stages per practice area, automated task assignment based on case status changes, and a document tagging system that links files to specific case milestones. Shipped the entire feature end-to-end using Claude CLI within Cursor.',
       tools: ['Figma', 'Claude CLI', 'Cursor', 'React', 'GitHub'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/3b82f6?text=Case+Management', alt: 'Case management board' },
+        { src: 'https://placehold.co/800x500/0a0a14/3b82f6?text=Client+Intake', alt: 'Client intake flow' },
+        { src: 'https://placehold.co/800x500/0a0a14/3b82f6?text=Document+Tags', alt: 'Document tagging system' },
+      ],
     },
     'vmware-dashboard': {
       title: 'Multi-Cloud Dashboard',
@@ -406,6 +422,10 @@
       challenge: 'Enterprise teams were jumping between 3+ cloud consoles to get a full picture of their infrastructure. Each provider uses different terminology, metrics, and mental models — making it nearly impossible to compare apples to apples.',
       solution: 'Created a normalized data model that maps each provider\'s concepts to a shared vocabulary, then designed a dashboard that surfaces the 5 most critical metrics per provider in a scannable grid. Progressive disclosure lets teams drill into provider-specific details without leaving the unified view.',
       tools: ['Figma', 'Sketch', 'VMware Design System', 'Usability Testing'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/00b7c3?text=Cloud+Dashboard', alt: 'Multi-cloud dashboard' },
+        { src: 'https://placehold.co/800x500/0a0a14/00b7c3?text=Provider+View', alt: 'Provider detail view' },
+      ],
     },
     'vmware-tables': {
       title: 'Data-Dense Tables',
@@ -414,6 +434,10 @@
       challenge: 'The existing tables showed every possible column by default, with no hierarchy or grouping. Users managing 500+ deployments couldn\'t find what they needed without resorting to browser Ctrl+F. Performance also degraded badly past 200 rows.',
       solution: 'Introduced a smart-default column set with customizable views, inline status badges with color-coded severity, and a faceted filter system that narrows results as you type. Added virtualized rendering so 1000+ rows perform identically to 50.',
       tools: ['Figma', 'VMware Clarity', 'User Research', 'A/B Testing'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/00b7c3?text=Data+Tables', alt: 'Data-dense table design' },
+        { src: 'https://placehold.co/800x500/0a0a14/00b7c3?text=Smart+Filters', alt: 'Faceted filter system' },
+      ],
     },
     'vmware-alerts': {
       title: 'Alert System',
@@ -422,6 +446,10 @@
       challenge: 'The old alert system treated everything as equal priority. Teams were drowning in noise — hundreds of low-severity alerts burying the critical ones. Alert fatigue meant real incidents were being missed.',
       solution: 'Designed a 4-tier severity system with auto-grouping that collapses related alerts into a single actionable item. Critical alerts surface with one-click remediation buttons — "scale up", "restart", "rollback" — so teams can act in seconds instead of minutes.',
       tools: ['Figma', 'VMware Clarity', 'Stakeholder Interviews'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/00b7c3?text=Alert+Pipeline', alt: 'Alert severity tiers' },
+        { src: 'https://placehold.co/800x500/0a0a14/00b7c3?text=Auto+Grouping', alt: 'Alert auto-grouping' },
+      ],
     },
     'currents-thermal': {
       title: 'Thermal Mapping',
@@ -430,6 +458,10 @@
       challenge: 'Scientific thermal data is inherently complex — thousands of data points across time and geography. Most existing tools render it as static images that scientists can\'t interact with or explore dynamically.',
       solution: 'Built a WebGL-powered map layer that renders temperature gradients in real time with smooth zoom and pan. Added a time-scrubbing slider that animates temperature changes across months, making temporal patterns immediately visible.',
       tools: ['D3.js', 'WebGL', 'Canvas API', 'Figma'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/00d4aa?text=Thermal+Map', alt: 'Thermal heat map' },
+        { src: 'https://placehold.co/800x500/0a0a14/00d4aa?text=Time+Scrubber', alt: 'Time-scrubbing control' },
+      ],
     },
     'currents-storytelling': {
       title: 'Data Storytelling',
@@ -438,6 +470,10 @@
       challenge: 'Raw ocean data is meaningless to non-scientists. Charts alone don\'t convey why temperature changes matter or what the implications are. The platform needed to make complex science accessible without dumbing it down.',
       solution: 'Designed guided scroll sequences that pair data visualizations with narrative text — as users scroll, charts animate to highlight key data points while callouts explain significance. Each story follows a "what, so what, now what" structure.',
       tools: ['D3.js', 'ScrollTrigger', 'Figma', 'Editorial Design'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/00d4aa?text=Scroll+Story', alt: 'Scroll-driven narrative' },
+        { src: 'https://placehold.co/800x500/0a0a14/00d4aa?text=Annotated+Charts', alt: 'Annotated data charts' },
+      ],
     },
     'currents-feeds': {
       title: 'Real-Time Feeds',
@@ -446,6 +482,10 @@
       challenge: 'Live data that updates every few seconds creates visual noise — numbers jumping around make it hard to spot meaningful changes versus normal fluctuation.',
       solution: 'Used animated number transitions that smoothly interpolate between values, paired with inline sparklines showing the last 24 hours of history. This gives instant context for whether a current reading is normal, trending up, or anomalous.',
       tools: ['D3.js', 'WebSockets', 'Canvas API', 'Figma'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/00d4aa?text=Live+Feeds', alt: 'Real-time data panels' },
+        { src: 'https://placehold.co/800x500/0a0a14/00d4aa?text=Sparklines', alt: 'Sparkline history charts' },
+      ],
     },
     'ms95-desktop': {
       title: 'Desktop Metaphor',
@@ -454,6 +494,10 @@
       challenge: 'Win95\'s window management relied on absolute positioning and pixel-based layouts that don\'t translate to modern responsive design. Recreating the spatial "feel" without the original constraints required rethinking every interaction.',
       solution: 'Used CSS Grid for the desktop icon layout with drag-and-drop via pointer events. Windows use CSS transforms for dragging and resizing with snap-to-edge behavior. The taskbar is a sticky flexbox strip that dynamically reflects open windows.',
       tools: ['CSS Grid', 'Flexbox', 'Vanilla JS', 'Figma'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/008080?text=Desktop+UI', alt: 'Desktop metaphor UI' },
+        { src: 'https://placehold.co/800x500/0a0a14/008080?text=Window+Mgmt', alt: 'Window management' },
+      ],
     },
     'ms95-start-menu': {
       title: 'Start Menu',
@@ -462,6 +506,10 @@
       challenge: 'The original Start menu was a rigid cascading flyout — hover to reveal, with zero animation. Recreating that UX pattern with modern expectations for animation and responsiveness while keeping it recognizable was a tightrope walk.',
       solution: 'Built a slide-up panel with staggered entrance animations per menu item. Nested submenus animate in from the side with a subtle blur transition. Used the original menu hierarchy (Programs > Accessories, etc.) but with modern type scales and spacing.',
       tools: ['CSS Animations', 'Figma', 'Typography', 'Vanilla JS'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/008080?text=Start+Menu', alt: 'Reimagined Start menu' },
+        { src: 'https://placehold.co/800x500/0a0a14/008080?text=Nested+Nav', alt: 'Nested navigation' },
+      ],
     },
     'ms95-tokens': {
       title: 'Design Tokens',
@@ -470,6 +518,10 @@
       challenge: 'Win95\'s palette was designed for CRT monitors and light-mode only. The iconic grays, teals, and navy blues look muddy on modern displays, especially in dark mode. Needed a system that feels authentically retro without looking dated.',
       solution: 'Extracted the original 16-color palette and created modern HSL equivalents optimized for OLED and LCD. Built a token system with semantic naming (surface, accent, muted) so components reference roles instead of raw colors. Spacing follows an 8px grid scaled from the original 4px Win95 grid.',
       tools: ['Design Tokens', 'CSS Custom Properties', 'Figma Variables'],
+      images: [
+        { src: 'https://placehold.co/800x500/0a0a14/008080?text=Token+System', alt: 'Design token system' },
+        { src: 'https://placehold.co/800x500/0a0a14/008080?text=Color+Palette', alt: 'Color palette mapping' },
+      ],
     },
   };
 
@@ -492,6 +544,8 @@
     $('#caseStudyChallenge').textContent = cs.challenge;
     $('#caseStudySolution').textContent = cs.solution;
 
+    renderCaseStudyImages(key);
+
     caseStudyModal.classList.add('is-open');
     state.caseStudyOpen = key;
   }
@@ -500,6 +554,124 @@
     if (!caseStudyModal) return;
     caseStudyModal.classList.remove('is-open');
     state.caseStudyOpen = null;
+  }
+
+  // ---- Lightbox ----
+  var lightboxEl = $('#lightbox');
+  var lightboxImageEl = $('#lightboxImage');
+  var lightboxPrevBtn = $('#lightboxPrev');
+  var lightboxNextBtn = $('#lightboxNext');
+  var lightboxCloseBtn = $('#lightboxClose');
+
+  function updateLightboxImage() {
+    var img = state.lightboxImages[state.lightboxIndex];
+    if (!img) return;
+    lightboxImageEl.src = img.src;
+    lightboxImageEl.alt = img.alt || '';
+  }
+
+  function openLightbox(images, index) {
+    if (!lightboxEl || !images || !images.length) return;
+    state.lightboxImages = images;
+    state.lightboxIndex = index || 0;
+    state.lightboxOpen = true;
+    updateLightboxImage();
+    lightboxEl.classList.add('is-open');
+    lightboxEl.classList.toggle('lightbox--single', images.length <= 1);
+  }
+
+  function closeLightbox() {
+    if (!lightboxEl) return;
+    lightboxEl.classList.remove('is-open');
+    state.lightboxOpen = false;
+    state.lightboxImages = [];
+    state.lightboxIndex = 0;
+  }
+
+  function lightboxGoNext() {
+    if (!state.lightboxOpen || state.lightboxImages.length <= 1) return;
+    state.lightboxIndex = (state.lightboxIndex + 1) % state.lightboxImages.length;
+    updateLightboxImage();
+  }
+
+  function lightboxGoPrev() {
+    if (!state.lightboxOpen || state.lightboxImages.length <= 1) return;
+    state.lightboxIndex = (state.lightboxIndex - 1 + state.lightboxImages.length) % state.lightboxImages.length;
+    updateLightboxImage();
+  }
+
+  // Render single spotlight thumbnail on feature cards that have images
+  function renderFeatureCardThumbnails() {
+    $$('.feature-card[data-casestudy]').forEach(function (card) {
+      var key = card.dataset.casestudy;
+      var cs = CASE_STUDIES[key];
+      if (!cs || !cs.images || !cs.images.length) return;
+
+      var thumb = document.createElement('div');
+      thumb.className = 'feature-card__thumb';
+
+      var img = document.createElement('img');
+      img.src = cs.images[0].src;
+      img.alt = cs.images[0].alt || '';
+      img.loading = 'lazy';
+      thumb.appendChild(img);
+
+      // Insert thumbnail after the visual icon
+      var visual = card.querySelector('.feature-card__visual');
+      if (visual) {
+        visual.insertAdjacentElement('afterend', thumb);
+      } else {
+        card.prepend(thumb);
+      }
+    });
+  }
+
+  // Place up to 2 images into the case study modal slots
+  function renderCaseStudyImages(key) {
+    var slot1 = $('#caseStudyImage1');
+    var slot2 = $('#caseStudyImage2');
+    var cs = CASE_STUDIES[key];
+    var images = (cs && cs.images) || [];
+
+    [slot1, slot2].forEach(function (slot, slotIndex) {
+      if (!slot) return;
+      slot.innerHTML = '';
+      var imgData = images[slotIndex];
+      if (!imgData) {
+        slot.style.display = 'none';
+        return;
+      }
+      slot.style.display = '';
+
+      var wrap = document.createElement('div');
+      wrap.className = 'case-study__gallery-item';
+
+      var img = document.createElement('img');
+      img.src = imgData.src;
+      img.alt = imgData.alt || '';
+      img.loading = 'lazy';
+      wrap.appendChild(img);
+
+      wrap.addEventListener('click', function (e) {
+        e.stopPropagation();
+        openLightbox(images, slotIndex);
+      });
+
+      slot.appendChild(wrap);
+    });
+  }
+
+  // Lightbox event listeners
+  if (lightboxEl) {
+    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+    if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', lightboxGoPrev);
+    if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', lightboxGoNext);
+
+    // Close when clicking anywhere outside the image or controls
+    lightboxEl.addEventListener('click', function (e) {
+      if (e.target.closest('.lightbox__image, .lightbox__arrow, .lightbox__close')) return;
+      closeLightbox();
+    });
   }
 
   // ---- Event Listeners ----
@@ -587,8 +759,12 @@
 
   // Keyboard
   document.addEventListener('keydown', (e) => {
-    // Escape: close orb card first, then detail, then overlays
+    // Escape: lightbox → case study → orb card → detail → overlay
     if (e.key === 'Escape') {
+      if (state.lightboxOpen) {
+        closeLightbox();
+        return;
+      }
       if (state.caseStudyOpen) {
         closeCaseStudy();
         return;
@@ -605,6 +781,13 @@
         closeOverlay();
         return;
       }
+      return;
+    }
+
+    // Arrow keys: lightbox navigation takes priority
+    if (state.lightboxOpen) {
+      if (e.key === 'ArrowRight') { lightboxGoNext(); return; }
+      if (e.key === 'ArrowLeft') { lightboxGoPrev(); return; }
       return;
     }
 
@@ -706,6 +889,7 @@
   })();
 
   // ---- Init ----
+  renderFeatureCardThumbnails();
   resizeCanvas();
   drawParticles();
 })();
