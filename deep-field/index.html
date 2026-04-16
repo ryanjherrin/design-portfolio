@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryan Herrin — Deep Field</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&family=Instrument+Serif:ital@1&family=Syne:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Layer 1: Void canvas -->
+  <canvas class="void" id="void"></canvas>
+
+  <!-- Layer 2: Landing -->
+  <section class="landing" id="landing">
+    <div class="landing__inner">
+      <p class="landing__pre">Portfolio of</p>
+      <h1 class="landing__name">Ryan Herrin</h1>
+      <p class="landing__role">AI-Focused Product Designer</p>
+      <button class="landing__enter" id="enterBtn">Enter</button>
+    </div>
+
+    <!-- Floating Orbs -->
+    <div class="orbs" id="orbs">
+      <button class="orb" data-orb="photo" style="--orb-x: 8%; --orb-y: 18%;">
+        <span class="orb__glow"></span>
+        <span class="orb__label">Photo</span>
+      </button>
+      <button class="orb" data-orb="story" style="--orb-x: 85%; --orb-y: 22%;">
+        <span class="orb__glow"></span>
+        <span class="orb__label">My Story</span>
+      </button>
+      <button class="orb" data-orb="tools" style="--orb-x: 12%; --orb-y: 72%;">
+        <span class="orb__glow"></span>
+        <span class="orb__label">Tools</span>
+      </button>
+      <button class="orb" data-orb="fact" style="--orb-x: 78%; --orb-y: 68%;">
+        <span class="orb__glow"></span>
+        <span class="orb__label">Fun Fact</span>
+      </button>
+      <button class="orb" data-orb="quote" style="--orb-x: 92%; --orb-y: 48%;">
+        <span class="orb__glow"></span>
+        <span class="orb__label">Quote</span>
+      </button>
+      <button class="orb" data-orb="hobby" style="--orb-x: 4%; --orb-y: 45%;">
+        <span class="orb__glow"></span>
+        <span class="orb__label">Hobby</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Orb Card Modal -->
+  <div class="orb-card" id="orbCard">
+    <div class="orb-card__backdrop"></div>
+    <div class="orb-card__panel">
+      <button class="orb-card__close" aria-label="Close">&times;</button>
+      <h3 class="orb-card__title"></h3>
+      <div class="orb-card__body"></div>
+    </div>
+  </div>
+
+  <!-- Case Study Modal -->
+  <div class="case-study" id="caseStudy">
+    <div class="case-study__backdrop"></div>
+    <div class="case-study__panel">
+      <button class="case-study__close" aria-label="Close">&times;</button>
+      <div class="case-study__icon" id="caseStudyIcon"></div>
+      <h3 class="case-study__title" id="caseStudyTitle"></h3>
+      <p class="case-study__desc" id="caseStudyDesc"></p>
+      <div class="case-study__section">
+        <div class="case-study__section-title">Challenge</div>
+        <p id="caseStudyChallenge"></p>
+      </div>
+      <div class="case-study__section">
+        <div class="case-study__section-title">How I Solved It</div>
+        <p id="caseStudySolution"></p>
+      </div>
+      <div class="case-study__tools" id="caseStudyTools"></div>
+    </div>
+  </div>
+
+  <!-- Layer 3: Projects -->
+  <div class="projects" id="projects">
+    <div class="projects__controls">
+      <div class="projects__arrow" id="prevArrow" aria-label="Previous project">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M15 4l-8 8 8 8"/>
+        </svg>
+      </div>
+      <div class="projects__counter" id="projectCounter">
+        <span class="projects__counter-current">01</span>
+        <span class="projects__counter-sep">/</span>
+        <span class="projects__counter-total">04</span>
+      </div>
+      <div class="projects__arrow" id="nextArrow" aria-label="Next project">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 4l8 8-8 8"/>
+        </svg>
+      </div>
+    </div>
+
+    <section class="project" data-index="0" data-color="#3b82f6" data-gradient="linear-gradient(135deg, #080c18, #111d35 40%, #1e3a6d 70%, #3b82f6)">
+      <div class="project__number">01</div>
+      <div class="project__preview" style="background: linear-gradient(135deg, #080c18, #111d35 40%, #1e3a6d 70%, #3b82f6);">
+        <div class="preview-mockups">
+          <div class="mockup">
+            <div class="mockup__bar"><span></span><span></span><span></span></div>
+            <div class="mockup__screen" style="background: #0a0f1e; position: relative; padding: 0; gap: 0;">
+              <div class="mock-sidebar">
+                <div class="mock-logo" style="color: #3b82f6;">LEXAI</div>
+                <div class="mock-nav-item is-active" style="background: rgba(59,130,246,0.1); color: rgba(59,130,246,0.9);">Dashboard</div>
+                <div class="mock-nav-item">Cases</div>
+                <div class="mock-nav-item">Documents</div>
+                <div class="mock-nav-item">AI Assistant</div>
+                <div class="mock-nav-item">Settings</div>
+              </div>
+              <div class="mock-main" style="margin-left: 22%;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div class="mock-heading">Active Cases</div>
+                  <div class="mock-search" style="max-width: 180px;">Search cases...</div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <div class="mock-stat"><div class="mock-stat-value" style="color: #3b82f6;">247</div><div class="mock-stat-label">Active Cases</div></div>
+                  <div class="mock-stat"><div class="mock-stat-value">89%</div><div class="mock-stat-label">Win Rate</div></div>
+                  <div class="mock-stat"><div class="mock-stat-value">12</div><div class="mock-stat-label">Pending Review</div></div>
+                </div>
+                <div class="mock-table-row"><div class="mock-avatar"></div><span style="flex: 2;">Smith v. Meridian Corp</span><span style="flex: 1;">Contract</span><div class="mock-badge" style="background: rgba(59,130,246,0.15); color: #3b82f6;">In Review</div></div>
+                <div class="mock-table-row"><div class="mock-avatar"></div><span style="flex: 2;">Davis v. TechStart Inc</span><span style="flex: 1;">IP</span><div class="mock-badge" style="background: rgba(80,200,120,0.15); color: #50c878;">Active</div></div>
+                <div class="mock-table-row"><div class="mock-avatar"></div><span style="flex: 2;">Chen v. Global Logistics</span><span style="flex: 1;">Employment</span><div class="mock-badge" style="background: rgba(255,180,50,0.15); color: #ffb432;">Pending</div></div>
+                <div class="mock-table-row"><div class="mock-avatar"></div><span style="flex: 2;">NovaTech Acquisition</span><span style="flex: 1;">M&amp;A</span><div class="mock-badge" style="background: rgba(59,130,246,0.15); color: #3b82f6;">In Review</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project__info">
+        <h2 class="project__title">LawGoat</h2>
+        <p class="project__category">Product Design / AI — Belva</p>
+        <button class="project__link">View Project</button>
+      </div>
+      <div class="project__detail">
+        <button class="project__detail-back" aria-label="Back to projects">&larr; Back</button>
+        <div class="project__detail-content">
+          <h3 class="project__detail-title">LawGoat</h3>
+          <p class="project__detail-desc">As Head of Product Design at Belva, I built LawGoat from the ground up — an AI-powered legal platform where users communicate with clients, analyze documents using AI, and automate tasks. Designed and shipped the full design system using Figma MCP, then built features end-to-end using Claude CLI within Cursor — writing code, running tests, and shipping through the full GitHub PR process.</p>
+          <div class="detail-preview" style="background: linear-gradient(135deg, #080c18, #111d35 40%, #1e3a6d 70%, #3b82f6); --project-glow: rgba(59,130,246,0.15);">
+            <div class="preview-mockups">
+              <div class="mockup">
+                <div class="mockup__bar"><span></span><span></span><span></span></div>
+                <div class="mockup__screen" style="background: #0a0f1e; position: relative; padding: 0; gap: 0;">
+                  <div class="mock-sidebar">
+                    <div class="mock-logo" style="color: #3b82f6;">LEXAI</div>
+                    <div class="mock-nav-item is-active" style="background: rgba(59,130,246,0.1); color: rgba(59,130,246,0.9);">Dashboard</div>
+                    <div class="mock-nav-item">Cases</div>
+                    <div class="mock-nav-item">Documents</div>
+                    <div class="mock-nav-item">AI Assistant</div>
+                    <div class="mock-nav-item">Settings</div>
+                  </div>
+                  <div class="mock-main" style="margin-left: 22%;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                      <div class="mock-heading">Active Cases</div>
+                      <div class="mock-search" style="max-width: 180px;">Search cases...</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                      <div class="mock-stat"><div class="mock-stat-value" style="color: #3b82f6;">247</div><div class="mock-stat-label">Active Cases</div></div>
+                      <div class="mock-stat"><div class="mock-stat-value">89%</div><div class="mock-stat-label">Win Rate</div></div>
+                      <div class="mock-stat"><div class="mock-stat-value">12</div><div class="mock-stat-label">Pending Review</div></div>
+                    </div>
+                    <div class="mock-table-row"><div class="mock-avatar"></div><span style="flex: 2;">Smith v. Meridian Corp</span><span style="flex: 1;">Contract</span><div class="mock-badge" style="background: rgba(59,130,246,0.15); color: #3b82f6;">In Review</div></div>
+                    <div class="mock-table-row"><div class="mock-avatar"></div><span style="flex: 2;">Davis v. TechStart Inc</span><span style="flex: 1;">IP</span><div class="mock-badge" style="background: rgba(80,200,120,0.15); color: #50c878;">Active</div></div>
+                    <div class="mock-table-row"><div class="mock-avatar"></div><span style="flex: 2;">Chen v. Global Logistics</span><span style="flex: 1;">Employment</span><div class="mock-badge" style="background: rgba(255,180,50,0.15); color: #ffb432;">Pending</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project__detail-tags">
+            <span class="tag-design">Product Design</span><span class="tag-ai">AI / ML</span><span class="tag-legal">Legal Tech</span><span class="tag-dashboard">Dashboard</span>
+          </div>
+          <div class="project__detail-features">
+            <div class="feature-card" data-casestudy="lawgoat-design-system">
+              <div class="feature-card__visual" style="background: rgba(59,130,246,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="#3b82f6" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="#3b82f6" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="#3b82f6" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="#3b82f6" stroke-width="1.5"/></svg>
+              </div>
+              <h4 class="feature-card__title">Design System</h4>
+              <p class="feature-card__desc">Complete component library built with Figma MCP — zero drift between design and code.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="lawgoat-ai-chat">
+              <div class="feature-card__visual" style="background: rgba(59,130,246,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="12" rx="3" stroke="#3b82f6" stroke-width="1.5"/><circle cx="7" cy="9" r="1" fill="#3b82f6"/><circle cx="10" cy="9" r="1" fill="#3b82f6"/><circle cx="13" cy="9" r="1" fill="#3b82f6"/></svg>
+              </div>
+              <h4 class="feature-card__title">AI Chat UX</h4>
+              <p class="feature-card__desc">Conversational AI interface for querying case law and analyzing documents.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="lawgoat-case-mgmt">
+              <div class="feature-card__visual" style="background: rgba(59,130,246,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h10" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <h4 class="feature-card__title">Case Management</h4>
+              <p class="feature-card__desc">End-to-end workflow from intake to resolution with automated task assignment.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+          </div>
+          <div class="project__detail-links">
+            <a href="#" class="project__detail-link">Live Product &rarr;</a>
+          </div>
+          <div class="detail-other">
+            <div class="detail-other__label">Other Projects</div>
+            <div class="detail-other__list">
+              <button class="detail-other__item" data-goto="1"><span class="detail-other__dot" style="background: #00b7c3;"></span>VMware</button>
+              <button class="detail-other__item" data-goto="2"><span class="detail-other__dot" style="background: #00d4aa;"></span>Currents</button>
+              <button class="detail-other__item" data-goto="3"><span class="detail-other__dot" style="background: #008080;"></span>Microsoft 1995</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project" data-index="1" data-color="#00b7c3" data-gradient="linear-gradient(160deg, #060e18, #0c2038 40%, #134a5e 70%, #00b7c3)">
+      <div class="project__number">02</div>
+      <div class="project__preview" style="background: linear-gradient(160deg, #060e18, #0c2038 40%, #134a5e 70%, #00b7c3);">
+        <div class="preview-mockups">
+          <div class="mockup">
+            <div class="mockup__bar"><span></span><span></span><span></span></div>
+            <div class="mockup__screen" style="background: #080e18; padding: 0; gap: 0; display: flex; flex-direction: column;">
+              <div class="mock-topbar">
+                <div class="mock-logo" style="color: #00b7c3;">VMware</div>
+                <div class="mock-nav-item is-active" style="color: #00b7c3;">Overview</div>
+                <div class="mock-nav-item">Workloads</div>
+                <div class="mock-nav-item">Network</div>
+                <div class="mock-nav-item">Security</div>
+                <div class="mock-search" style="max-width: 160px;">Search resources...</div>
+              </div>
+              <div class="mock-main">
+                <div class="mock-heading">Cloud Infrastructure</div>
+                <div style="display: flex; gap: 8px;">
+                  <div class="mock-card" style="flex: 1; border-left: 2px solid #ff9900;">
+                    <div class="mock-subtext">AWS</div>
+                    <div class="mock-stat-value" style="font-size: 12px;">142</div>
+                    <div class="mock-subtext">instances</div>
+                    <div class="mock-chart-bars" style="height: 24px; margin-top: 6px;">
+                      <div class="mock-chart-bar" style="height: 60%; background: rgba(255,153,0,0.4);"></div>
+                      <div class="mock-chart-bar" style="height: 80%; background: rgba(255,153,0,0.5);"></div>
+                      <div class="mock-chart-bar" style="height: 45%; background: rgba(255,153,0,0.3);"></div>
+                      <div class="mock-chart-bar" style="height: 90%; background: rgba(255,153,0,0.6);"></div>
+                      <div class="mock-chart-bar" style="height: 70%; background: rgba(255,153,0,0.45);"></div>
+                    </div>
+                  </div>
+                  <div class="mock-card" style="flex: 1; border-left: 2px solid #0078d4;">
+                    <div class="mock-subtext">Azure</div>
+                    <div class="mock-stat-value" style="font-size: 12px;">89</div>
+                    <div class="mock-subtext">instances</div>
+                    <div class="mock-chart-bars" style="height: 24px; margin-top: 6px;">
+                      <div class="mock-chart-bar" style="height: 50%; background: rgba(0,120,212,0.4);"></div>
+                      <div class="mock-chart-bar" style="height: 85%; background: rgba(0,120,212,0.6);"></div>
+                      <div class="mock-chart-bar" style="height: 65%; background: rgba(0,120,212,0.45);"></div>
+                      <div class="mock-chart-bar" style="height: 40%; background: rgba(0,120,212,0.35);"></div>
+                    </div>
+                  </div>
+                  <div class="mock-card" style="flex: 1; border-left: 2px solid #4285f4;">
+                    <div class="mock-subtext">GCP</div>
+                    <div class="mock-stat-value" style="font-size: 12px;">56</div>
+                    <div class="mock-subtext">instances</div>
+                    <div class="mock-chart-bars" style="height: 24px; margin-top: 6px;">
+                      <div class="mock-chart-bar" style="height: 70%; background: rgba(66,133,244,0.4);"></div>
+                      <div class="mock-chart-bar" style="height: 90%; background: rgba(66,133,244,0.55);"></div>
+                      <div class="mock-chart-bar" style="height: 60%; background: rgba(66,133,244,0.4);"></div>
+                      <div class="mock-chart-bar" style="height: 75%; background: rgba(66,133,244,0.5);"></div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <div class="mock-stat"><div class="mock-stat-value" style="color: #00b7c3;">287</div><div class="mock-stat-label">Total Instances</div></div>
+                  <div class="mock-stat"><div class="mock-stat-value">99.7%</div><div class="mock-stat-label">Uptime</div></div>
+                  <div class="mock-stat"><div class="mock-stat-value">$24.8k</div><div class="mock-stat-label">Monthly Cost</div></div>
+                  <div class="mock-stat"><div class="mock-stat-value" style="color: #ffb432;">3</div><div class="mock-stat-label">Alerts</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project__info">
+        <h2 class="project__title">VMware</h2>
+        <p class="project__category">Enterprise UX / Cloud</p>
+        <button class="project__link">View Project</button>
+      </div>
+      <div class="project__detail">
+        <button class="project__detail-back" aria-label="Back to projects">&larr; Back</button>
+        <div class="project__detail-content">
+          <h3 class="project__detail-title">VMware</h3>
+          <p class="project__detail-desc">Led UX design for VMware's multi-cloud management platform, enabling enterprise teams to monitor, deploy, and optimize workloads across AWS, Azure, and GCP from a single interface. Focused on reducing cognitive load in complex data-heavy dashboards.</p>
+          <div class="detail-preview" style="background: linear-gradient(160deg, #060e18, #0c2038 40%, #134a5e 70%, #00b7c3); --project-glow: rgba(0,183,195,0.15);">
+            <div class="preview-mockups">
+              <div class="mockup">
+                <div class="mockup__bar"><span></span><span></span><span></span></div>
+                <div class="mockup__screen" style="background: #080e18; padding: 0; gap: 0; display: flex; flex-direction: column;">
+                  <div class="mock-topbar">
+                    <div class="mock-logo" style="color: #00b7c3;">VMware</div>
+                    <div class="mock-nav-item is-active" style="color: #00b7c3;">Overview</div>
+                    <div class="mock-nav-item">Workloads</div>
+                    <div class="mock-nav-item">Network</div>
+                    <div class="mock-nav-item">Security</div>
+                    <div class="mock-search" style="max-width: 160px;">Search resources...</div>
+                  </div>
+                  <div class="mock-main">
+                    <div class="mock-heading">Cloud Infrastructure</div>
+                    <div style="display: flex; gap: 8px;">
+                      <div class="mock-card" style="flex: 1; border-left: 2px solid #ff9900;">
+                        <div class="mock-subtext">AWS</div>
+                        <div class="mock-stat-value" style="font-size: 12px;">142</div>
+                        <div class="mock-subtext">instances</div>
+                        <div class="mock-chart-bars" style="height: 24px; margin-top: 6px;">
+                          <div class="mock-chart-bar" style="height: 60%; background: rgba(255,153,0,0.4);"></div>
+                          <div class="mock-chart-bar" style="height: 80%; background: rgba(255,153,0,0.5);"></div>
+                          <div class="mock-chart-bar" style="height: 45%; background: rgba(255,153,0,0.3);"></div>
+                          <div class="mock-chart-bar" style="height: 90%; background: rgba(255,153,0,0.6);"></div>
+                          <div class="mock-chart-bar" style="height: 70%; background: rgba(255,153,0,0.45);"></div>
+                        </div>
+                      </div>
+                      <div class="mock-card" style="flex: 1; border-left: 2px solid #0078d4;">
+                        <div class="mock-subtext">Azure</div>
+                        <div class="mock-stat-value" style="font-size: 12px;">89</div>
+                        <div class="mock-subtext">instances</div>
+                        <div class="mock-chart-bars" style="height: 24px; margin-top: 6px;">
+                          <div class="mock-chart-bar" style="height: 50%; background: rgba(0,120,212,0.4);"></div>
+                          <div class="mock-chart-bar" style="height: 85%; background: rgba(0,120,212,0.6);"></div>
+                          <div class="mock-chart-bar" style="height: 65%; background: rgba(0,120,212,0.45);"></div>
+                          <div class="mock-chart-bar" style="height: 40%; background: rgba(0,120,212,0.35);"></div>
+                        </div>
+                      </div>
+                      <div class="mock-card" style="flex: 1; border-left: 2px solid #4285f4;">
+                        <div class="mock-subtext">GCP</div>
+                        <div class="mock-stat-value" style="font-size: 12px;">56</div>
+                        <div class="mock-subtext">instances</div>
+                        <div class="mock-chart-bars" style="height: 24px; margin-top: 6px;">
+                          <div class="mock-chart-bar" style="height: 70%; background: rgba(66,133,244,0.4);"></div>
+                          <div class="mock-chart-bar" style="height: 90%; background: rgba(66,133,244,0.55);"></div>
+                          <div class="mock-chart-bar" style="height: 60%; background: rgba(66,133,244,0.4);"></div>
+                          <div class="mock-chart-bar" style="height: 75%; background: rgba(66,133,244,0.5);"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                      <div class="mock-stat"><div class="mock-stat-value" style="color: #00b7c3;">287</div><div class="mock-stat-label">Total Instances</div></div>
+                      <div class="mock-stat"><div class="mock-stat-value">99.7%</div><div class="mock-stat-label">Uptime</div></div>
+                      <div class="mock-stat"><div class="mock-stat-value">$24.8k</div><div class="mock-stat-label">Monthly Cost</div></div>
+                      <div class="mock-stat"><div class="mock-stat-value" style="color: #ffb432;">3</div><div class="mock-stat-label">Alerts</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project__detail-tags">
+            <span class="tag-enterprise">Enterprise UX</span><span class="tag-cloud">Cloud Computing</span><span class="tag-systems">Design Systems</span><span class="tag-dataviz">Data Visualization</span>
+          </div>
+          <div class="project__detail-features">
+            <div class="feature-card" data-casestudy="vmware-dashboard">
+              <div class="feature-card__visual" style="background: rgba(0,183,195,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="#00b7c3" stroke-width="1.5"/><path d="M2 8h16" stroke="#00b7c3" stroke-width="1.5"/><path d="M7 8v8" stroke="#00b7c3" stroke-width="1.5"/></svg>
+              </div>
+              <h4 class="feature-card__title">Multi-Cloud Dashboard</h4>
+              <p class="feature-card__desc">Unified AWS, Azure, and GCP monitoring in a single pane of glass.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="vmware-tables">
+              <div class="feature-card__visual" style="background: rgba(0,183,195,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="#00b7c3" stroke-width="1.5"/><path d="M2 7h16M2 11h16M2 15h16" stroke="#00b7c3" stroke-width="1"/><path d="M8 3v14M14 3v14" stroke="#00b7c3" stroke-width="1"/></svg>
+              </div>
+              <h4 class="feature-card__title">Data-Dense Tables</h4>
+              <p class="feature-card__desc">Deployment tables handling 1000+ rows with inline actions and smart filtering.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="vmware-alerts">
+              <div class="feature-card__visual" style="background: rgba(0,183,195,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v2M10 15v2M17 10h-2M5 10H3" stroke="#00b7c3" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="4" stroke="#00b7c3" stroke-width="1.5"/><path d="M14.5 5.5l-1.4 1.4M6.9 13.1l-1.4 1.4" stroke="#00b7c3" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <h4 class="feature-card__title">Alert System</h4>
+              <p class="feature-card__desc">Priority-based alert pipeline with severity tiers and one-click remediation.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+          </div>
+          <div class="project__detail-links">
+            <a href="#" class="project__detail-link">VMware Cloud &rarr;</a>
+          </div>
+          <div class="detail-other">
+            <div class="detail-other__label">Other Projects</div>
+            <div class="detail-other__list">
+              <button class="detail-other__item" data-goto="0"><span class="detail-other__dot" style="background: #3b82f6;"></span>LawGoat</button>
+              <button class="detail-other__item" data-goto="2"><span class="detail-other__dot" style="background: #00d4aa;"></span>Currents</button>
+              <button class="detail-other__item" data-goto="3"><span class="detail-other__dot" style="background: #008080;"></span>Microsoft 1995</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project" data-index="2" data-color="#00d4aa" data-gradient="linear-gradient(145deg, #040d1a, #0a2540 40%, #00695c 70%, #00d4aa)">
+      <div class="project__number">03</div>
+      <div class="project__preview" style="background: linear-gradient(145deg, #040d1a, #0a2540 40%, #00695c 70%, #00d4aa);">
+        <div class="preview-mockups">
+          <div class="mockup">
+            <div class="mockup__bar"><span></span><span></span><span></span></div>
+            <div class="mockup__screen" style="background: linear-gradient(180deg, #040d1a, #0a2540 60%); padding: 0; gap: 0; display: flex; flex-direction: column;">
+              <div class="mock-topbar" style="border-bottom-color: rgba(0,212,170,0.1);">
+                <div class="mock-logo" style="color: #00d4aa;">Currents</div>
+                <div style="display: flex; gap: 12px;">
+                  <div class="mock-nav-item is-active" style="color: #00d4aa;">Explore</div>
+                  <div class="mock-nav-item">Data</div>
+                  <div class="mock-nav-item">About</div>
+                </div>
+              </div>
+              <div class="mock-main" style="flex: 1;">
+                <div class="mock-heading" style="font-size: 14px;">Pacific Ocean Currents</div>
+                <div class="mock-subtext">Real-time thermal data</div>
+                <svg viewBox="0 0 400 100" style="width: 100%; margin-top: 8px;" preserveAspectRatio="none">
+                  <path d="M0,50 Q50,15 100,50 T200,45 T300,55 T400,40" fill="none" stroke="rgba(0,212,170,0.5)" stroke-width="2"/>
+                  <path d="M0,65 Q60,30 120,60 T240,55 T360,65 T400,55" fill="none" stroke="rgba(0,212,170,0.3)" stroke-width="1.5"/>
+                  <path d="M0,35 Q40,60 100,30 T200,40 T300,25 T400,45" fill="none" stroke="rgba(0,180,200,0.35)" stroke-width="1.5"/>
+                  <path d="M0,80 Q70,50 140,75 T280,70 T400,80" fill="none" stroke="rgba(0,212,170,0.2)" stroke-width="1"/>
+                </svg>
+                <div style="display: flex; gap: 16px; margin-top: 6px;">
+                  <div style="display: flex; align-items: center; gap: 4px;"><div style="width: 6px; height: 6px; border-radius: 50%; background: #00d4aa;"></div><span class="mock-subtext">Warm</span></div>
+                  <div style="display: flex; align-items: center; gap: 4px;"><div style="width: 6px; height: 6px; border-radius: 50%; background: #00b4c8;"></div><span class="mock-subtext">Cold</span></div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                  <div class="mock-stat" style="background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.12);"><div class="mock-stat-value" style="color: #00d4aa; font-size: 11px;">23.4&deg;C</div><div class="mock-stat-label">Surface Temp</div></div>
+                  <div class="mock-stat" style="background: rgba(0,180,200,0.06); border-color: rgba(0,180,200,0.12);"><div class="mock-stat-value" style="color: #00b4c8; font-size: 11px;">2.1 m/s</div><div class="mock-stat-label">Flow Speed</div></div>
+                  <div class="mock-stat" style="background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.12);"><div class="mock-stat-value" style="color: #00d4aa; font-size: 11px;">NNW</div><div class="mock-stat-label">Direction</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project__info">
+        <h2 class="project__title">Currents</h2>
+        <p class="project__category">Data Visualization / Web</p>
+        <button class="project__link">View Project</button>
+      </div>
+      <div class="project__detail">
+        <button class="project__detail-back" aria-label="Back to projects">&larr; Back</button>
+        <div class="project__detail-content">
+          <h3 class="project__detail-title">Currents</h3>
+          <p class="project__detail-desc">Designed and developed an interactive visualization platform for ocean current data. Real-time thermal mapping, flow simulations, and scientific data presented through an editorial design lens. Built with D3.js and WebGL.</p>
+          <div class="detail-preview" style="background: linear-gradient(145deg, #040d1a, #0a2540 40%, #00695c 70%, #00d4aa); --project-glow: rgba(0,212,170,0.15);">
+            <div class="preview-mockups">
+              <div class="mockup">
+                <div class="mockup__bar"><span></span><span></span><span></span></div>
+                <div class="mockup__screen" style="background: linear-gradient(180deg, #040d1a, #0a2540 60%); padding: 0; gap: 0; display: flex; flex-direction: column;">
+                  <div class="mock-topbar" style="border-bottom-color: rgba(0,212,170,0.1);">
+                    <div class="mock-logo" style="color: #00d4aa;">Currents</div>
+                    <div style="display: flex; gap: 12px;">
+                      <div class="mock-nav-item is-active" style="color: #00d4aa;">Explore</div>
+                      <div class="mock-nav-item">Data</div>
+                      <div class="mock-nav-item">About</div>
+                    </div>
+                  </div>
+                  <div class="mock-main" style="flex: 1;">
+                    <div class="mock-heading" style="font-size: 14px;">Pacific Ocean Currents</div>
+                    <div class="mock-subtext">Real-time thermal data</div>
+                    <svg viewBox="0 0 400 100" style="width: 100%; margin-top: 8px;" preserveAspectRatio="none">
+                      <path d="M0,50 Q50,15 100,50 T200,45 T300,55 T400,40" fill="none" stroke="rgba(0,212,170,0.5)" stroke-width="2"/>
+                      <path d="M0,65 Q60,30 120,60 T240,55 T360,65 T400,55" fill="none" stroke="rgba(0,212,170,0.3)" stroke-width="1.5"/>
+                      <path d="M0,35 Q40,60 100,30 T200,40 T300,25 T400,45" fill="none" stroke="rgba(0,180,200,0.35)" stroke-width="1.5"/>
+                      <path d="M0,80 Q70,50 140,75 T280,70 T400,80" fill="none" stroke="rgba(0,212,170,0.2)" stroke-width="1"/>
+                    </svg>
+                    <div style="display: flex; gap: 16px; margin-top: 6px;">
+                      <div style="display: flex; align-items: center; gap: 4px;"><div style="width: 6px; height: 6px; border-radius: 50%; background: #00d4aa;"></div><span class="mock-subtext">Warm</span></div>
+                      <div style="display: flex; align-items: center; gap: 4px;"><div style="width: 6px; height: 6px; border-radius: 50%; background: #00b4c8;"></div><span class="mock-subtext">Cold</span></div>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                      <div class="mock-stat" style="background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.12);"><div class="mock-stat-value" style="color: #00d4aa; font-size: 11px;">23.4&deg;C</div><div class="mock-stat-label">Surface Temp</div></div>
+                      <div class="mock-stat" style="background: rgba(0,180,200,0.06); border-color: rgba(0,180,200,0.12);"><div class="mock-stat-value" style="color: #00b4c8; font-size: 11px;">2.1 m/s</div><div class="mock-stat-label">Flow Speed</div></div>
+                      <div class="mock-stat" style="background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.12);"><div class="mock-stat-value" style="color: #00d4aa; font-size: 11px;">NNW</div><div class="mock-stat-label">Direction</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project__detail-tags">
+            <span class="tag-dataviz">Data Visualization</span><span class="tag-web">Web Development</span><span class="tag-d3">D3.js</span><span class="tag-editorial">Editorial Design</span>
+          </div>
+          <div class="project__detail-features">
+            <div class="feature-card" data-casestudy="currents-thermal">
+              <div class="feature-card__visual" style="background: rgba(0,212,170,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" stroke="#00d4aa" stroke-width="1.5"/><circle cx="6" cy="8" r="1.5" fill="#00d4aa" opacity="0.4"/><circle cx="10" cy="6" r="1.5" fill="#00d4aa" opacity="0.7"/><circle cx="14" cy="12" r="1.5" fill="#00d4aa"/><circle cx="8" cy="14" r="1.5" fill="#00d4aa" opacity="0.55"/></svg>
+              </div>
+              <h4 class="feature-card__title">Thermal Mapping</h4>
+              <p class="feature-card__desc">Interactive heat maps visualizing ocean temperature anomalies across global regions.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="currents-storytelling">
+              <div class="feature-card__visual" style="background: rgba(0,212,170,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 15l4-6 3 4 3-8 4 10" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4 class="feature-card__title">Data Storytelling</h4>
+              <p class="feature-card__desc">Raw scientific datasets turned into editorial-quality narratives with annotated charts.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="currents-feeds">
+              <div class="feature-card__visual" style="background: rgba(0,212,170,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 14l2-3 2 1 2-4 2 2 2-1 2-3 2 2" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15" cy="8" r="2" stroke="#00d4aa" stroke-width="1.5"/></svg>
+              </div>
+              <h4 class="feature-card__title">Real-Time Feeds</h4>
+              <p class="feature-card__desc">Live data panels streaming current speed, direction, and temperature with sparklines.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+          </div>
+          <div class="project__detail-links">
+            <a href="#" class="project__detail-link">Live Site &rarr;</a>
+          </div>
+          <div class="detail-other">
+            <div class="detail-other__label">Other Projects</div>
+            <div class="detail-other__list">
+              <button class="detail-other__item" data-goto="0"><span class="detail-other__dot" style="background: #3b82f6;"></span>LawGoat</button>
+              <button class="detail-other__item" data-goto="1"><span class="detail-other__dot" style="background: #00b7c3;"></span>VMware</button>
+              <button class="detail-other__item" data-goto="3"><span class="detail-other__dot" style="background: #008080;"></span>Microsoft 1995</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project" data-index="3" data-color="#008080" data-gradient="linear-gradient(140deg, #1a1a1e, #2a2a30 30%, #005f5f 60%, #008080 80%, #00a5a5)">
+      <div class="project__number">04</div>
+      <div class="project__preview" style="background: linear-gradient(140deg, #1a1a1e, #2a2a30 30%, #005f5f 60%, #008080 80%, #00a5a5);">
+        <div class="preview-mockups">
+          <div class="mockup">
+            <div class="mockup__bar"><span></span><span></span><span></span></div>
+            <div class="mockup__screen" style="background: #1a1a1e; padding: 0; gap: 0; display: flex; flex-direction: column; position: relative;">
+              <div style="flex: 1; padding: 12px; display: flex; flex-direction: column;">
+                <div style="flex: 1; border: 1px solid rgba(232,230,225,0.1); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;">
+                  <div class="mock-win-titlebar">
+                    <div style="display: flex; gap: 3px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: rgba(232,230,225,0.1);"></div><div style="width: 8px; height: 8px; border-radius: 50%; background: rgba(232,230,225,0.1);"></div><div style="width: 8px; height: 8px; border-radius: 50%; background: rgba(232,230,225,0.1);"></div></div>
+                    <div class="mock-win-titlebar-text">My Computer</div>
+                  </div>
+                  <div style="display: flex; gap: 6px; padding: 5px 10px; border-bottom: 1px solid rgba(232,230,225,0.06); font-size: 8px; color: rgba(232,230,225,0.3);"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+                  <div style="display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-bottom: 1px solid rgba(232,230,225,0.06);">
+                    <span style="font-size: 7px; color: rgba(232,230,225,0.25);">Address</span>
+                    <div style="flex: 1; height: 16px; background: rgba(232,230,225,0.04); border: 1px solid rgba(232,230,225,0.08); border-radius: 3px; padding: 0 6px; display: flex; align-items: center; font-size: 7px; color: rgba(232,230,225,0.4);">C:\Users\Desktop</div>
+                  </div>
+                  <div style="flex: 1; padding: 10px; display: flex; flex-wrap: wrap; gap: 12px; align-content: flex-start;">
+                    <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(0,128,128,0.2); border: 1px solid rgba(0,128,128,0.3); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">My Files</span></div>
+                    <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.1); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Network</span></div>
+                    <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.1); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Control Panel</span></div>
+                    <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.1); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Recycle Bin</span></div>
+                    <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(74,158,255,0.12); border: 1px solid rgba(74,158,255,0.2); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Internet</span></div>
+                    <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(255,180,50,0.12); border: 1px solid rgba(255,180,50,0.2); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Notepad</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mock-win-taskbar">
+                <div class="mock-win-start">Start</div>
+                <div style="flex: 1; display: flex; gap: 4px;"><div style="padding: 2px 8px; font-size: 7px; color: rgba(232,230,225,0.5); background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.08); border-radius: 2px;">My Computer</div></div>
+                <div style="font-size: 7px; color: rgba(232,230,225,0.35);">12:00 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project__info">
+        <h2 class="project__title">Microsoft 1995 Rebuilt</h2>
+        <p class="project__category">OS Design / Project</p>
+        <button class="project__link">View Project</button>
+      </div>
+      <div class="project__detail">
+        <button class="project__detail-back" aria-label="Back to projects">&larr; Back</button>
+        <div class="project__detail-content">
+          <h3 class="project__detail-title">Microsoft 1995 Rebuilt</h3>
+          <p class="project__detail-desc">A design concept reimagining the Windows 95 interface with modern design principles. Preserved the iconic desktop metaphor while introducing contemporary typography, spacing, and interaction patterns. A love letter to the OS that started it all.</p>
+          <div class="detail-preview" style="background: linear-gradient(140deg, #1a1a1e, #2a2a30 30%, #005f5f 60%, #008080 80%, #00a5a5); --project-glow: rgba(0,128,128,0.15);">
+            <div class="preview-mockups">
+              <div class="mockup">
+                <div class="mockup__bar"><span></span><span></span><span></span></div>
+                <div class="mockup__screen" style="background: #1a1a1e; padding: 0; gap: 0; display: flex; flex-direction: column; position: relative;">
+                  <div style="flex: 1; padding: 12px; display: flex; flex-direction: column;">
+                    <div style="flex: 1; border: 1px solid rgba(232,230,225,0.1); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;">
+                      <div class="mock-win-titlebar">
+                        <div style="display: flex; gap: 3px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: rgba(232,230,225,0.1);"></div><div style="width: 8px; height: 8px; border-radius: 50%; background: rgba(232,230,225,0.1);"></div><div style="width: 8px; height: 8px; border-radius: 50%; background: rgba(232,230,225,0.1);"></div></div>
+                        <div class="mock-win-titlebar-text">My Computer</div>
+                      </div>
+                      <div style="display: flex; gap: 6px; padding: 5px 10px; border-bottom: 1px solid rgba(232,230,225,0.06); font-size: 8px; color: rgba(232,230,225,0.3);"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+                      <div style="display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-bottom: 1px solid rgba(232,230,225,0.06);">
+                        <span style="font-size: 7px; color: rgba(232,230,225,0.25);">Address</span>
+                        <div style="flex: 1; height: 16px; background: rgba(232,230,225,0.04); border: 1px solid rgba(232,230,225,0.08); border-radius: 3px; padding: 0 6px; display: flex; align-items: center; font-size: 7px; color: rgba(232,230,225,0.4);">C:\Users\Desktop</div>
+                      </div>
+                      <div style="flex: 1; padding: 10px; display: flex; flex-wrap: wrap; gap: 12px; align-content: flex-start;">
+                        <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(0,128,128,0.2); border: 1px solid rgba(0,128,128,0.3); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">My Files</span></div>
+                        <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.1); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Network</span></div>
+                        <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.1); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Control Panel</span></div>
+                        <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.1); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Recycle Bin</span></div>
+                        <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(74,158,255,0.12); border: 1px solid rgba(74,158,255,0.2); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Internet</span></div>
+                        <div style="width: 48px; text-align: center;"><div style="width: 28px; height: 28px; margin: 0 auto 3px; background: rgba(255,180,50,0.12); border: 1px solid rgba(255,180,50,0.2); border-radius: 4px;"></div><span style="font-size: 7px; color: rgba(232,230,225,0.5);">Notepad</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mock-win-taskbar">
+                    <div class="mock-win-start">Start</div>
+                    <div style="flex: 1; display: flex; gap: 4px;"><div style="padding: 2px 8px; font-size: 7px; color: rgba(232,230,225,0.5); background: rgba(232,230,225,0.06); border: 1px solid rgba(232,230,225,0.08); border-radius: 2px;">My Computer</div></div>
+                    <div style="font-size: 7px; color: rgba(232,230,225,0.35);">12:00 PM</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project__detail-tags">
+            <span class="tag-concept">Concept Design</span><span class="tag-ui">UI Design</span><span class="tag-nostalgia">Nostalgia</span><span class="tag-systems">Design Systems</span>
+          </div>
+          <div class="project__detail-features">
+            <div class="feature-card" data-casestudy="ms95-desktop">
+              <div class="feature-card__visual" style="background: rgba(0,128,128,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#008080" stroke-width="1.5"/><rect x="5" y="7" width="5" height="4" rx="0.5" stroke="#008080" stroke-width="1" opacity="0.6"/><rect x="12" y="7" width="3" height="2" rx="0.5" fill="#008080" opacity="0.3"/><path d="M2 14h16" stroke="#008080" stroke-width="1.5"/></svg>
+              </div>
+              <h4 class="feature-card__title">Desktop Metaphor</h4>
+              <p class="feature-card__desc">Iconic Win95 spatial model rebuilt with modern CSS Grid and flexbox.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="ms95-start-menu">
+              <div class="feature-card__visual" style="background: rgba(0,128,128,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="10" height="13" rx="1" stroke="#008080" stroke-width="1.5"/><path d="M6 8h4M6 11h4M6 14h3" stroke="#008080" stroke-width="1" stroke-linecap="round" opacity="0.6"/><path d="M3 4l3-2h4l3 2" stroke="#008080" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+              <h4 class="feature-card__title">Start Menu</h4>
+              <p class="feature-card__desc">Classic Start menu reimagined with modern typography and smooth animations.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+            <div class="feature-card" data-casestudy="ms95-tokens">
+              <div class="feature-card__visual" style="background: rgba(0,128,128,0.1);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="6" cy="6" r="3" stroke="#008080" stroke-width="1.5"/><circle cx="14" cy="6" r="3" stroke="#008080" stroke-width="1.5"/><circle cx="6" cy="14" r="3" stroke="#008080" stroke-width="1.5"/><circle cx="14" cy="14" r="3" stroke="#008080" stroke-width="1.5"/><path d="M9 6h2M6 9v2M14 9v2M9 14h2" stroke="#008080" stroke-width="1" stroke-linecap="round"/></svg>
+              </div>
+              <h4 class="feature-card__title">Design Tokens</h4>
+              <p class="feature-card__desc">Teal-accent token system mapping Win95 palette to modern dark-mode equivalents.</p>
+              <span class="feature-card__arrow">Read more &rarr;</span>
+            </div>
+          </div>
+          <div class="project__detail-links">
+            <a href="#" class="project__detail-link">Prototype &rarr;</a>
+          </div>
+          <div class="detail-other">
+            <div class="detail-other__label">Other Projects</div>
+            <div class="detail-other__list">
+              <button class="detail-other__item" data-goto="0"><span class="detail-other__dot" style="background: #3b82f6;"></span>LawGoat</button>
+              <button class="detail-other__item" data-goto="1"><span class="detail-other__dot" style="background: #00b7c3;"></span>VMware</button>
+              <button class="detail-other__item" data-goto="2"><span class="detail-other__dot" style="background: #00d4aa;"></span>Currents</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="projects__hints" id="projectHints">
+      <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> Navigate</span>
+      <span><kbd>Enter</kbd> View</span>
+      <span><kbd>Esc</kbd> Back</span>
+    </div>
+  </div>
+
+  <!-- Layer 4: Overlays -->
+  <div class="overlay" id="aboutOverlay">
+    <div class="overlay__panel">
+      <button class="overlay__close" data-close aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <h2 class="overlay__title">About</h2>
+      <div class="overlay__body">
+        <p>Ryan Herrin is an AI-focused Product Designer with over a year of experience building AI products. Currently Head of Product Design at Belva, where he built LawGoat — an AI-powered legal platform.</p>
+        <p>Specializing in complex systems, design systems, and AI-native interfaces. From component architecture in Figma to shipping production-ready designs, every decision is rooted in clarity and craft.</p>
+        <p>Open to product design roles focused on AI, developer tools, and complex software.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="contactOverlay">
+    <div class="overlay__panel">
+      <button class="overlay__close" data-close aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <h2 class="overlay__title">Contact</h2>
+      <div class="overlay__body">
+        <p>Open to new projects, collaborations, and conversations about design.</p>
+        <div class="overlay__links">
+          <a href="mailto:hello@ryanjohnson.design" class="overlay__link">hello@ryanjohnson.design</a>
+          <a href="#" class="overlay__link">Twitter / X</a>
+          <a href="#" class="overlay__link">LinkedIn</a>
+          <a href="#" class="overlay__link">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layer 5: Nav -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav__logo" id="navLogo">RH</a>
+    <div class="nav__links">
+      <button class="nav__link" id="navHome">Home</button>
+      <button class="nav__link" data-overlay="aboutOverlay">About</button>
+      <button class="nav__link" data-overlay="contactOverlay">Contact</button>
+    </div>
+  </nav>
+
+  <!-- Layer 6: Grain -->
+  <div class="grain"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
