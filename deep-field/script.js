@@ -492,11 +492,6 @@
     $('#caseStudyChallenge').textContent = cs.challenge;
     $('#caseStudySolution').textContent = cs.solution;
 
-    var toolsEl = $('#caseStudyTools');
-    toolsEl.innerHTML = cs.tools.map(function (t) {
-      return '<span class="case-study__tool">' + t + '</span>';
-    }).join('');
-
     caseStudyModal.classList.add('is-open');
     state.caseStudyOpen = key;
   }
@@ -664,6 +659,51 @@
 
   // Resize
   window.addEventListener('resize', resizeCanvas);
+
+  // ---- Custom scroll indicator ----
+  (function () {
+    var thumb = document.createElement('div');
+    thumb.className = 'scroll-thumb';
+    document.body.appendChild(thumb);
+
+    var hideTimer = null;
+
+    function update(el) {
+      var sh = el.scrollHeight;
+      var ch = el.clientHeight;
+      if (sh <= ch) { thumb.classList.remove('is-visible'); return; }
+
+      var rect = el.getBoundingClientRect();
+      var radius = parseFloat(getComputedStyle(el).borderRadius) || 0;
+      var inset = Math.max(radius, 8);
+      var trackTop = rect.top + inset;
+      var trackBottom = rect.bottom - inset;
+      var trackH = trackBottom - trackTop;
+
+      var ratio = ch / sh;
+      var thumbH = Math.max(ratio * trackH, 24);
+      var scrollFrac = el.scrollTop / (sh - ch);
+      var top = trackTop + scrollFrac * (trackH - thumbH);
+
+      thumb.style.top = top + 'px';
+      thumb.style.height = thumbH + 'px';
+      thumb.style.right = (window.innerWidth - rect.right + 6) + 'px';
+      thumb.classList.add('is-visible');
+
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () {
+        thumb.classList.remove('is-visible');
+      }, 800);
+    }
+
+    document.addEventListener('scroll', function (e) {
+      var el = e.target;
+      if (el === document || el === document.documentElement) return;
+      if (el.matches('.orb-card__panel, .project__detail, .case-study__panel')) {
+        update(el);
+      }
+    }, true);
+  })();
 
   // ---- Init ----
   resizeCanvas();

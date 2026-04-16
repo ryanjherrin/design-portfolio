@@ -13,6 +13,37 @@
   --duration: 800ms;
 }
 
+/* ---- Custom Scrollbar ---- */
+
+.orb-card__panel,
+.project__detail,
+.case-study__panel {
+  scrollbar-width: none;
+  position: relative;
+}
+
+.orb-card__panel::-webkit-scrollbar,
+.project__detail::-webkit-scrollbar,
+.case-study__panel::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-thumb {
+  position: fixed;
+  right: 4px;
+  width: 6px;
+  border-radius: 2px;
+  background: rgba(232, 230, 225, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.scroll-thumb.is-visible {
+  opacity: 1;
+}
+
 /* ---- Reset & Base ---- */
 
 *, *::before, *::after {
@@ -632,11 +663,11 @@ body::after {
 .project__link {
   font-family: 'Syne', sans-serif;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   opacity: 0.6;
-  padding: 14px 36px;
+  padding: 10px 24px;
   border: 1px solid rgba(232, 230, 225, 0.25);
   border-radius: 60px;
   white-space: nowrap;
@@ -1078,14 +1109,16 @@ body::after {
 }
 
 .case-study__close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+  position: sticky;
+  top: 0;
+  float: right;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   border: 1px solid rgba(232, 230, 225, 0.15);
-  background: rgba(5, 5, 7, 0.4);
+  background: rgba(5, 5, 7, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--white);
   font-size: 1.2rem;
   line-height: 1;
@@ -1094,6 +1127,7 @@ body::after {
   align-items: center;
   justify-content: center;
   transition: border-color 0.3s ease, background 0.3s ease;
+  z-index: 2;
 }
 
 .case-study__close:hover {
@@ -1127,6 +1161,22 @@ body::after {
   margin-bottom: 24px;
 }
 
+.case-study__image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  background: rgba(232, 230, 225, 0.04);
+  border: 1px solid rgba(232, 230, 225, 0.06);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.case-study__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .case-study__section {
   margin-bottom: 20px;
 }
@@ -1147,24 +1197,6 @@ body::after {
   color: rgba(232, 230, 225, 0.6);
 }
 
-.case-study__tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 20px;
-}
-
-.case-study__tool {
-  font-family: 'Syne', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 5px 12px;
-  border: 1px solid rgba(232, 230, 225, 0.1);
-  border-radius: 60px;
-  color: rgba(232, 230, 225, 0.5);
-}
 
 /* ---- Mockup Screens ---- */
 
