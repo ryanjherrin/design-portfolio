@@ -162,11 +162,11 @@
 
   // ---- Go Home (back to landing) ----
   function goHome() {
+    if (state.overlayOpen) closeOverlay();
+    closeOrbCard();
     if (state.phase === 'landing') return;
 
     // Close anything open
-    closeOrbCard();
-    if (state.overlayOpen) closeOverlay();
     if (state.detailOpen) {
       // Force-reset detail without animation for a clean return
       var project = projects[state.activeIndex];
