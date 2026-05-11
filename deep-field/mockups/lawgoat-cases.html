@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LawGoat — Cases & Contacts</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0..1,-25..200" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #191919; font-family: -apple-system, 'Inter', system-ui, sans-serif; color: #ECEEF2; height: 100vh; overflow: hidden; display: flex; font-size: 14px; }
+  .material-symbols-rounded { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; user-select: none; vertical-align: middle; flex-shrink: 0; }
+  .ms-sm { font-size: 16px; } .ms-md { font-size: 18px; } .ms-lg { font-size: 20px; } .ms-xs { font-size: 14px; } .ms-xxs { font-size: 12px; }
+
+  /* SIDEBAR */
+  .sidebar { width: 220px; flex-shrink: 0; background: #191919; border-right: 0.5px solid #2A2A2A; display: flex; flex-direction: column; padding: 16px 10px; height: 100vh; transition: width 200ms ease-out; position: relative; }
+  .sidebar.collapsed { width: 64px; padding: 16px 8px; }
+  .logo { display: flex; align-items: center; gap: 9px; padding: 6px 8px 18px; }
+  .logo-mark { width: 26px; height: 26px; background: #2563EB; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; }
+  .logo-name { font-size: 15px; font-weight: 600; color: #ECEEF2; }
+  .sidebar.collapsed .logo-name { display: none; }
+  .sidebar.collapsed .logo { padding: 6px 0 18px; justify-content: center; }
+  .sidebar-collapse { margin-left: auto; width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; cursor: pointer; color: #555; transition: all 80ms; flex-shrink: 0; }
+  .sidebar-collapse:hover { background: #242424; color: #ECEEF2; }
+  .sidebar.collapsed .sidebar-collapse { display: none; }
+  .sidebar-expand { display: none; position: absolute; top: 14px; right: -12px; width: 24px; height: 24px; border-radius: 9999px; background: #212121; border: 0.5px solid #2A2A2A; align-items: center; justify-content: center; cursor: pointer; color: #7A7A85; transition: all 80ms; z-index: 10; }
+  .sidebar-expand:hover { background: #2A2A2A; color: #ECEEF2; border-color: #333; }
+  .sidebar.collapsed .sidebar-expand { display: flex; }
+
+  .nav-item { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 6px; font-size: 13px; color: #7A7A85; cursor: pointer; transition: background 80ms, color 80ms; user-select: none; position: relative; }
+  .nav-item:hover:not(.active) { background: #242424; color: #ECEEF2; }
+  .nav-item.active { background: #212121; color: #ECEEF2; font-weight: 500; }
+  .sidebar.collapsed .nav-item { justify-content: center; padding: 8px 0; }
+  .sidebar.collapsed .nav-item-label { display: none; }
+  .sidebar.collapsed .nav-count { display: none; }
+  .nav-count { margin-left: auto; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 9999px; }
+  .nav-count.urgent { background: #0D1E3D; color: #60A5FA; }
+  .nav-count.neutral { color: #555; }
+  .nav-sep { height: 0.5px; background: #2A2A2A; margin: 8px 0; }
+
+  .sidebar-bottom { margin-top: auto; padding-top: 6px; display: flex; flex-direction: column; gap: 0; }
+  .sidebar-utilities { display: flex; align-items: center; gap: 2px; padding: 6px 0; }
+  .sidebar.collapsed .sidebar-utilities { flex-direction: column; gap: 4px; }
+  .util-btn { flex: 1; display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 6px; background: transparent; border: none; cursor: pointer; color: #7A7A85; font-family: inherit; font-size: 13px; transition: all 80ms; min-width: 0; }
+  .util-btn:hover { background: #242424; color: #ECEEF2; }
+  .util-btn-label { flex: 1; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sidebar.collapsed .util-btn { flex: 0; padding: 7px 0; justify-content: center; width: 100%; }
+  .sidebar.collapsed .util-btn-label { display: none; }
+
+  .user-row { display: flex; align-items: center; gap: 9px; padding: 8px; border-radius: 6px; cursor: pointer; transition: background 80ms; border-top: 0.5px solid #2A2A2A; padding-top: 12px; margin-top: 2px; }
+  .user-row:hover { background: #242424; }
+  .sidebar.collapsed .user-row { padding: 12px 0 8px; justify-content: center; border-top: 0.5px solid #2A2A2A; }
+  .avatar-sm { width: 26px; height: 26px; border-radius: 9999px; background: #17123E; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: #818CF8; flex-shrink: 0; position: relative; }
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-size: 13px; font-weight: 500; color: #ECEEF2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .user-role { font-size: 11px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sidebar.collapsed .user-info { display: none; }
+  .sidebar.collapsed .nav-item:hover::after, .sidebar.collapsed .user-row:hover::after, .sidebar.collapsed .util-btn:hover::after { content: attr(data-tooltip); position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%); background: #2A2A2A; border: 0.5px solid #333; border-radius: 6px; padding: 5px 9px; font-size: 12px; color: #ECEEF2; white-space: nowrap; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+
+  /* CONTENT AREA */
+  .content { flex: 1; display: flex; flex-direction: column; min-width: 0; height: 100vh; overflow: hidden; }
+  .screens-wrap { flex: 1; position: relative; min-height: 0; }
+
+  /* GLOBAL TOPBAR */
+  .topbar { display: flex; align-items: center; height: 44px; padding: 0 20px 0 28px; border-bottom: 0.5px solid #2A2A2A; flex-shrink: 0; gap: 12px; }
+  .topbar-left { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; }
+  .topbar-title { font-size: 14px; font-weight: 600; color: #ECEEF2; white-space: nowrap; }
+  .topbar-back { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: #7A7A85; cursor: pointer; padding: 4px 6px; border-radius: 6px; transition: all 80ms; border: none; background: transparent; font-family: inherit; }
+  .topbar-back:hover { background: #242424; color: #ECEEF2; }
+  .topbar-crumb-sep { color: #3A3A3A; font-size: 13px; }
+  .topbar-crumb-current { font-size: 13px; color: #ECEEF2; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .topbar-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .topbar-search { display: flex; align-items: center; gap: 7px; height: 30px; padding: 0 10px; border-radius: 6px; background: transparent; border: 0.5px solid transparent; cursor: pointer; color: #7A7A85; transition: all 80ms; font-family: inherit; font-size: 13px; min-width: 180px; }
+  .topbar-search:hover { background: #212121; border-color: #2A2A2A; color: #ECEEF2; }
+  .topbar-search .material-symbols-rounded { font-size: 15px; flex-shrink: 0; }
+  .topbar-search-label { flex: 1; text-align: left; }
+  .topbar-bell { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; cursor: pointer; color: #7A7A85; transition: all 80ms; position: relative; }
+  .topbar-bell:hover { background: #242424; color: #ECEEF2; }
+  .topbar-bell .bell-badge { position: absolute; top: 6px; right: 6px; width: 6px; height: 6px; background: #ECEEF2; border-radius: 9999px; border: 1.5px solid #191919; }
+
+  /* Topbar context — hidden by default, JS toggles which is shown */
+  .topbar-ctx { display: none; align-items: center; gap: 10px; }
+  .topbar-ctx.active { display: flex; }
+
+  .screen { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: none; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  /* —— PAGE HEADER (used by list screens) —— */
+  .page-header { padding: 18px 0 0; flex-shrink: 0; }
+  .view-tabs { display: flex; align-items: center; border-bottom: 0.5px solid #2A2A2A; padding: 0 28px; }
+  .view-tab { display: flex; align-items: center; gap: 5px; padding: 8px 12px; font-size: 13px; color: #7A7A85; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; user-select: none; white-space: nowrap; position: relative; transition: color 80ms; }
+  .view-tab.active { color: #ECEEF2; font-weight: 500; border-bottom-color: #2563EB; }
+  .view-tab:hover:not(.active) { color: #9A9AA6; }
+  .view-tab-count { font-size: 11px; color: #555; }
+  .view-tab.active .view-tab-count { color: #7A7A85; }
+  .view-tab-add { display: flex; align-items: center; padding: 8px 8px; color: #3A3A3A; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; transition: color 80ms; }
+  .view-tab-add:hover { color: #7A7A85; }
+  .view-tabs-right { margin-left: auto; display: flex; align-items: center; padding-bottom: 8px; }
+  .view-toggle { display: flex; background: #212121; border: 0.5px solid #2A2A2A; border-radius: 6px; overflow: hidden; }
+  .view-toggle-btn { display: flex; align-items: center; gap: 5px; padding: 5px 10px; font-size: 12px; color: #7A7A85; cursor: pointer; transition: all 80ms; user-select: none; }
+  .view-toggle-btn.active { background: #2A2A2A; color: #ECEEF2; }
+
+  .toolbar { display: flex; align-items: center; gap: 8px; padding: 12px 28px; border-bottom: 0.5px solid #2A2A2A; flex-shrink: 0; }
+  .search-wrap { display: flex; align-items: center; height: 30px; background: #212121; border: 0.5px solid #2A2A2A; border-radius: 6px; padding: 0 10px; gap: 7px; width: 200px; }
+  .search-wrap .material-symbols-rounded { color: #444; font-size: 16px; }
+  .search-wrap input { flex: 1; min-width: 0; background: transparent !important; -webkit-box-shadow: none !important; border: none !important; outline: none !important; color: #ECEEF2 !important; -webkit-text-fill-color: #ECEEF2 !important; font-family: inherit; font-size: 13px; padding: 0; }
+  .search-wrap input::placeholder { color: #444 !important; -webkit-text-fill-color: #444 !important; }
+  .tb-btn { display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 10px; border-radius: 6px; font-size: 13px; font-family: inherit; cursor: pointer; color: #7A7A85; background: transparent; border: none; transition: all 80ms; white-space: nowrap; }
+  .tb-btn:hover { background: #242424; color: #ECEEF2; }
+  .tb-right { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  button.primary-btn { -webkit-appearance: none; appearance: none; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 14px; border-radius: 6px; font-family: inherit; font-size: 13px; font-weight: 500; background: #2563EB !important; color: #fff !important; border: none !important; outline: none !important; cursor: pointer; }
+  button.primary-btn:hover { background: #1D4ED8 !important; }
+
+  /* CASES / CONTACTS LIST */
+  #listView, #contactsListView { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .table-header { padding: 0 28px; border-bottom: 0.5px solid #2A2A2A; flex-shrink: 0; }
+  .table-header.cases { display: grid; grid-template-columns: 28px minmax(0,1.8fr) minmax(0,1.6fr) 130px 160px 80px; }
+  .table-header.contacts { display: grid; grid-template-columns: 28px minmax(0,1.6fr) 110px minmax(0,1.4fr) 70px 100px; }
+  .th { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #444; padding: 9px 10px 9px 0; display: flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; white-space: nowrap; }
+  .cases-area, .contacts-area { flex: 1; overflow-y: auto; }
+  .cases-area::-webkit-scrollbar, .contacts-area::-webkit-scrollbar { width: 4px; }
+  .cases-area::-webkit-scrollbar-thumb, .contacts-area::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 4px; }
+  .case-row { display: grid; grid-template-columns: 28px minmax(0,1.8fr) minmax(0,1.6fr) 130px 160px 80px; border-bottom: 0.5px solid #2A2A2A; cursor: pointer; transition: background 80ms; align-items: center; min-height: 56px; border-left: 2px solid transparent; padding: 0 28px; }
+  .case-row:hover { background: #212121; }
+  .case-row.fire { border-left-color: #DC2626; }
+  .contact-row { display: grid; grid-template-columns: 28px minmax(0,1.6fr) 110px minmax(0,1.4fr) 70px 100px; border-bottom: 0.5px solid #2A2A2A; cursor: pointer; transition: background 80ms; align-items: center; min-height: 56px; padding: 0 28px; }
+  .contact-row:hover { background: #212121; }
+  .cell { padding: 10px 10px 10px 0; display: flex; align-items: center; gap: 9px; min-width: 0; overflow: hidden; }
+  .unread-dot { width: 6px; height: 6px; border-radius: 9999px; background: #ECEEF2; flex-shrink: 0; }
+  .spacer { width: 6px; flex-shrink: 0; }
+  .avatar { width: 28px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex-shrink: 0; }
+  .client-name { font-size: 14px; font-weight: 500; color: #ECEEF2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .case-sub { font-size: 12px; color: #555; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .next-action { display: flex; align-items: flex-start; gap: 7px; min-width: 0; width: 100%; }
+  .next-action .material-symbols-rounded { font-size: 16px; margin-top: 1px; }
+  .action-text { font-size: 13px; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .action-sub { font-size: 11px; color: #555; margin-top: 2px; white-space: nowrap; }
+  .activity { font-size: 12px; color: #7A7A85; white-space: nowrap; }
+  .activity.stale { color: #F87171; }
+
+  /* Contact-specific cells */
+  .contact-channels { font-size: 12px; color: #7A7A85; line-height: 17px; min-width: 0; }
+  .contact-channels-line { display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .contact-channels-line .material-symbols-rounded { font-size: 12px; color: #555; flex-shrink: 0; }
+  .contact-cases-count { font-size: 13px; color: #ECEEF2; font-weight: 500; }
+  .contact-cases-count-sub { font-size: 11px; color: #555; }
+
+  .assignee { display: flex; align-items: center; gap: 7px; min-width: 0; }
+  .assignee-avatar { width: 22px; height: 22px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; flex-shrink: 0; }
+  .assignee-text { min-width: 0; }
+  .assignee-name { font-size: 12px; font-weight: 500; color: #ECEEF2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .assignee-role { font-size: 10px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Board view */
+  #boardView { flex: 1; display: none; flex-direction: column; min-height: 0; }
+  .board-area { flex: 1; display: flex; gap: 12px; padding: 16px 28px; overflow-x: auto; overflow-y: hidden; }
+  .board-area::-webkit-scrollbar { height: 8px; }
+  .board-area::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 4px; }
+  .board-col { flex: 0 0 280px; display: flex; flex-direction: column; min-height: 0; background: #1C1C1C; border: 0.5px solid #2A2A2A; border-radius: 8px; overflow: hidden; }
+  .board-col-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 0.5px solid #2A2A2A; flex-shrink: 0; }
+  .board-col-title { display: flex; align-items: center; gap: 8px; }
+  .board-col-count { font-size: 11px; color: #555; font-weight: 600; }
+  .board-col-body { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+  .board-col-body::-webkit-scrollbar { width: 4px; }
+  .board-col-body::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 4px; }
+  .board-card { background: #212121; border: 0.5px solid #2A2A2A; border-radius: 6px; padding: 10px 11px; cursor: pointer; transition: background 80ms; border-left: 2px solid transparent; }
+  .board-card:hover { background: #2A2A2A; }
+  .board-card.fire { border-left-color: #DC2626; }
+  .bc-name { font-size: 13px; font-weight: 500; color: #ECEEF2; margin-bottom: 2px; }
+  .bc-case { font-size: 11px; color: #555; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bc-action { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 8px; }
+  .bc-action .material-symbols-rounded { font-size: 16px; margin-top: 1px; }
+  .bc-action-text { font-size: 12px; line-height: 16px; }
+  .bc-footer { display: flex; align-items: center; justify-content: space-between; }
+  .bc-avatar { width: 20px; height: 20px; font-size: 9px; }
+  .bc-age { font-size: 11px; color: #7A7A85; }
+  .bc-age.stale { color: #F87171; }
+
+  .status-bar { padding: 8px 28px; border-top: 0.5px solid #2A2A2A; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  .status-item { font-size: 11px; color: #555; display: flex; align-items: center; gap: 5px; }
+  .status-dot { width: 5px; height: 5px; border-radius: 9999px; }
+
+  /* BADGES */
+  .badge { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+  .pill { border-radius: 9999px; }
+  .b-intake { background:#0E1F1E; color:#2DD4BF; border:0.5px solid #134D46; }
+  .b-invest { background:#17123E; color:#818CF8; border:0.5px solid #2D2070; }
+  .b-demand { background:#1F1A08; color:#FCD34D; border:0.5px solid #4A3A10; }
+  .b-negot  { background:#0D1E3D; color:#60A5FA; border:0.5px solid #1A3566; }
+  .b-settle { background:#0C2318; color:#34D399; border:0.5px solid #134D33; }
+  .b-closed { background:#212121; color:#555; border:0.5px solid #2A2A2A; }
+  .b-active { background:#0C2318; color:#34D399; border:0.5px solid #134D33; }
+  .b-tag    { background:#212121; color:#9A9AA6; border:0.5px solid #2A2A2A; }
+  .b-ai     { background:#17123E; color:#818CF8; border:0.5px solid #2D2070; }
+
+  /* Contact type badges */
+  .ct-client    { background:#0D1E3D; color:#60A5FA; border:0.5px solid #1A3566; }
+  .ct-adjuster  { background:#1F1A08; color:#FCD34D; border:0.5px solid #4A3A10; }
+  .ct-provider  { background:#0E1F1E; color:#2DD4BF; border:0.5px solid #134D46; }
+  .ct-opposing  { background:#1F0A0A; color:#F87171; border:0.5px solid #4D1515; }
+  .ct-other     { background:#212121; color:#9A9AA6; border:0.5px solid #2A2A2A; }
+
+  /* Role pill colors */
+  .r-csr    { background:#0E1F1E; color:#2DD4BF; border:0.5px solid #134D46; }
+  .r-cm     { background:#17123E; color:#818CF8; border:0.5px solid #2D2070; }
+  .r-atty   { background:#1E0E2E; color:#C084FC; border:0.5px solid #3D1A5A; }
+
+  /* —— DETAIL HEADER (shared by case + contact) —— */
+  .detail-header { padding: 20px 28px 0; flex-shrink: 0; }
+  .detail-header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+  .detail-header-identity { display: flex; align-items: center; gap: 14px; }
+  .detail-header-avatar { width: 40px; height: 40px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex-shrink: 0; }
+  .detail-header-name { font-size: 20px; font-weight: 600; color: #ECEEF2; }
+  .detail-header-sub { font-size: 13px; color: #7A7A85; margin-top: 4px; display: flex; align-items: center; flex-wrap: wrap; }
+  .detail-header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  /* Stage selector */
+  .stage-selector { display: flex; align-items: center; gap: 8px; padding: 5px 10px 5px 12px; background: #212121; border: 0.5px solid #2A2A2A; border-radius: 6px; cursor: pointer; transition: background 80ms; height: 30px; }
+  .stage-selector:hover { background: #2A2A2A; }
+
+  .icon-btn { width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; cursor: pointer; color: #7A7A85; transition: all 80ms; position: relative; }
+  .icon-btn:hover { background: #242424; color: #ECEEF2; }
+
+  /* Detail tabs */
+  .detail-tabs { display: flex; align-items: center; border-bottom: 0.5px solid #2A2A2A; padding: 0 28px 0 14px; margin-top: 16px; }
+  .detail-tab { display: flex; align-items: center; gap: 6px; padding: 8px 14px; font-size: 13px; color: #7A7A85; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; white-space: nowrap; user-select: none; }
+  .detail-tab.active { color: #ECEEF2; font-weight: 500; border-bottom-color: #2563EB; }
+  .detail-tab:hover:not(.active) { color: #9A9AA6; }
+  .detail-tab-count { font-size: 11px; color: #555; padding: 1px 6px; border-radius: 9999px; font-weight: 600; }
+  .detail-tab-count.urgent { background: #0D1E3D; color: #60A5FA; }
+  .detail-tab.active .detail-tab-count:not(.urgent) { color: #7A7A85; }
+
+  .tab-content { flex: 1; overflow-y: auto; padding: 20px 28px; }
+  .tab-content::-webkit-scrollbar { width: 4px; }
+  .tab-content::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 4px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Overview cards */
+  .overview-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; max-width: 800px; }
+  .ov-card { background: #212121; border: 0.5px solid #2A2A2A; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; min-height: 0; }
+  .ov-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-shrink: 0; }
+  .ov-card-body { flex: 1; min-height: 0; margin: 0 -4px; padding: 0 4px; }
+  .ov-card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #555; }
+  .ov-meta-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+  .ov-meta-row:last-child { margin-bottom: 0; }
+  .ov-key { font-size: 12px; color: #7A7A85; }
+  .ov-val { font-size: 12px; font-weight: 500; color: #ECEEF2; }
+
+  /* Team rows */
+  .team-row { display: flex; align-items: center; gap: 9px; padding: 7px 0; border-bottom: 0.5px solid #2A2A2A; position: relative; }
+  .team-row:last-child { border-bottom: none; }
+  .team-row.primary { padding-left: 8px; margin-left: -8px; border-left: 2px solid #2563EB; padding-top: 7px; padding-bottom: 7px; }
+  .team-avatar { width: 24px; height: 24px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex-shrink: 0; }
+  .team-text { flex: 1; min-width: 0; }
+  .team-name { font-size: 12px; font-weight: 500; color: #ECEEF2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .team-roles { font-size: 11px; color: #7A7A85; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .team-primary-chip { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 9999px; background: #0D1E3D; color: #60A5FA; border: 0.5px solid #1A3566; font-size: 10px; font-weight: 500; flex-shrink: 0; }
+  .team-set-primary { display: none; font-size: 11px; color: #60A5FA; cursor: pointer; flex-shrink: 0; user-select: none; }
+  .team-set-primary:hover { text-decoration: underline; }
+  .team-row:not(.primary):hover .team-set-primary { display: inline; }
+  .team-row-menu { display: none; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 4px; color: #555; cursor: pointer; flex-shrink: 0; transition: all 80ms; }
+  .team-row-menu:hover { background: #2A2A2A; color: #ECEEF2; }
+  .team-row:hover .team-row-menu { display: inline-flex; }
+  .team-add { display: inline-flex; align-items: center; gap: 5px; padding: 8px 0 0; font-size: 12px; color: #7A7A85; cursor: pointer; transition: color 80ms; flex-shrink: 0; border-top: 0.5px solid #2A2A2A; margin-top: 4px; padding-top: 10px; }
+  .team-add:hover { color: #ECEEF2; }
+
+  .attention-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid #2A2A2A; }
+  .attention-item:last-child { border-bottom: none; }
+  .att-dot { width: 6px; height: 6px; border-radius: 9999px; flex-shrink: 0; }
+  .att-text { font-size: 13px; color: #ECEEF2; flex: 1; }
+  .att-age { font-size: 11px; color: #7A7A85; flex-shrink: 0; }
+
+  .ai-card { background: #212121; border: 0.5px solid #2A2A2A; border-radius: 8px; padding: 14px; }
+  .ai-card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .ai-card-header .material-symbols-rounded { color: #818CF8; font-size: 14px; }
+  .ai-card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #555; }
+  .ai-card-age { font-size: 11px; color: #555; margin-left: auto; }
+  .ai-summary { font-size: 13px; color: #ECEEF2; line-height: 20px; }
+  .ai-card-footer { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+
+  .pinned-note { background: #1C1C1C; border: 0.5px solid #2A2A2A; border-radius: 6px; padding: 10px 12px; }
+  .pinned-note-author { font-size: 11px; color: #555; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+  .pinned-note-author .material-symbols-rounded { font-size: 12px; color: #60A5FA; }
+  .pinned-note-text { font-size: 13px; color: #9A9AA6; line-height: 18px; }
+
+  button.b { -webkit-appearance: none; appearance: none; display: inline-flex; align-items: center; gap: 5px; border-radius: 6px; font-family: inherit; font-weight: 500; cursor: pointer; border: none !important; outline: none !important; background: none; transition: background 80ms; height: 28px; padding: 0 10px; font-size: 12px; white-space: nowrap; }
+  button.b .material-symbols-rounded { font-size: 14px; }
+  button.b.primary   { background: #2563EB !important; color: #fff !important; }
+  button.b.secondary { background: transparent !important; color: #ECEEF2 !important; border: 0.5px solid #7A7A85 !important; }
+  button.b.ghost     { background: transparent !important; color: #9A9AA6 !important; }
+  button.b.ai        { background: transparent !important; color: #A78BFA !important; border: 0.5px solid #7C3AED !important; }
+  button.b.primary:hover   { background: #1D4ED8 !important; }
+  button.b.secondary:hover { background: #2A2A2A !important; }
+  button.b.ghost:hover     { background: #2A2A2A !important; color: #ECEEF2 !important; }
+  button.b.ai:hover        { background: #1A1240 !important; }
+
+  /* Documents tab */
+  .doc-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid #2A2A2A; }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .doc-icon .material-symbols-rounded { font-size: 16px; }
+  .doc-name { font-size: 13px; font-weight: 500; color: #ECEEF2; }
+  .doc-meta { font-size: 11px; color: #555; margin-top: 2px; }
+  .doc-summary { font-size: 12px; color: #9A9AA6; margin-top: 4px; line-height: 17px; }
+  .doc-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+  /* Messages */
+  .msg-thread { display: flex; flex-direction: column; gap: 12px; max-width: 600px; }
+  .msg { display: flex; flex-direction: column; gap: 3px; }
+  .msg.inbound { align-items: flex-start; }
+  .msg.outbound { align-items: flex-end; }
+  .msg-bubble { padding: 9px 13px; border-radius: 10px; font-size: 13px; line-height: 19px; max-width: 82%; }
+  .msg.inbound .msg-bubble { background: #2A2A2A; color: #ECEEF2; border-bottom-left-radius: 3px; }
+  .msg.outbound .msg-bubble { background: #0D1E3D; color: #ECEEF2; border-bottom-right-radius: 3px; }
+  .msg-meta { font-size: 11px; color: #555; }
+  .msg-context { font-size: 10px; color: #4A4A52; margin-top: 1px; }
+  .msg-ai-label { font-size: 11px; color: #818CF8; display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+  .msg-ai-label .material-symbols-rounded { font-size: 12px; }
+
+  .compose-bar { position: sticky; bottom: 0; background: #191919; border-top: 0.5px solid #2A2A2A; padding: 10px 0 0; margin-top: 16px; }
+  .compose-inner { display: flex; align-items: center; gap: 8px; background: #212121; border: 0.5px solid #2A2A2A; border-radius: 8px; padding: 8px 12px; }
+  .compose-input { flex: 1; background: transparent; border: none; outline: none; color: #ECEEF2; font-family: inherit; font-size: 13px; }
+  .compose-input::placeholder { color: #444; }
+  .compose-case-picker { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; background: #1C1C1C; border: 0.5px solid #2A2A2A; border-radius: 6px; font-size: 11px; color: #9A9AA6; cursor: pointer; }
+  .compose-case-picker:hover { background: #2A2A2A; }
+
+  /* Tasks / Notes / Timeline */
+  .task-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 0.5px solid #2A2A2A; }
+  .task-row:last-child { border-bottom: none; }
+  .task-check { width: 16px; height: 16px; border-radius: 4px; border: 0.5px solid #333; flex-shrink: 0; margin-top: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .task-check .material-symbols-rounded { font-size: 11px; }
+  .task-check.done { background: #0C2318; border-color: #134D33; color: #34D399; }
+  .task-check.overdue { background: #1F0A0A; border-color: #4D1515; color: #F87171; }
+  .task-title { font-size: 13px; color: #ECEEF2; margin-bottom: 2px; }
+  .task-title.done { text-decoration: line-through; color: #555; }
+  .task-meta { font-size: 11px; color: #555; }
+  .task-meta.overdue { color: #F87171; }
+  .task-badge { margin-left: auto; flex-shrink: 0; }
+
+  .note-card { background: #212121; border: 0.5px solid #2A2A2A; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+  .note-card.pinned { border-color: #2563EB; }
+  .note-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .note-author { font-size: 12px; font-weight: 500; color: #9A9AA6; }
+  .note-date { font-size: 11px; color: #555; }
+  .note-pin { font-size: 11px; color: #60A5FA; margin-left: auto; display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
+  .note-pin .material-symbols-rounded { font-size: 12px; }
+  .note-text { font-size: 13px; color: #ECEEF2; line-height: 20px; }
+
+  .timeline-item { display: flex; gap: 14px; padding-bottom: 16px; position: relative; }
+  .timeline-item::before { content:''; position:absolute; left:11px; top:24px; bottom:0; width:0.5px; background:#2A2A2A; }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-dot { width: 24px; height: 24px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #212121; border: 0.5px solid #2A2A2A; color: #555; }
+  .timeline-dot .material-symbols-rounded { font-size: 13px; }
+  .timeline-dot.ai { background: #17123E; border-color: #2D2070; color: #818CF8; }
+  .timeline-dot.msg { background: #0D1E3D; border-color: #1A3566; color: #60A5FA; }
+  .timeline-dot.success { background: #0C2318; border-color: #134D33; color: #34D399; }
+  .timeline-content { flex: 1; min-width: 0; padding-top: 3px; }
+  .timeline-text { font-size: 13px; color: #ECEEF2; margin-bottom: 2px; }
+  .timeline-text span { color: #7A7A85; }
+  .timeline-date { font-size: 11px; color: #555; }
+
+  /* AI CHAT */
+  .ai-chat-fab, .ai-chat-popover, .ai-chat-backdrop { display: none; }
+  body.in-case-detail .ai-chat-fab { display: inline-flex; }
+  body.in-case-detail .ai-chat-popover, body.in-case-detail .ai-chat-backdrop { display: block; }
+  body.in-case-detail .ai-chat-popover { display: flex; }
+  .ai-chat-fab { position: fixed; bottom: 24px; right: 24px; height: 40px; padding: 0 16px; border-radius: 9999px; background: #2D2070; align-items: center; gap: 7px; cursor: pointer; box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35), 0 2px 8px rgba(0, 0, 0, 0.5); z-index: 9999; transition: all 120ms ease-out; border: 0.5px solid #A78BFA; color: #ECEEF2; font-family: inherit; font-size: 13px; font-weight: 500; }
+  .ai-chat-fab:hover { background: #3D2A95; border-color: #C4B5FD; box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5), 0 3px 10px rgba(0, 0, 0, 0.5); transform: translateY(-1px); }
+  .ai-chat-fab.open { background: #3D2A95; border-color: #C4B5FD; }
+  .ai-chat-fab .material-symbols-rounded { font-size: 17px; color: #C4B5FD; }
+  .ai-chat-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.25); z-index: 9000; opacity: 0; pointer-events: none; transition: opacity 120ms; }
+  .ai-chat-backdrop.open { opacity: 1; pointer-events: auto; }
+  .ai-chat-popover { position: fixed; bottom: 88px; right: 24px; width: 400px; height: 580px; max-height: calc(100vh - 120px); background: #1C1C1C; border: 0.5px solid #2A2A2A; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4); z-index: 9001; display: flex; flex-direction: column; overflow: hidden; opacity: 0; transform: translateY(8px) scale(0.98); transform-origin: bottom right; pointer-events: none; transition: opacity 160ms ease-out, transform 160ms ease-out; }
+  .ai-chat-popover.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  .aic-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 0.5px solid #2A2A2A; flex-shrink: 0; }
+  .aic-header-icon { width: 24px; height: 24px; border-radius: 6px; background: #17123E; border: 0.5px solid #2D2070; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #818CF8; }
+  .aic-header-icon .material-symbols-rounded { font-size: 14px; }
+  .aic-header-text { flex: 1; min-width: 0; }
+  .aic-header-title { font-size: 13px; font-weight: 600; color: #ECEEF2; }
+  .aic-header-context { font-size: 11px; color: #7A7A85; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aic-header-close { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #7A7A85; flex-shrink: 0; transition: all 80ms; border: none; background: transparent; }
+  .aic-header-close:hover { background: #242424; color: #ECEEF2; }
+  .aic-body { flex: 1; min-height: 0; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .aic-body::-webkit-scrollbar { width: 4px; }
+  .aic-body::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 4px; }
+  .aic-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 24px 16px; text-align: center; }
+  .aic-empty-icon { width: 40px; height: 40px; border-radius: 9999px; background: #17123E; border: 0.5px solid #2D2070; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; color: #A78BFA; }
+  .aic-empty-icon .material-symbols-rounded { font-size: 20px; }
+  .aic-empty-title { font-size: 14px; font-weight: 500; color: #ECEEF2; margin-bottom: 4px; }
+  .aic-empty-sub { font-size: 12px; color: #7A7A85; margin-bottom: 20px; line-height: 18px; max-width: 280px; }
+  .aic-suggestions { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+  .aic-suggestion { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: #212121; border: 0.5px solid #2A2A2A; border-radius: 8px; cursor: pointer; transition: all 80ms; text-align: left; font-family: inherit; }
+  .aic-suggestion:hover { background: #2A2A2A; border-color: #2D2070; }
+  .aic-suggestion .material-symbols-rounded { color: #818CF8; font-size: 14px; flex-shrink: 0; }
+  .aic-suggestion-text { font-size: 12px; color: #ECEEF2; flex: 1; }
+  .aic-msg { display: flex; flex-direction: column; gap: 4px; max-width: 90%; }
+  .aic-msg.user { align-self: flex-end; }
+  .aic-msg.ai { align-self: flex-start; max-width: 100%; }
+  .aic-msg-bubble { padding: 10px 13px; border-radius: 12px; font-size: 13px; line-height: 19px; }
+  .aic-msg.user .aic-msg-bubble { background: #2A2A2A; color: #ECEEF2; border-bottom-right-radius: 4px; }
+  .aic-msg.ai .aic-msg-bubble { background: transparent; color: #ECEEF2; padding-left: 0; padding-right: 0; }
+  .aic-msg-author { font-size: 11px; color: #555; display: flex; align-items: center; gap: 4px; }
+  .aic-msg-author .material-symbols-rounded { font-size: 12px; color: #818CF8; }
+  .aic-msg.user .aic-msg-author { justify-content: flex-end; }
+  .aic-input-wrap { padding: 12px 14px; border-top: 0.5px solid #2A2A2A; flex-shrink: 0; }
+  .aic-input-inner { display: flex; align-items: center; gap: 8px; background: #212121; border: 0.5px solid #2A2A2A; border-radius: 8px; padding: 8px 10px; transition: border-color 120ms; }
+  .aic-input-inner:focus-within { border-color: #7C3AED; }
+  .aic-input { flex: 1; background: transparent; border: none; outline: none; color: #ECEEF2; font-family: inherit; font-size: 13px; min-width: 0; }
+  .aic-input::placeholder { color: #4A4A52; }
+  .aic-send { width: 26px; height: 26px; border-radius: 6px; background: #7C3AED; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; border: none; transition: background 80ms; }
+  .aic-send:hover { background: #6D28D9; }
+  .aic-send .material-symbols-rounded { font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-mark">
+      <span class="material-symbols-rounded" style="font-size:16px">layers</span>
+    </div>
+    <span class="logo-name">LawGoat</span>
+    <button class="sidebar-collapse" onclick="toggleSidebar()" title="Collapse sidebar">
+      <span class="material-symbols-rounded" style="font-size:14px">left_panel_close</span>
+    </button>
+  </div>
+  <button class="sidebar-expand" onclick="toggleSidebar()" title="Expand sidebar">
+    <span class="material-symbols-rounded" style="font-size:12px">chevron_right</span>
+  </button>
+  <div class="nav-item active" id="navCases" data-tooltip="Cases" onclick="switchScreen('cases-list')">
+    <span class="material-symbols-rounded ms-sm">folder</span>
+    <span class="nav-item-label">Cases</span>
+  </div>
+  <div class="nav-item" data-tooltip="Queue">
+    <span class="material-symbols-rounded ms-sm">inbox</span>
+    <span class="nav-item-label">Queue</span> <span class="nav-count urgent">6</span>
+  </div>
+  <div class="nav-item" data-tooltip="Leads">
+    <span class="material-symbols-rounded ms-sm">person_add</span>
+    <span class="nav-item-label">Leads</span> <span class="nav-count neutral">3</span>
+  </div>
+  <div class="nav-item" id="navContacts" data-tooltip="Contacts" onclick="switchScreen('contacts-list')">
+    <span class="material-symbols-rounded ms-sm">contacts</span>
+    <span class="nav-item-label">Contacts</span>
+  </div>
+  <div class="nav-item" data-tooltip="Messages">
+    <span class="material-symbols-rounded ms-sm">chat_bubble</span>
+    <span class="nav-item-label">Messages</span>
+  </div>
+  <div class="sidebar-bottom">
+    <div class="sidebar-utilities">
+      <button class="util-btn" data-tooltip="Settings">
+        <span class="material-symbols-rounded ms-sm">settings</span>
+        <span class="util-btn-label">Settings</span>
+      </button>
+    </div>
+    <div class="user-row" data-tooltip="Maria Rivera">
+      <div class="avatar-sm">MR</div>
+      <div class="user-info">
+        <div class="user-name">Maria Rivera</div>
+        <div class="user-role">Case manager</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- GLOBAL TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-ctx active" id="ctx-cases-list">
+        <div class="topbar-title">Cases</div>
+      </div>
+      <div class="topbar-ctx" id="ctx-case-detail">
+        <button class="topbar-back" onclick="switchScreen('cases-list')">
+          <span class="material-symbols-rounded ms-xs">chevron_left</span>
+          Cases
+        </button>
+        <div class="topbar-crumb-sep">/</div>
+        <div class="topbar-crumb-current">Auto Accident v. State Farm</div>
+      </div>
+      <div class="topbar-ctx" id="ctx-contacts-list">
+        <div class="topbar-title">Contacts</div>
+      </div>
+      <div class="topbar-ctx" id="ctx-contact-detail">
+        <button class="topbar-back" onclick="switchScreen('contacts-list')">
+          <span class="material-symbols-rounded ms-xs">chevron_left</span>
+          Contacts
+        </button>
+        <div class="topbar-crumb-sep">/</div>
+        <div class="topbar-crumb-current" id="contactCrumb">Nancy Johnson</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-search">
+        <span class="material-symbols-rounded">search</span>
+        <span class="topbar-search-label">Search</span>
+      </button>
+      <button class="topbar-bell" title="Notifications">
+        <span class="material-symbols-rounded ms-md">notifications</span>
+        <div class="bell-badge"></div>
+      </button>
+    </div>
+  </div>
+
+  <div class="screens-wrap">
+
+    <!-- CASES LIST SCREEN -->
+    <div class="screen active" id="screen-cases-list">
+      <div class="page-header">
+        <div class="view-tabs">
+          <div class="view-tab active" data-tab="my">
+            <span class="tab-label">My cases</span>
+            <span class="view-tab-count">8</span>
+          </div>
+          <div class="view-tab" data-tab="all">
+            <span class="tab-label">All cases</span>
+            <span class="view-tab-count">28</span>
+          </div>
+          <div class="view-tab" data-tab="stale">
+            <span class="tab-label">Stale</span>
+            <span class="view-tab-count">4</span>
+          </div>
+          <div class="view-tab-add" title="New view">
+            <span class="material-symbols-rounded" style="font-size:14px">add</span>
+          </div>
+          <div class="view-tabs-right">
+            <div class="view-toggle">
+              <div class="view-toggle-btn active" id="listToggle" onclick="switchView('list')">
+                <span class="material-symbols-rounded ms-xxs">list</span>
+                List
+              </div>
+              <div class="view-toggle-btn" id="boardToggle" onclick="switchView('board')">
+                <span class="material-symbols-rounded ms-xxs">view_kanban</span>
+                Board
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="material-symbols-rounded">search</span>
+          <input placeholder="Search cases..." />
+        </div>
+        <button class="tb-btn"><span class="material-symbols-rounded ms-xs">filter_list</span>Filter</button>
+        <button class="tb-btn"><span class="material-symbols-rounded ms-xs">sort</span>Sort</button>
+        <div class="tb-right">
+          <button class="tb-btn"><span class="material-symbols-rounded ms-xs">upload</span>Import</button>
+          <button class="primary-btn"><span class="material-symbols-rounded ms-xs">add</span>New case</button>
+        </div>
+      </div>
+
+      <div id="listView">
+        <div class="table-header cases">
+          <div class="th"></div>
+          <div class="th">Case</div>
+          <div class="th">Next action</div>
+          <div class="th">Stage</div>
+          <div class="th">Assigned to</div>
+          <div class="th">Activity</div>
+        </div>
+        <div class="cases-area" id="casesArea"></div>
+      </div>
+      <div id="boardView">
+        <div class="board-area" id="boardArea"></div>
+      </div>
+      <div class="status-bar" id="casesStatusBar"></div>
+    </div>
+
+    <!-- CASE DETAIL SCREEN -->
+    <div class="screen" id="screen-case-detail">
+      <div class="detail-header">
+        <div class="detail-header-top">
+          <div class="detail-header-identity">
+            <div>
+              <div class="detail-header-name">Auto Accident v. State Farm</div>
+              <div class="detail-header-sub">
+                <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:9999px;background:#34D399;display:inline-block"></span>Active</span>
+                <span style="color:#3A3A3A;margin:0 8px">·</span>
+                <span style="color:#60A5FA;cursor:pointer;text-decoration:none" onclick="openContact('nancy')">Nancy Johnson</span>
+                <span style="color:#3A3A3A;margin:0 8px">·</span>
+                Chicago
+              </div>
+            </div>
+          </div>
+          <div class="detail-header-actions">
+            <button class="b secondary"><span class="material-symbols-rounded">chat_bubble</span>New message</button>
+            <div class="stage-selector">
+              <span style="font-size:11px;color:#7A7A85;text-transform:uppercase;letter-spacing:0.05em;font-weight:600">Stage</span>
+              <span class="badge b-negot" style="height:18px;font-size:11px">Negotiation</span>
+              <span class="material-symbols-rounded ms-xxs" style="color:#7A7A85">expand_more</span>
+            </div>
+            <button class="icon-btn" title="Case settings">
+              <span class="material-symbols-rounded ms-sm">settings</span>
+            </button>
+          </div>
+        </div>
+        <div class="detail-tabs">
+          <div class="detail-tab active" onclick="switchDetailTab('case', 'overview', this)">Overview</div>
+          <div class="detail-tab" onclick="switchDetailTab('case', 'documents', this)">Documents <span class="detail-tab-count">8</span></div>
+          <div class="detail-tab" onclick="switchDetailTab('case', 'messages', this)">Messages <span class="detail-tab-count urgent">1</span></div>
+          <div class="detail-tab" onclick="switchDetailTab('case', 'tasks', this)">Tasks <span class="detail-tab-count urgent">1</span></div>
+          <div class="detail-tab" onclick="switchDetailTab('case', 'notes', this)">Notes <span class="detail-tab-count">3</span></div>
+          <div class="detail-tab" onclick="switchDetailTab('case', 'timeline', this)">Timeline</div>
+        </div>
+      </div>
+      <div class="tab-content">
+
+        <!-- CASE OVERVIEW -->
+        <div class="tab-panel active" id="case-tab-overview">
+          <div class="overview-grid">
+            <div class="ov-card">
+              <div class="ov-card-header"><div class="ov-card-label">Needs your attention</div></div>
+              <div class="ov-card-body">
+                <div class="attention-item"><div class="att-dot" style="background:#818CF8"></div><div class="att-text">AI review pending — message to client</div><div class="att-age">2m ago</div></div>
+                <div class="attention-item"><div class="att-dot" style="background:#ECEEF2"></div><div class="att-text">Nancy texted — no reply yet</div><div class="att-age">3h ago</div></div>
+                <div class="attention-item"><div class="att-dot" style="background:#F87171"></div><div class="att-text">Demand response due today — call adjuster</div><div class="att-age">Today</div></div>
+              </div>
+            </div>
+            <div class="ai-card">
+              <div class="ai-card-header"><span class="material-symbols-rounded">auto_awesome</span><span class="ai-card-label">AI case summary</span><span class="ai-card-age">Generated 2h ago</span></div>
+              <div class="ai-summary">Nancy Johnson was rear-ended at a red light on March 4th, 2025 by a distracted driver insured by State Farm. She sustained cervical strain and a mild concussion. Treatment is ongoing with Dr. Patel at Northside Orthopedics — 14 sessions to date with 4 remaining. A demand letter for $87,500 was sent April 12th. The adjuster, Mark Chen at State Farm, has not responded — follow-up is now 3 days overdue.</div>
+              <div class="ai-card-footer">
+                <button class="b ghost"><span class="material-symbols-rounded">refresh</span>Regenerate</button>
+                <button class="b ghost"><span class="material-symbols-rounded">edit</span>Edit</button>
+              </div>
+            </div>
+            <div class="pinned-note">
+              <div class="pinned-note-author"><span class="material-symbols-rounded">push_pin</span><span style="color:#60A5FA;font-weight:500">Pinned</span> · Maria R. · 2d ago</div>
+              <div class="pinned-note-text">Client is anxious — call before 2pm if possible. Husband is skeptical about the case value and may push her to settle low. Attorney Sarah is aware.</div>
+            </div>
+            <div class="ov-card">
+              <div class="ov-card-header"><div class="ov-card-label">Team</div></div>
+              <div class="ov-card-body">
+                <div class="team-row primary">
+                  <div class="team-avatar" style="background:#1E0E2E;color:#C084FC">SK</div>
+                  <div class="team-text"><div class="team-name">Sarah Kim</div><div class="team-roles">Attorney</div></div>
+                  <span class="team-primary-chip">Primary</span>
+                  <div class="team-row-menu"><span class="material-symbols-rounded ms-xxs">more_vert</span></div>
+                </div>
+                <div class="team-row">
+                  <div class="team-avatar" style="background:#17123E;color:#818CF8">JT</div>
+                  <div class="team-text"><div class="team-name">James Torres</div><div class="team-roles">Case manager</div></div>
+                  <span class="team-set-primary">Set as primary</span>
+                  <div class="team-row-menu"><span class="material-symbols-rounded ms-xxs">more_vert</span></div>
+                </div>
+                <div class="team-row">
+                  <div class="team-avatar" style="background:#0E1F1E;color:#2DD4BF">MR</div>
+                  <div class="team-text"><div class="team-name">Maria Rivera</div><div class="team-roles">CSR</div></div>
+                  <span class="team-set-primary">Set as primary</span>
+                  <div class="team-row-menu"><span class="material-symbols-rounded ms-xxs">more_vert</span></div>
+                </div>
+              </div>
+              <div class="team-add"><span class="material-symbols-rounded ms-xxs">add</span>Add team member</div>
+            </div>
+            <div class="ov-card">
+              <div class="ov-card-header"><div class="ov-card-label">Case details</div></div>
+              <div class="ov-meta-row"><span class="ov-key">Opened</span><span class="ov-val">Mar 4, 2025</span></div>
+              <div class="ov-meta-row"><span class="ov-key">Office</span><span class="ov-val">Chicago</span></div>
+              <div class="ov-meta-row"><span class="ov-key">CRM ID</span><span class="ov-val">SF-00419</span></div>
+              <div class="ov-meta-row"><span class="ov-key">In stage</span><span class="ov-val">12 days</span></div>
+              <div class="ov-meta-row"><span class="ov-key">Last activity</span><span class="ov-val">2h ago</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASE DOCUMENTS -->
+        <div class="tab-panel" id="case-tab-documents">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-size:13px;color:#7A7A85">8 documents</div>
+            <div style="display:flex;gap:8px">
+              <button class="b ghost"><span class="material-symbols-rounded">filter_list</span>Filter</button>
+              <button class="b secondary"><span class="material-symbols-rounded">upload</span>Upload</button>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon" style="background:#0D1E3D;color:#60A5FA"><span class="material-symbols-rounded">description</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="doc-name">Demand Letter — State Farm.pdf</div>
+              <div class="doc-meta">Apr 12, 2025 · <span class="badge b-tag" style="height:16px;font-size:10px">demand-letter</span></div>
+              <div class="doc-summary">Formal demand for $87,500 covering medical expenses, lost wages, and pain & suffering. Addressed to adjuster Mark Chen.</div>
+            </div>
+            <div class="doc-actions"><button class="b ghost" style="font-size:11px">View</button></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon" style="background:#0E1F1E;color:#2DD4BF"><span class="material-symbols-rounded">description</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="doc-name">Medical Records — Northside Orthopedics.pdf</div>
+              <div class="doc-meta">Mar 28, 2025 · <span class="badge b-tag" style="height:16px;font-size:10px">medical-records</span></div>
+              <div class="doc-summary">14 treatment sessions. Cervical strain, C4-C5 herniation noted. Dr. Patel recommends 4 additional sessions and possible surgery evaluation.</div>
+            </div>
+            <div class="doc-actions"><button class="b ghost" style="font-size:11px">View</button></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon" style="background:#17123E;color:#818CF8"><span class="material-symbols-rounded">description</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="doc-name">Police Report — CPD Incident #2025-0304.pdf</div>
+              <div class="doc-meta">Mar 10, 2025 · <span class="badge b-tag" style="height:16px;font-size:10px">police-report</span></div>
+              <div class="doc-summary">Driver at fault confirmed. Witness statements included. No citations issued at scene — follow-up with officer recommended.</div>
+            </div>
+            <div class="doc-actions"><button class="b ghost" style="font-size:11px">View</button></div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon" style="background:#1C1C1C;border:0.5px solid #2D2070;color:#818CF8"><span class="material-symbols-rounded">auto_awesome</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="doc-name">Case Summary — AI Generated.pdf</div>
+              <div class="doc-meta">Apr 14, 2025 · <span class="badge b-ai" style="height:16px;font-size:10px">AI generated</span></div>
+              <div class="doc-summary">Comprehensive case summary including timeline, medical history, liability analysis, and settlement recommendation range.</div>
+            </div>
+            <div class="doc-actions"><button class="b ghost" style="font-size:11px">View</button></div>
+          </div>
+        </div>
+
+        <!-- CASE MESSAGES -->
+        <div class="tab-panel" id="case-tab-messages">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+            <div class="avatar" style="background:#0D1E3D;color:#60A5FA;width:28px;height:28px;font-size:10px">NJ</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:#ECEEF2">Nancy Johnson</div>
+              <div style="font-size:11px;color:#555">SMS · (312) 555-0142</div>
+            </div>
+          </div>
+          <div class="msg-thread">
+            <div class="msg inbound">
+              <div class="msg-bubble">Hi, I wanted to check in about my case. Has there been any update from the insurance company?</div>
+              <div class="msg-meta">Nancy · Apr 10, 2:14pm</div>
+            </div>
+            <div class="msg outbound">
+              <div class="msg-bubble">Hi Nancy! We sent the demand letter on April 12th. State Farm typically responds within 2-3 weeks. We'll reach out the moment we hear back.</div>
+              <div class="msg-meta">Maria · Apr 10, 2:31pm</div>
+            </div>
+            <div class="msg inbound">
+              <div class="msg-bubble">Thank you! My husband keeps asking me if we should just settle quickly. Should I be worried about the timeline?</div>
+              <div class="msg-meta">Nancy · Apr 11, 10:02am</div>
+            </div>
+            <div class="msg outbound">
+              <div class="msg-bubble">Totally understand the concern. The timeline is actually normal — we're right on track. A quick settlement usually means leaving money on the table. Let's talk this week so we can walk you both through where things stand.</div>
+              <div class="msg-meta">Maria · Apr 11, 10:45am</div>
+              <div class="msg-ai-label"><span class="material-symbols-rounded">auto_awesome</span>AI drafted · Edited before sending</div>
+            </div>
+            <div class="msg inbound">
+              <div class="msg-bubble">Hi, just checking in. Is there any update on the offer?</div>
+              <div class="msg-meta">Nancy · Today, 9:12am · <span style="color:#F87171">No reply yet</span></div>
+            </div>
+          </div>
+          <div class="compose-bar">
+            <div class="compose-inner">
+              <input class="compose-input" placeholder="Reply to Nancy..." />
+              <button class="b ghost" style="height:26px;padding:0 8px;font-size:12px"><span class="material-symbols-rounded">description</span>Template</button>
+              <button class="b ai" style="height:26px;padding:0 8px;font-size:12px"><span class="material-symbols-rounded">auto_awesome</span>AI draft</button>
+              <button class="b primary" style="height:26px;padding:0 10px;font-size:12px"><span class="material-symbols-rounded">send</span>Send</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASE TASKS -->
+        <div class="tab-panel" id="case-tab-tasks">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-size:13px;color:#7A7A85">4 tasks · 1 overdue</div>
+            <button class="b secondary"><span class="material-symbols-rounded">add</span>New task</button>
+          </div>
+          <div class="task-row">
+            <div class="task-check overdue"><span class="material-symbols-rounded">priority_high</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="task-title">Follow up with adjuster Mark Chen — demand response</div>
+              <div class="task-meta overdue">Due today · Created by automation</div>
+            </div>
+            <div class="task-badge"><span class="badge b-negot" style="height:16px;font-size:10px">Negotiation</span></div>
+          </div>
+          <div class="task-row">
+            <div class="task-check"></div>
+            <div style="flex:1;min-width:0">
+              <div class="task-title">Call Nancy — address husband's concerns about timeline</div>
+              <div class="task-meta">Due Apr 17 · Assigned to Maria R.</div>
+            </div>
+            <div class="task-badge"><span class="badge b-negot" style="height:16px;font-size:10px">Negotiation</span></div>
+          </div>
+          <div class="task-row">
+            <div class="task-check"></div>
+            <div style="flex:1;min-width:0">
+              <div class="task-title">Request updated medical records from Dr. Patel</div>
+              <div class="task-meta">Due Apr 20 · Assigned to Maria R.</div>
+            </div>
+            <div class="task-badge"><span class="badge b-negot" style="height:16px;font-size:10px">Negotiation</span></div>
+          </div>
+          <div class="task-row">
+            <div class="task-check done"><span class="material-symbols-rounded">check</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="task-title done">Send demand letter to State Farm</div>
+              <div class="task-meta">Completed Apr 12 · Maria R.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASE NOTES -->
+        <div class="tab-panel" id="case-tab-notes">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-size:13px;color:#7A7A85">3 notes · 1 pinned</div>
+            <button class="b secondary"><span class="material-symbols-rounded">add</span>New note</button>
+          </div>
+          <div class="note-card pinned">
+            <div class="note-header">
+              <div class="note-author">Maria Rivera</div>
+              <div class="note-date">2 days ago</div>
+              <div class="note-pin"><span class="material-symbols-rounded">push_pin</span>Pinned</div>
+            </div>
+            <div class="note-text">Client is anxious — call before 2pm if possible. Husband is skeptical about the case value and may push her to settle low. Attorney Sarah is aware and will join next client call.</div>
+          </div>
+          <div class="note-card">
+            <div class="note-header">
+              <div class="note-author">James Torres</div>
+              <div class="note-date">1 week ago</div>
+            </div>
+            <div class="note-text">Spoke with Dr. Patel's office — surgery evaluation scheduled for May 3rd. This may impact settlement value significantly. Recommend we hold off on counter-offer until results are in.</div>
+          </div>
+          <div class="note-card">
+            <div class="note-header">
+              <div class="note-author">Sarah Kim</div>
+              <div class="note-date">2 weeks ago</div>
+            </div>
+            <div class="note-text">Reviewed liability. State Farm's driver was cited in a prior incident in 2023. This strengthens our position. I'd push for $95K if they come back under $80K.</div>
+          </div>
+        </div>
+
+        <!-- CASE TIMELINE -->
+        <div class="tab-panel" id="case-tab-timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot ai"><span class="material-symbols-rounded">auto_awesome</span></div>
+            <div class="timeline-content">
+              <div class="timeline-text"><strong>AI review triggered</strong> — <span>message to client pending approval</span></div>
+              <div class="timeline-date">Today, 11:42am</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot msg"><span class="material-symbols-rounded">chat_bubble</span></div>
+            <div class="timeline-content">
+              <div class="timeline-text"><strong>Inbound SMS</strong> — <span>Nancy Johnson — no reply yet</span></div>
+              <div class="timeline-date">Today, 9:12am</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="material-symbols-rounded">description</span></div>
+            <div class="timeline-content">
+              <div class="timeline-text"><strong>Document uploaded</strong> — <span>Demand Letter — State Farm.pdf</span></div>
+              <div class="timeline-date">Apr 12, 3:08pm · Maria Rivera</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot msg"><span class="material-symbols-rounded">trending_flat</span></div>
+            <div class="timeline-content">
+              <div class="timeline-text"><strong>Stage moved</strong> — <span>Investigation → Negotiation</span></div>
+              <div class="timeline-date">Apr 12, 2:55pm · James Torres</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="material-symbols-rounded">check</span></div>
+            <div class="timeline-content">
+              <div class="timeline-text"><strong>Task completed</strong> — <span>Send demand letter to State Farm</span></div>
+              <div class="timeline-date">Apr 12, 2:54pm · Maria Rivera</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="material-symbols-rounded">description</span></div>
+            <div class="timeline-content">
+              <div class="timeline-text"><strong>Document uploaded</strong> — <span>Medical Records — Northside Orthopedics.pdf</span></div>
+              <div class="timeline-date">Mar 28, 10:21am · Maria Rivera</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot success"><span class="material-symbols-rounded">add</span></div>
+            <div class="timeline-content">
+              <div class="timeline-text"><strong>Case created</strong> — <span>Imported from Salesforce · SF-00419</span></div>
+              <div class="timeline-date">Mar 4, 9:00am · System</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONTACTS LIST SCREEN -->
+    <div class="screen" id="screen-contacts-list">
+      <div class="page-header">
+        <div class="view-tabs">
+          <div class="view-tab active" data-ctab="clients" onclick="switchContactTab('clients', this)">
+            <span class="tab-label">Clients</span>
+            <span class="view-tab-count">12</span>
+          </div>
+          <div class="view-tab" data-ctab="all" onclick="switchContactTab('all', this)">
+            <span class="tab-label">All</span>
+            <span class="view-tab-count">23</span>
+          </div>
+          <div class="view-tab" data-ctab="adjusters" onclick="switchContactTab('adjusters', this)">
+            <span class="tab-label">Adjusters</span>
+            <span class="view-tab-count">5</span>
+          </div>
+          <div class="view-tab" data-ctab="providers" onclick="switchContactTab('providers', this)">
+            <span class="tab-label">Providers</span>
+            <span class="view-tab-count">4</span>
+          </div>
+          <div class="view-tab" data-ctab="opposing" onclick="switchContactTab('opposing', this)">
+            <span class="tab-label">Opposing</span>
+            <span class="view-tab-count">2</span>
+          </div>
+          <div class="view-tab-add" title="New view">
+            <span class="material-symbols-rounded" style="font-size:14px">add</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="material-symbols-rounded">search</span>
+          <input placeholder="Search contacts..." />
+        </div>
+        <button class="tb-btn"><span class="material-symbols-rounded ms-xs">filter_list</span>Filter</button>
+        <button class="tb-btn"><span class="material-symbols-rounded ms-xs">sort</span>Sort</button>
+        <div class="tb-right">
+          <button class="primary-btn"><span class="material-symbols-rounded ms-xs">add</span>New contact</button>
+        </div>
+      </div>
+
+      <div id="contactsListView">
+        <div class="table-header contacts">
+          <div class="th"></div>
+          <div class="th">Contact</div>
+          <div class="th">Type</div>
+          <div class="th">Channels</div>
+          <div class="th">Cases</div>
+          <div class="th">Last contact</div>
+        </div>
+        <div class="contacts-area" id="contactsArea"></div>
+      </div>
+      <div class="status-bar" id="contactsStatusBar"></div>
+    </div>
+
+    <!-- CONTACT DETAIL SCREEN -->
+    <div class="screen" id="screen-contact-detail">
+      <div class="detail-header">
+        <div class="detail-header-top">
+          <div class="detail-header-identity">
+            <div class="detail-header-avatar" id="contactDetailAvatar" style="background:#0D1E3D;color:#60A5FA">NJ</div>
+            <div>
+              <div class="detail-header-name" id="contactDetailName">Nancy Johnson</div>
+              <div class="detail-header-sub" id="contactDetailSub">
+                <span class="badge ct-client">Client</span>
+                <span style="color:#3A3A3A;margin:0 8px">·</span>
+                3 cases (1 active)
+                <span style="color:#3A3A3A;margin:0 8px">·</span>
+                Chicago
+              </div>
+            </div>
+          </div>
+          <div class="detail-header-actions">
+            <button class="b secondary"><span class="material-symbols-rounded">chat_bubble</span>New message</button>
+            <button class="icon-btn" title="Contact settings">
+              <span class="material-symbols-rounded ms-sm">settings</span>
+            </button>
+          </div>
+        </div>
+        <div class="detail-tabs">
+          <div class="detail-tab active" onclick="switchDetailTab('contact', 'overview', this)">Overview</div>
+          <div class="detail-tab" onclick="switchDetailTab('contact', 'cases', this)">Cases <span class="detail-tab-count">3</span></div>
+          <div class="detail-tab" onclick="switchDetailTab('contact', 'messages', this)">Messages <span class="detail-tab-count urgent">1</span></div>
+          <div class="detail-tab" onclick="switchDetailTab('contact', 'documents', this)">Documents <span class="detail-tab-count">2</span></div>
+          <div class="detail-tab" onclick="switchDetailTab('contact', 'notes', this)">Notes <span class="detail-tab-count">2</span></div>
+        </div>
+      </div>
+
+      <div class="tab-content">
+
+        <!-- CONTACT OVERVIEW -->
+        <div class="tab-panel active" id="contact-tab-overview">
+          <div class="overview-grid">
+
+            <div class="ov-card">
+              <div class="ov-card-header"><div class="ov-card-label">Needs your attention</div></div>
+              <div class="ov-card-body">
+                <div class="attention-item">
+                  <div class="att-dot" style="background:#ECEEF2"></div>
+                  <div class="att-text">Nancy texted — no reply yet</div>
+                  <div class="att-age">3h ago</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ov-card">
+              <div class="ov-card-header"><div class="ov-card-label">Contact info</div></div>
+              <div class="ov-meta-row"><span class="ov-key">Phone</span><span class="ov-val">(312) 555-0142</span></div>
+              <div class="ov-meta-row"><span class="ov-key">Email</span><span class="ov-val">njohnson@email.com</span></div>
+              <div class="ov-meta-row"><span class="ov-key">Preferred channel</span><span class="ov-val">SMS</span></div>
+              <div class="ov-meta-row"><span class="ov-key">Address</span><span class="ov-val">Chicago, IL</span></div>
+              <div class="ov-meta-row"><span class="ov-key">First contacted</span><span class="ov-val">Mar 4, 2022</span></div>
+              <div class="ov-meta-row"><span class="ov-key">Total cases</span><span class="ov-val">3 (1 active)</span></div>
+            </div>
+
+            <div class="ov-card">
+              <div class="ov-card-header"><div class="ov-card-label">Cases</div></div>
+              <div class="ov-card-body">
+                <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #2A2A2A;cursor:pointer" onclick="switchScreen('case-detail')">
+                  <span class="badge b-negot">Negotiation</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:500;color:#ECEEF2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Auto Accident v. State Farm</div>
+                    <div style="font-size:11px;color:#555">Client · Opened Mar 4, 2025</div>
+                  </div>
+                  <span class="material-symbols-rounded ms-xs" style="color:#555">chevron_right</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #2A2A2A;cursor:pointer">
+                  <span class="badge b-closed">Closed</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:500;color:#9A9AA6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Slip & Fall v. Marriott</div>
+                    <div style="font-size:11px;color:#555">Client · Closed Aug 2023</div>
+                  </div>
+                  <span class="material-symbols-rounded ms-xs" style="color:#555">chevron_right</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer">
+                  <span class="badge b-closed">Closed</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:500;color:#9A9AA6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Rear End v. Allstate</div>
+                    <div style="font-size:11px;color:#555">Client · Closed May 2022</div>
+                  </div>
+                  <span class="material-symbols-rounded ms-xs" style="color:#555">chevron_right</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CONTACT CASES -->
+        <div class="tab-panel" id="contact-tab-cases">
+          <div style="font-size:13px;color:#7A7A85;margin-bottom:16px">3 cases — 1 active, 2 closed</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#212121;border:0.5px solid #2A2A2A;border-radius:8px;margin-bottom:8px;cursor:pointer" onclick="switchScreen('case-detail')">
+            <span class="badge b-negot">Negotiation</span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:500;color:#ECEEF2">Auto Accident v. State Farm</div>
+              <div style="font-size:12px;color:#7A7A85;margin-top:2px">Client · Chicago · Opened Mar 4, 2025 · Last activity 2h ago</div>
+            </div>
+            <span class="material-symbols-rounded ms-xs" style="color:#555">chevron_right</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#212121;border:0.5px solid #2A2A2A;border-radius:8px;margin-bottom:8px;cursor:pointer;opacity:0.7">
+            <span class="badge b-closed">Closed</span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:500;color:#9A9AA6">Slip & Fall v. Marriott</div>
+              <div style="font-size:12px;color:#555;margin-top:2px">Client · Chicago · Settled Aug 2023</div>
+            </div>
+            <span class="material-symbols-rounded ms-xs" style="color:#555">chevron_right</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#212121;border:0.5px solid #2A2A2A;border-radius:8px;margin-bottom:8px;cursor:pointer;opacity:0.7">
+            <span class="badge b-closed">Closed</span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:500;color:#9A9AA6">Rear End v. Allstate</div>
+              <div style="font-size:12px;color:#555;margin-top:2px">Client · Chicago · Settled May 2022</div>
+            </div>
+            <span class="material-symbols-rounded ms-xs" style="color:#555">chevron_right</span>
+          </div>
+        </div>
+
+        <!-- CONTACT MESSAGES — unified across cases -->
+        <div class="tab-panel" id="contact-tab-messages">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-size:13px;color:#7A7A85">All messages with Nancy Johnson · across 3 cases</div>
+            <button class="tb-btn"><span class="material-symbols-rounded ms-xs">filter_list</span>Filter by case</button>
+          </div>
+          <div class="msg-thread">
+            <div class="msg inbound">
+              <div class="msg-bubble">Hi, just checking in. Is there any update on the offer?</div>
+              <div class="msg-meta">Nancy · Today, 9:12am · <span style="color:#F87171">No reply yet</span></div>
+              <div class="msg-context">On Auto Accident v. State Farm · SMS</div>
+            </div>
+            <div class="msg outbound">
+              <div class="msg-bubble">Totally understand the concern. The timeline is actually normal — we're right on track. Let's talk this week so we can walk you both through where things stand.</div>
+              <div class="msg-meta">Maria · Apr 11, 10:45am</div>
+              <div class="msg-context">On Auto Accident v. State Farm · SMS</div>
+            </div>
+            <div class="msg inbound">
+              <div class="msg-bubble">Thank you! My husband keeps asking me if we should just settle quickly. Should I be worried about the timeline?</div>
+              <div class="msg-meta">Nancy · Apr 11, 10:02am</div>
+              <div class="msg-context">On Auto Accident v. State Farm · SMS</div>
+            </div>
+            <div class="msg outbound">
+              <div class="msg-bubble">Hi Nancy! Settlement check has been deposited and disbursement is scheduled for the 15th. We'll send a final summary by email.</div>
+              <div class="msg-meta">Maria · Aug 12, 2023</div>
+              <div class="msg-context">On Slip & Fall v. Marriott · Email</div>
+            </div>
+            <div class="msg inbound">
+              <div class="msg-bubble">Wonderful, thank you for everything!</div>
+              <div class="msg-meta">Nancy · Aug 12, 2023</div>
+              <div class="msg-context">On Slip & Fall v. Marriott · Email</div>
+            </div>
+          </div>
+          <div class="compose-bar">
+            <div class="compose-inner">
+              <div class="compose-case-picker">
+                <span class="material-symbols-rounded" style="font-size:11px">folder</span>
+                Re: Auto Accident v. State Farm
+                <span class="material-symbols-rounded" style="font-size:11px">expand_more</span>
+              </div>
+              <input class="compose-input" placeholder="Reply to Nancy..." />
+              <button class="b ai" style="height:26px;padding:0 8px;font-size:12px"><span class="material-symbols-rounded">auto_awesome</span>AI draft</button>
+              <button class="b primary" style="height:26px;padding:0 10px;font-size:12px"><span class="material-symbols-rounded">send</span>Send</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTACT DOCUMENTS -->
+        <div class="tab-panel" id="contact-tab-documents">
+          <div style="font-size:13px;color:#7A7A85;margin-bottom:16px">Documents involving Nancy Johnson · across 3 cases</div>
+          <div class="doc-row">
+            <div class="doc-icon" style="background:#0D1E3D;color:#60A5FA"><span class="material-symbols-rounded">description</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="doc-name">Demand Letter — State Farm.pdf</div>
+              <div class="doc-meta">Apr 12, 2025 · <span class="badge b-tag" style="height:16px;font-size:10px">demand-letter</span> · On Auto Accident v. State Farm</div>
+            </div>
+            <button class="b ghost" style="font-size:11px">View</button>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon" style="background:#0E1F1E;color:#2DD4BF"><span class="material-symbols-rounded">description</span></div>
+            <div style="flex:1;min-width:0">
+              <div class="doc-name">Settlement Agreement — Marriott.pdf</div>
+              <div class="doc-meta">Aug 10, 2023 · <span class="badge b-tag" style="height:16px;font-size:10px">settlement</span> · On Slip & Fall v. Marriott</div>
+            </div>
+            <button class="b ghost" style="font-size:11px">View</button>
+          </div>
+        </div>
+
+        <!-- CONTACT NOTES -->
+        <div class="tab-panel" id="contact-tab-notes">
+          <div style="font-size:13px;color:#7A7A85;margin-bottom:16px">Notes mentioning Nancy Johnson</div>
+          <div class="note-card">
+            <div class="note-header">
+              <div class="note-author">Maria Rivera</div>
+              <div class="note-date">2 days ago</div>
+              <div style="font-size:11px;color:#555;margin-left:auto">On Auto Accident v. State Farm</div>
+            </div>
+            <div class="note-text">Client is anxious — call before 2pm if possible. Husband is skeptical about the case value.</div>
+          </div>
+          <div class="note-card">
+            <div class="note-header">
+              <div class="note-author">James Torres</div>
+              <div class="note-date">Aug 2023</div>
+              <div style="font-size:11px;color:#555;margin-left:auto">On Slip & Fall v. Marriott</div>
+            </div>
+            <div class="note-text">Nancy was very satisfied with how this resolved. Good candidate for referrals.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /.screens-wrap -->
+
+  <!-- AI CHAT — scoped to case detail only -->
+  <div class="ai-chat-backdrop" id="aiChatBackdrop" onclick="closeAIChat()"></div>
+  <button class="ai-chat-fab" id="aiChatFab" onclick="toggleAIChat()" aria-label="Open LawGoat AI">
+    <span class="material-symbols-rounded">auto_awesome</span>
+    LawGoat AI
+  </button>
+  <div class="ai-chat-popover" id="aiChatPopover" role="dialog" aria-label="LawGoat AI">
+    <div class="aic-header">
+      <div class="aic-header-icon"><span class="material-symbols-rounded">auto_awesome</span></div>
+      <div class="aic-header-text">
+        <div class="aic-header-title">LawGoat AI</div>
+        <div class="aic-header-context">On this case · Auto Accident v. State Farm</div>
+      </div>
+      <button class="aic-header-close" onclick="closeAIChat()" aria-label="Close"><span class="material-symbols-rounded">close</span></button>
+    </div>
+    <div class="aic-body" id="aiChatBody">
+      <div class="aic-empty" id="aiChatEmpty">
+        <div class="aic-empty-icon"><span class="material-symbols-rounded">auto_awesome</span></div>
+        <div class="aic-empty-title">Ask anything about this case</div>
+        <div class="aic-empty-sub">I know what's happened, who's involved, and what's pending.</div>
+        <div class="aic-suggestions">
+          <button class="aic-suggestion" onclick="sendAIMessage('Summarize what happened this week')"><span class="material-symbols-rounded">list</span><div class="aic-suggestion-text">Summarize what happened this week</div></button>
+          <button class="aic-suggestion" onclick="sendAIMessage('Draft a follow-up to Mark Chen at State Farm')"><span class="material-symbols-rounded">edit</span><div class="aic-suggestion-text">Draft a follow-up to Mark Chen at State Farm</div></button>
+          <button class="aic-suggestion" onclick="sendAIMessage('What is holding this case up?')"><span class="material-symbols-rounded">help</span><div class="aic-suggestion-text">What's holding this case up?</div></button>
+        </div>
+      </div>
+    </div>
+    <div class="aic-input-wrap">
+      <div class="aic-input-inner">
+        <input class="aic-input" id="aiChatInput" placeholder="Ask about this case..." onkeydown="handleAIChatKey(event)" />
+        <button class="aic-send" onclick="sendAIMessage()" aria-label="Send"><span class="material-symbols-rounded">send</span></button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const allCases = [
+    { id:'nancy-auto', initials:'NJ', bg:'#1F0A0A', color:'#F87171', name:'Auto Accident v. State Farm', client:'Nancy Johnson', office:'Chicago', actionIcon:'warning', actionColor:'#F87171', action:'Demand response due today', sub:'Call adjuster before 5pm', stage:'b-negot', stageLabel:'Negotiation', assignedUser:{ initials:'JT', name:'James Torres', bg:'#17123E', color:'#818CF8', role:'Case manager' }, activity:'Due today', stale:true, unread:true, fire:true },
+    { id:'thompson-fall', initials:'RT', bg:'#0D1E3D', color:'#60A5FA', name:'Slip & Fall v. Riverside Mall', client:'Rachel Thompson', office:'Chicago', actionIcon:'phone', actionColor:'#60A5FA', action:'Call back — promised yesterday', sub:'Client waiting · 1d overdue', stage:'b-demand', stageLabel:'Demand', assignedUser:{ initials:'JT', name:'James Torres', bg:'#17123E', color:'#818CF8', role:'Case manager' }, activity:'2h ago', unread:true },
+    { id:'martinez-wc', initials:'CM', bg:'#0E1F1E', color:'#2DD4BF', name:'Workers Comp v. Apex Industries', client:'Carlos Martinez', office:'Dallas', actionIcon:'schedule', actionColor:'#444', actionTextColor:'#7A7A85', action:'Waiting on medical records', sub:'Apex Radiology · 6 weeks', stage:'b-invest', stageLabel:'Investigation', assignedUser:{ initials:'MR', name:'Maria Rivera', bg:'#0E1F1E', color:'#2DD4BF', role:'CSR' }, activity:'1d ago' },
+    { id:'williams-med', initials:'DW', bg:'#1E0E2E', color:'#C084FC', name:'Medical Malpractice v. General Hospital', client:'David Williams', office:'Dallas', actionIcon:'schedule', actionColor:'#FCD34D', actionTextColor:'#FCD34D', action:'No activity — check in with client', sub:'Last contact 14 days ago', stage:'b-intake', stageLabel:'Intake', assignedUser:{ initials:'MR', name:'Maria Rivera', bg:'#0E1F1E', color:'#2DD4BF', role:'CSR' }, activity:'14d ago', stale:true },
+    { id:'lee-rear', initials:'AL', bg:'#0C2318', color:'#34D399', name:'Rear End Collision v. Progressive', client:'Angela Lee', office:'Chicago', actionIcon:'check', actionColor:'#34D399', actionTextColor:'#9A9AA6', action:'Settlement docs sent for signature', sub:'Waiting on client · 2 days', stage:'b-settle', stageLabel:'Settlement', assignedUser:{ initials:'SK', name:'Sarah Kim', bg:'#1E0E2E', color:'#C084FC', role:'Attorney' }, activity:'5h ago' },
+    { id:'patel-dog', initials:'RP', bg:'#17123E', color:'#818CF8', name:'Dog Bite v. Homeowners Insurance', client:'Ravi Patel', office:'Dallas', actionIcon:'schedule', actionColor:'#444', actionTextColor:'#7A7A85', action:'Waiting on police report', sub:'CPD records · 3 weeks', stage:'b-invest', stageLabel:'Investigation', assignedUser:{ initials:'JT', name:'James Torres', bg:'#17123E', color:'#818CF8', role:'Case manager' }, activity:'2d ago' },
+    { id:'kim-wt', initials:'SK', bg:'#0E1F1E', color:'#2DD4BF', name:'Wrongful Termination v. TechCorp', client:'Susan Kim', office:'Chicago', actionIcon:'mail', actionColor:'#60A5FA', actionTextColor:'#ECEEF2', action:'Email from Susan — no reply yet', sub:'6h unanswered', stage:'b-demand', stageLabel:'Demand', assignedUser:{ initials:'JT', name:'James Torres', bg:'#17123E', color:'#818CF8', role:'Case manager' }, activity:'6h ago', unread:true },
+    { id:'brown-rear', initials:'JB', bg:'#212121', color:'#555', name:'Rear End v. Allstate', client:'James Brown', office:'Dallas', actionIcon:'check', actionColor:'#444', actionTextColor:'#555', action:'Case closed · Settlement disbursed', sub:'', stage:'b-closed', stageLabel:'Closed', assignedUser:{ initials:'SK', name:'Sarah Kim', bg:'#1E0E2E', color:'#C084FC', role:'Attorney' }, activity:'1w ago', muted:true }
+  ];
+
+  const allContacts = [
+    { id:'nancy', initials:'NJ', bg:'#0D1E3D', color:'#60A5FA', name:'Nancy Johnson', type:'client', typeLabel:'Client', phone:'(312) 555-0142', email:'njohnson@email.com', cases:3, activeCases:1, lastContact:'3h ago', unread:true },
+    { id:'rachel', initials:'RT', bg:'#0D1E3D', color:'#60A5FA', name:'Rachel Thompson', type:'client', typeLabel:'Client', phone:'(312) 555-0188', email:'rthompson@email.com', cases:1, activeCases:1, lastContact:'2h ago' },
+    { id:'carlos', initials:'CM', bg:'#0D1E3D', color:'#60A5FA', name:'Carlos Martinez', type:'client', typeLabel:'Client', phone:'(214) 555-0233', email:'cmartinez@email.com', cases:1, activeCases:1, lastContact:'1d ago' },
+    { id:'david', initials:'DW', bg:'#0D1E3D', color:'#60A5FA', name:'David Williams', type:'client', typeLabel:'Client', phone:'(214) 555-0445', email:'dwilliams@email.com', cases:1, activeCases:1, lastContact:'14d ago', stale:true },
+    { id:'angela', initials:'AL', bg:'#0D1E3D', color:'#60A5FA', name:'Angela Lee', type:'client', typeLabel:'Client', phone:'(312) 555-0567', email:'alee@email.com', cases:1, activeCases:1, lastContact:'5h ago' },
+    { id:'mark-chen', initials:'MC', bg:'#1F1A08', color:'#FCD34D', name:'Mark Chen', type:'adjuster', typeLabel:'Adjuster', phone:'(800) 555-0911', email:'mchen@statefarm.com', org:'State Farm', cases:4, activeCases:2, lastContact:'5d ago', stale:true },
+    { id:'patel-dr', initials:'PP', bg:'#0E1F1E', color:'#2DD4BF', name:'Dr. Priya Patel', type:'provider', typeLabel:'Provider', phone:'(312) 555-0712', email:'office@northsideortho.com', org:'Northside Orthopedics', cases:8, activeCases:3, lastContact:'3d ago' },
+    { id:'james-torres-opp', initials:'JT', bg:'#1F0A0A', color:'#F87171', name:'Jonathan Trent', type:'opposing', typeLabel:'Opposing', phone:'(312) 555-0099', email:'jtrent@trentlaw.com', org:'Trent & Associates', cases:1, activeCases:1, lastContact:'8d ago', stale:true }
+  ];
+
+  const contactTabFilter = {
+    clients:   c => c.type === 'client',
+    all:       c => true,
+    adjusters: c => c.type === 'adjuster',
+    providers: c => c.type === 'provider',
+    opposing:  c => c.type === 'opposing'
+  };
+
+  const stagesForBoard = [
+    { key: 'b-intake', label: 'Intake' },
+    { key: 'b-invest', label: 'Investigation' },
+    { key: 'b-demand', label: 'Demand' },
+    { key: 'b-negot',  label: 'Negotiation' },
+    { key: 'b-settle', label: 'Settlement' }
+  ];
+
+  function renderCasesList() {
+    const area = document.getElementById('casesArea');
+    area.innerHTML = '';
+    allCases.forEach(c => {
+      const row = document.createElement('div');
+      row.className = 'case-row' + (c.fire ? ' fire' : '');
+      row.onclick = () => switchScreen('case-detail');
+      row.innerHTML = `
+        <div class="cell">${c.unread ? '<div class="unread-dot"></div>' : '<div class="spacer"></div>'}</div>
+        <div class="cell">
+          <div class="avatar" style="background:${c.bg};color:${c.color}">${c.initials}</div>
+          <div style="min-width:0">
+            <div class="client-name" ${c.muted ? 'style="color:#7A7A85"' : ''}>${c.name}</div>
+            <div class="case-sub">${c.client} · ${c.office}</div>
+          </div>
+        </div>
+        <div class="cell">
+          <div class="next-action">
+            <span class="material-symbols-rounded" style="color:${c.actionColor}">${c.actionIcon}</span>
+            <div style="min-width:0">
+              <div class="action-text" style="color:${c.actionTextColor || (c.fire ? '#F87171' : '#ECEEF2')}">${c.action}</div>
+              ${c.sub ? `<div class="action-sub">${c.sub}</div>` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="cell"><span class="badge ${c.stage}">${c.stageLabel}</span></div>
+        <div class="cell">
+          <div class="assignee">
+            <div class="assignee-avatar" style="background:${c.assignedUser.bg};color:${c.assignedUser.color}">${c.assignedUser.initials}</div>
+            <div class="assignee-text">
+              <div class="assignee-name">${c.assignedUser.name}</div>
+              <div class="assignee-role">${c.assignedUser.role}</div>
+            </div>
+          </div>
+        </div>
+        <div class="cell"><span class="activity ${c.stale ? 'stale' : ''}">${c.activity}</span></div>
+      `;
+      area.appendChild(row);
+    });
+
+    const fires = allCases.filter(c => c.fire).length;
+    const unread = allCases.filter(c => c.unread).length;
+    const stale = allCases.filter(c => c.stale && !c.fire).length;
+    document.getElementById('casesStatusBar').innerHTML = `
+      ${fires ? `<div class="status-item"><div class="status-dot" style="background:#F87171"></div>${fires} fire</div>` : ''}
+      ${unread ? `<div class="status-item"><div class="status-dot" style="background:#ECEEF2"></div>${unread} unread</div>` : ''}
+      ${stale ? `<div class="status-item"><div class="status-dot" style="background:#FCD34D"></div>${stale} going cold</div>` : ''}
+      <div class="status-item" style="margin-left:auto">${allCases.length} of 28 cases shown</div>
+    `;
+  }
+
+  function renderBoardView() {
+    const area = document.getElementById('boardArea');
+    area.innerHTML = '';
+    stagesForBoard.forEach(stage => {
+      const stageCases = allCases.filter(c => c.stage === stage.key);
+      const col = document.createElement('div');
+      col.className = 'board-col';
+      col.innerHTML = `
+        <div class="board-col-header">
+          <div class="board-col-title">
+            <span class="badge ${stage.key}">${stage.label}</span>
+          </div>
+          <div class="board-col-count">${stageCases.length}</div>
+        </div>
+        <div class="board-col-body"></div>
+      `;
+      const body = col.querySelector('.board-col-body');
+      stageCases.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'board-card' + (c.fire ? ' fire' : '');
+        card.onclick = () => switchScreen('case-detail');
+        card.innerHTML = `
+          <div class="bc-name">${c.name}</div>
+          <div class="bc-case">${c.client}</div>
+          <div class="bc-action">
+            <span class="material-symbols-rounded" style="color:${c.actionColor}">${c.actionIcon}</span>
+            <div class="bc-action-text" style="color:${c.actionTextColor || (c.fire ? '#F87171' : '#ECEEF2')}">${c.action}</div>
+          </div>
+          <div class="bc-footer">
+            <div class="avatar bc-avatar" style="background:${c.assignedUser.bg};color:${c.assignedUser.color}">${c.assignedUser.initials}</div>
+            <div class="bc-age ${c.stale ? 'stale' : ''}">${c.activity}</div>
+          </div>
+        `;
+        body.appendChild(card);
+      });
+      area.appendChild(col);
+    });
+  }
+
+  let activeContactTab = 'clients';
+  function renderContactsList() {
+    const area = document.getElementById('contactsArea');
+    area.innerHTML = '';
+    const filtered = allContacts.filter(contactTabFilter[activeContactTab] || (() => true));
+    filtered.forEach(c => {
+      const row = document.createElement('div');
+      row.className = 'contact-row';
+      row.onclick = () => openContact(c.id);
+      row.innerHTML = `
+        <div class="cell">${c.unread ? '<div class="unread-dot"></div>' : '<div class="spacer"></div>'}</div>
+        <div class="cell">
+          <div class="avatar" style="background:${c.bg};color:${c.color}">${c.initials}</div>
+          <div style="min-width:0">
+            <div class="client-name">${c.name}</div>
+            <div class="case-sub">${c.org || c.email}</div>
+          </div>
+        </div>
+        <div class="cell"><span class="badge ct-${c.type}">${c.typeLabel}</span></div>
+        <div class="cell">
+          <div class="contact-channels">
+            <div class="contact-channels-line"><span class="material-symbols-rounded">phone</span>${c.phone}</div>
+            <div class="contact-channels-line"><span class="material-symbols-rounded">mail</span>${c.email}</div>
+          </div>
+        </div>
+        <div class="cell">
+          <div>
+            <div class="contact-cases-count">${c.cases}</div>
+            <div class="contact-cases-count-sub">${c.activeCases} active</div>
+          </div>
+        </div>
+        <div class="cell"><span class="activity ${c.stale ? 'stale' : ''}">${c.lastContact}</span></div>
+      `;
+      area.appendChild(row);
+    });
+
+    const total = allContacts.length;
+    const clients = allContacts.filter(c => c.type === 'client').length;
+    const stale = allContacts.filter(c => c.stale).length;
+    document.getElementById('contactsStatusBar').innerHTML = `
+      <div class="status-item"><div class="status-dot" style="background:#60A5FA"></div>${clients} clients</div>
+      ${stale ? `<div class="status-item"><div class="status-dot" style="background:#F87171"></div>${stale} stale</div>` : ''}
+      <div class="status-item" style="margin-left:auto">${filtered.length} of ${total} contacts shown</div>
+    `;
+  }
+
+  function switchContactTab(tab, el) {
+    activeContactTab = tab;
+    document.querySelectorAll('#screen-contacts-list .view-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderContactsList();
+  }
+
+  function openContact(contactId) {
+    const c = allContacts.find(x => x.id === contactId);
+    if (!c) { switchScreen('contact-detail'); return; }
+    document.getElementById('contactDetailName').textContent = c.name;
+    document.getElementById('contactDetailAvatar').textContent = c.initials;
+    document.getElementById('contactDetailAvatar').style.background = c.bg;
+    document.getElementById('contactDetailAvatar').style.color = c.color;
+    document.getElementById('contactCrumb').textContent = c.name;
+    const officeText = c.org ? c.org : 'Chicago';
+    document.getElementById('contactDetailSub').innerHTML = `
+      <span class="badge ct-${c.type}">${c.typeLabel}</span>
+      <span style="color:#3A3A3A;margin:0 8px">·</span>
+      ${c.cases} cases (${c.activeCases} active)
+      <span style="color:#3A3A3A;margin:0 8px">·</span>
+      ${officeText}
+    `;
+    switchScreen('contact-detail');
+  }
+
+  function switchScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const screen = document.getElementById('screen-' + screenId);
+    if (screen) screen.classList.add('active');
+
+    document.querySelectorAll('.topbar-ctx').forEach(c => c.classList.remove('active'));
+    const ctx = document.getElementById('ctx-' + screenId);
+    if (ctx) ctx.classList.add('active');
+
+    document.querySelectorAll('.sidebar .nav-item').forEach(n => n.classList.remove('active'));
+    if (screenId === 'cases-list' || screenId === 'case-detail') {
+      document.getElementById('navCases').classList.add('active');
+    } else if (screenId === 'contacts-list' || screenId === 'contact-detail') {
+      document.getElementById('navContacts').classList.add('active');
+    }
+
+    document.body.classList.toggle('in-case-detail', screenId === 'case-detail');
+    if (screenId !== 'case-detail') closeAIChat();
+
+    if (screenId === 'case-detail') resetDetailTabs('case');
+    if (screenId === 'contact-detail') resetDetailTabs('contact');
+
+    document.querySelectorAll('.tab-content').forEach(tc => tc.scrollTop = 0);
+  }
+
+  function resetDetailTabs(scope) {
+    const tabs = document.querySelectorAll(`#screen-${scope}-detail .detail-tab`);
+    const panels = document.querySelectorAll(`#screen-${scope}-detail .tab-panel`);
+    tabs.forEach((t, i) => t.classList.toggle('active', i === 0));
+    panels.forEach((p, i) => p.classList.toggle('active', i === 0));
+  }
+
+  function switchDetailTab(scope, tabId, el) {
+    const tabs = document.querySelectorAll(`#screen-${scope}-detail .detail-tab`);
+    const panels = document.querySelectorAll(`#screen-${scope}-detail .tab-panel`);
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    const panel = document.getElementById(`${scope}-tab-${tabId}`);
+    if (panel) panel.classList.add('active');
+  }
+
+  function switchView(view) {
+    const isBoard = view === 'board';
+    document.getElementById('listView').style.display = isBoard ? 'none' : 'flex';
+    document.getElementById('boardView').style.display = isBoard ? 'flex' : 'none';
+    document.getElementById('listToggle').classList.toggle('active', !isBoard);
+    document.getElementById('boardToggle').classList.toggle('active', isBoard);
+    if (isBoard) renderBoardView();
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+  }
+
+  let aiChatOpen = false;
+  function toggleAIChat() {
+    aiChatOpen ? closeAIChat() : openAIChat();
+  }
+  function openAIChat() {
+    aiChatOpen = true;
+    document.getElementById('aiChatPopover').classList.add('open');
+    document.getElementById('aiChatBackdrop').classList.add('open');
+    document.getElementById('aiChatFab').classList.add('open');
+    setTimeout(() => document.getElementById('aiChatInput').focus(), 100);
+  }
+  function closeAIChat() {
+    aiChatOpen = false;
+    document.getElementById('aiChatPopover').classList.remove('open');
+    document.getElementById('aiChatBackdrop').classList.remove('open');
+    document.getElementById('aiChatFab').classList.remove('open');
+  }
+  function handleAIChatKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendAIMessage();
+    }
+  }
+  function sendAIMessage(presetText) {
+    const input = document.getElementById('aiChatInput');
+    const text = presetText || input.value.trim();
+    if (!text) return;
+    input.value = '';
+
+    const empty = document.getElementById('aiChatEmpty');
+    if (empty) empty.remove();
+
+    const body = document.getElementById('aiChatBody');
+    const userMsg = document.createElement('div');
+    userMsg.className = 'aic-msg user';
+    userMsg.innerHTML = `<div class="aic-msg-bubble">${escapeHtml(text)}</div>`;
+    body.appendChild(userMsg);
+    body.scrollTop = body.scrollHeight;
+
+    setTimeout(() => {
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'aic-msg ai';
+      aiMsg.innerHTML = `
+        <div class="aic-msg-author"><span class="material-symbols-rounded">auto_awesome</span>LawGoat AI</div>
+        <div class="aic-msg-bubble">${aiCannedReply(text)}</div>
+      `;
+      body.appendChild(aiMsg);
+      body.scrollTop = body.scrollHeight;
+    }, 600);
+  }
+  function aiCannedReply(prompt) {
+    const p = prompt.toLowerCase();
+    if (p.includes('summarize') || p.includes('this week')) {
+      return 'This week, the demand letter sent April 12th has gone unanswered by adjuster Mark Chen — follow-up is now 3 days overdue. Nancy texted twice expressing concern about the timeline; Maria replied yesterday. Dr. Patel scheduled a surgery evaluation for May 3rd, which may impact settlement value. No new documents were filed.';
+    }
+    if (p.includes('draft') && p.includes('mark')) {
+      return 'Hi Mark — Following up on the demand letter we sent April 12th regarding Nancy Johnson (Claim #SF-00419). It has been 24 days since delivery and we are now 3 days past your standard 21-day response window. Could you confirm receipt and provide a status update? Happy to discuss by phone if easier. Thanks, Maria';
+    }
+    if (p.includes('holding') || p.includes('hold')) {
+      return 'Two things. First — adjuster Mark Chen has not responded to the demand letter (3 days overdue). Second — Dr. Patel\'s surgery evaluation is scheduled for May 3rd, and James noted we should hold off on counter-offers until those results are in. Recommend escalating with Mark this week and tabling negotiations until early May.';
+    }
+    return 'I can pull anything from this case — documents, messages, timeline events, or context from team notes. What would help most right now?';
+  }
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch]));
+  }
+
+  renderCasesList();
+  renderContactsList();
+</script>
+
+</body>
+</html>
