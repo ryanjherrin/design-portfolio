@@ -236,11 +236,11 @@
     },
     story: {
       title: 'My Story',
-      body: '<p>I’ve spent the past year and a half as Head of Product Design at Belva, building LawGoat from scratch — an AI-powered legal platform that helps attorneys communicate with clients, analyze documents, and automate their workflows. I designed the entire system end-to-end, from research to shipped product, including building the design system using Figma MCP. I’m drawn to the intersection of AI and complex software — where good design makes powerful tools feel simple.</p>',
+      body: '<p>I’ve spent the past year and a half as Head of Product Design at Belva, building LawGoat from scratch — an AI-powered legal platform that helps attorneys communicate with clients, analyze documents, and automate their workflows. I designed the entire system end-to-end, from research to shipped product. I’m drawn to the intersection of AI and complex software — where good design makes powerful tools feel simple.</p>',
     },
     tools: {
       title: 'Tools & Tech',
-      body: '<div class="orb-pills"><span class="orb-pill">Figma</span><span class="orb-pill">Figma MCP</span><span class="orb-pill">Design Systems</span><span class="orb-pill">Prototyping</span><span class="orb-pill">HTML / CSS / JS</span><span class="orb-pill">AI Product Design</span><span class="orb-pill">User Research</span><span class="orb-pill">Framer</span></div>',
+      body: '<div class="orb-pills"><span class="orb-pill">Figma</span><span class="orb-pill">Design Systems</span><span class="orb-pill">Cursor</span><span class="orb-pill">Claude</span><span class="orb-pill">HTMX</span><span class="orb-pill">Tailwind</span><span class="orb-pill">Python</span><span class="orb-pill">AI Product Design</span><span class="orb-pill">User Research</span><span class="orb-pill">Prototyping</span></div>',
     },
     fact: {
       title: 'Fun Fact',
