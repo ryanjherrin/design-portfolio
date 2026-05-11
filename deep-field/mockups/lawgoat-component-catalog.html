@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LawGoat Component Catalog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#0f172a', light: '#334155', container: '#f1f5f9', 'on-container': '#0f172a' },
+            accent:  { DEFAULT: '#2563eb', light: '#3b82f6', container: '#dbeafe', 'on-container': '#1e40af' },
+            info:    { DEFAULT: '#2563eb', light: '#3b82f6', container: '#dbeafe', 'on-container': '#1e40af' },
+            success: { DEFAULT: '#16a34a', light: '#22c55e', container: '#dcfce7', 'on-container': '#166534' },
+            error:   { DEFAULT: '#dc2626', light: '#ef4444', container: '#fee2e2', 'on-container': '#991b1b' },
+            warning: { DEFAULT: '#d97706', light: '#f59e0b', container: '#fef3c7', 'on-container': '#92400e' },
+            surface: { DEFAULT: '#fafaf9', variant: '#f5f5f4', page: '#fafaf9', panel: '#f8f7f5' },
+            on: { surface: '#1c1917', 'surface-variant': '#78716c', primary: '#ffffff', accent: '#ffffff' },
+            outline: { DEFAULT: '#a8a29e', variant: '#e7e5e4' },
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          boxShadow: {
+            menu: '0 0 0 1px rgba(0,0,0,0.04), 0 3px 6px rgba(0,0,0,0.06), 0 9px 24px rgba(0,0,0,0.08)',
+            panel: '-2px 0 8px rgba(0,0,0,0.04)',
+          },
+        },
+      },
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .filepath {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+    .section-anchor { scroll-margin-top: 24px; }
+    /* Tab active state */
+    .tab-active { border-bottom: 2px solid #0f172a; color: #0f172a; }
+    /* Note card hover actions */
+    .note-card:hover .note-actions { opacity: 1; }
+    .note-actions { opacity: 0; transition: opacity 0.15s; }
+    /* Tooltip */
+    .tooltip-wrap:hover .tooltip-content { opacity: 1; visibility: visible; }
+    .tooltip-content { opacity: 0; visibility: hidden; transition: all 0.2s; }
+    /* Dropdown */
+    .dropdown-menu { display: none; }
+    .dropdown-open .dropdown-menu { display: block; }
+    /* Toast animation */
+    @keyframes slideIn { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .toast { animation: slideIn 0.2s ease; }
+    /* Nav active */
+    .nav-link.active { background: #f1f5f9; color: #0f172a; font-weight: 500; }
+  </style>
+</head>
+<body class="bg-surface-page text-on-surface min-h-screen">
+
+  <!-- Layout -->
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar Nav -->
+    <nav class="w-56 shrink-0 bg-surface-panel border-r border-outline-variant sticky top-0 h-screen overflow-y-auto py-6 px-3">
+      <div class="mb-6 px-2">
+        <h1 class="text-sm font-semibold text-on-surface">Component Catalog</h1>
+        <p class="text-xs text-on-surface-variant mt-0.5">LawGoat Design System</p>
+      </div>
+
+      <div class="mb-2 px-2">
+        <p class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Atoms</p>
+      </div>
+      <ul class="space-y-0.5 mb-4 text-sm">
+        <li><a href="#buttons" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Buttons</a></li>
+        <li><a href="#form-field" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Form Field</a></li>
+        <li><a href="#form-input-text" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Form Input Text</a></li>
+        <li><a href="#form-input-textarea" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Form Input Textarea</a></li>
+        <li><a href="#search-box" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Search Box</a></li>
+        <li><a href="#tabs" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Tabs</a></li>
+        <li><a href="#chip" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Chip</a></li>
+        <li><a href="#stage-chip" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Stage Chip</a></li>
+        <li><a href="#badge" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Workflow Badge</a></li>
+        <li><a href="#tooltip" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Tooltip</a></li>
+        <li><a href="#toast" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Toast</a></li>
+        <li><a href="#toggle" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Toggle</a></li>
+        <li><a href="#feature-list" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Feature List</a></li>
+        <li><a href="#table-cells" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Table Cells</a></li>
+      </ul>
+
+      <div class="mb-2 px-2">
+        <p class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Molecules</p>
+      </div>
+      <ul class="space-y-0.5 text-sm">
+        <li><a href="#controls-bar" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Controls Bar</a></li>
+        <li><a href="#empty-state" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Empty State</a></li>
+        <li><a href="#modal" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Modal</a></li>
+        <li><a href="#note-card" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Note Card</a></li>
+        <li><a href="#dropdown" class="nav-link flex items-center gap-2 px-2 py-1.5 rounded-md text-on-surface-variant hover:bg-surface-variant hover:text-on-surface transition-colors">Dropdown</a></li>
+      </ul>
+
+      <div class="mt-6 px-2 pt-4 border-t border-outline-variant">
+        <a href=".claude/rules/design-system.md" class="text-xs text-accent hover:underline">Design Tokens ↗</a>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="flex-1 overflow-y-auto px-10 py-10 max-w-5xl">
+
+      <div class="mb-10">
+        <h2 class="text-2xl font-semibold text-on-surface">LawGoat Component Catalog</h2>
+        <p class="text-on-surface-variant mt-1 text-sm">Canonical components from <code class="filepath">templates/core/partials/</code>. Use these — never write one-off HTML.</p>
+      </div>
+
+      <!-- ───────────────────────────────────────────
+           ATOMS
+      ─────────────────────────────────────────── -->
+      <div class="mb-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Atoms</h3>
+        <div class="h-px bg-outline-variant mt-2"></div>
+      </div>
+
+      <!-- BUTTONS -->
+      <section id="buttons" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Button</h4>
+          <span class="filepath">core/partials/atoms/button_primary.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">8 variants · 3 sizes · link mode · loading state · icon support</p>
+
+        <!-- Variants -->
+        <div class="mb-6">
+          <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-3">Variants</p>
+          <div class="flex flex-wrap gap-3 items-center p-6 bg-surface rounded-lg border border-outline-variant">
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">Primary</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-transparent bg-stone-100 text-stone-900 hover:bg-stone-200 cursor-pointer">Secondary</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-transparent text-stone-500 hover:bg-stone-100 hover:text-stone-900 cursor-pointer">Ghost</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-stone-400 text-stone-900 hover:bg-stone-100 hover:border-stone-500 cursor-pointer">Outlined</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-transparent text-red-600 hover:bg-red-50 cursor-pointer">Danger</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-transparent bg-red-600 text-white hover:bg-red-500 cursor-pointer">Danger Filled</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-stone-400 text-red-600 hover:bg-red-50 hover:border-red-400 cursor-pointer">Danger Outlined</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all duration-100 h-9 px-4 text-sm gap-2 border border-transparent bg-green-700 text-white hover:bg-green-600 cursor-pointer">Success</button>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div class="mb-6">
+          <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-3">Sizes</p>
+          <div class="flex flex-wrap gap-3 items-center p-6 bg-surface rounded-lg border border-outline-variant">
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-7 px-2.5 text-xs gap-1 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">Small (sm)</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-8 px-3 text-sm gap-1.5 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">Medium (md)</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">Default</button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-11 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">Large (lg)</button>
+          </div>
+        </div>
+
+        <!-- With icons -->
+        <div class="mb-6">
+          <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-3">With Icons</p>
+          <div class="flex flex-wrap gap-3 items-center p-6 bg-surface rounded-lg border border-outline-variant">
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">
+              <span class="material-icons leading-none" style="font-size:20px">add</span>Add
+            </button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent text-red-600 hover:bg-red-50 cursor-pointer">
+              <span class="material-icons leading-none" style="font-size:20px">delete</span>Delete
+            </button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-stone-400 text-stone-900 hover:bg-stone-100 cursor-pointer">
+              Save<span class="material-icons leading-none" style="font-size:20px">open_in_new</span>
+            </button>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white opacity-40 cursor-not-allowed pointer-events-none">Disabled</button>
+          </div>
+        </div>
+
+        <!-- Loading state -->
+        <div>
+          <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-3">Loading State <span class="text-on-surface-variant normal-case font-normal">(during HTMX request)</span></p>
+          <div class="flex flex-wrap gap-3 items-center p-6 bg-surface rounded-lg border border-outline-variant">
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white cursor-pointer">
+              <span class="inline-flex items-center gap-2">
+                <i class="material-icons animate-spin leading-none" style="font-size:18px">refresh</i>
+                <span>Saving...</span>
+              </span>
+            </button>
+            <p class="text-xs text-on-surface-variant">Use <code class="filepath">loading_text="Saving..."</code></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORM FIELD -->
+      <section id="form-field" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Form Field</h4>
+          <span class="filepath">core/partials/atoms/form_field.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Wraps a Django BoundField with label, errors, and help text.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant max-w-sm space-y-4">
+          <!-- Normal -->
+          <div>
+            <label class="block text-sm font-medium text-on-surface-variant mb-1">Email address</label>
+            <input type="email" placeholder="you@example.com" class="w-full px-3 py-2 rounded-lg border border-outline-variant text-sm focus:outline-none focus:ring-1 focus:ring-accent" style="height:36px;">
+            <p class="text-xs text-on-surface-variant mt-1">We'll never share your email.</p>
+          </div>
+          <!-- With error -->
+          <div>
+            <label class="block text-sm font-medium text-on-surface-variant mb-1">Full name</label>
+            <input type="text" value="" placeholder="Full name" class="w-full px-3 py-2 rounded-lg border border-red-400 text-sm focus:outline-none focus:ring-1 focus:ring-red-400" style="height:36px;">
+            <p class="text-xs text-red-600 mt-1">This field is required.</p>
+          </div>
+          <!-- Password -->
+          <div>
+            <label class="block text-sm font-medium text-on-surface-variant mb-1">Password</label>
+            <input type="password" placeholder="••••••••" class="w-full px-3 py-2 rounded-lg border border-outline-variant text-sm focus:outline-none" style="height:36px;">
+          </div>
+        </div>
+      </section>
+
+      <!-- FORM INPUT TEXT -->
+      <section id="form-input-text" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Form Input Text</h4>
+          <span class="filepath">core/partials/atoms/form_input_text.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">
+          Config-driven text input (text / email / tel / number / url / password / search). Supports a vertical layout (default, label above) and a row layout used by the intake form-shelf pattern. Includes status icon, error / help text, full a11y wiring (aria-describedby, aria-invalid, required + sr-only). Use this for any non-Django-form input — for Django <code class="filepath">BoundField</code>-bound inputs, use <code class="filepath">form_field.html</code>.
+        </p>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-2">Vertical layout (default)</h5>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant max-w-md space-y-4 mb-8">
+          <!-- Basic -->
+          <div>
+            <label for="cat-fit-1" class="block text-sm font-medium text-stone-700 mb-1">Email address</label>
+            <input id="cat-fit-1" type="email" placeholder="name@company.com" class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150">
+          </div>
+          <!-- With help text -->
+          <div>
+            <label for="cat-fit-2" class="block text-sm font-medium text-stone-700 mb-1">Full name</label>
+            <input id="cat-fit-2" type="text" placeholder="Jane Doe" class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150">
+            <p class="mt-1 text-xs text-stone-500">As it appears on legal documents.</p>
+          </div>
+          <!-- Required -->
+          <div>
+            <label for="cat-fit-3" class="block text-sm font-medium text-stone-700 mb-1">Phone number<span aria-hidden="true" class="text-red-600 ml-0.5">*</span><span class="sr-only">required</span></label>
+            <input id="cat-fit-3" type="tel" placeholder="(555) 555-5555" required class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150">
+          </div>
+          <!-- Error -->
+          <div>
+            <label for="cat-fit-4" class="block text-sm font-medium text-stone-700 mb-1">Email address<span aria-hidden="true" class="text-red-600 ml-0.5">*</span><span class="sr-only">required</span></label>
+            <input id="cat-fit-4" type="email" value="not-an-email" aria-invalid="true" aria-describedby="cat-fit-4-error" class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150">
+            <p id="cat-fit-4-error" class="mt-1 text-xs text-red-600 flex items-center gap-1">
+              <span class="material-icons" aria-hidden="true" style="font-size: 14px;">error</span>
+              Enter a valid email address.
+            </p>
+          </div>
+          <!-- Disabled -->
+          <div>
+            <label for="cat-fit-5" class="block text-sm font-medium text-stone-700 mb-1">Account ID</label>
+            <input id="cat-fit-5" type="text" value="acct_9f4c2b" disabled class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:outline-none placeholder:text-stone-400 transition-colors duration-150 disabled:bg-stone-100 disabled:text-stone-500 disabled:cursor-not-allowed">
+          </div>
+          <!-- Readonly -->
+          <div>
+            <label for="cat-fit-6" class="block text-sm font-medium text-stone-700 mb-1">Created</label>
+            <div id="cat-fit-6" class="min-h-[44px] flex items-center px-3 py-2 text-sm text-stone-900 bg-stone-50 border border-stone-200 rounded-md">May 11, 2026</div>
+          </div>
+        </div>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-2">Row layout (intake form pattern)</h5>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant mb-2">
+          <!-- Empty -->
+          <div class="flex items-start gap-3 py-2">
+            <div class="shrink-0 w-6 pt-2.5 flex items-center justify-center" aria-hidden="true">
+              <span class="material-icons text-stone-300" style="font-size: 20px;">radio_button_unchecked</span>
+            </div>
+            <label for="cat-fit-r1" class="shrink-0 pt-2.5 text-sm font-medium text-stone-700" style="width: 240px;">Date of incident</label>
+            <div class="flex-1 min-w-0">
+              <input id="cat-fit-r1" type="text" placeholder="MM/DD/YYYY" class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150">
+            </div>
+          </div>
+          <!-- Filled (status auto-derived from value) -->
+          <div class="flex items-start gap-3 py-2">
+            <div class="shrink-0 w-6 pt-2.5 flex items-center justify-center" aria-hidden="true">
+              <span class="material-icons text-green-600" style="font-size: 20px;">check_circle</span>
+            </div>
+            <label for="cat-fit-r2" class="shrink-0 pt-2.5 text-sm font-medium text-stone-700" style="width: 240px;">Client name</label>
+            <div class="flex-1 min-w-0">
+              <input id="cat-fit-r2" type="text" value="Linda Park" class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150">
+            </div>
+          </div>
+          <!-- Warning + help text -->
+          <div class="flex items-start gap-3 py-2">
+            <div class="shrink-0 w-6 pt-2.5 flex items-center justify-center" aria-hidden="true">
+              <span class="material-icons text-amber-600" style="font-size: 20px;">error_outline</span>
+            </div>
+            <label for="cat-fit-r3" class="shrink-0 pt-2.5 text-sm font-medium text-stone-700" style="width: 240px;">Insurance policy #<span aria-hidden="true" class="text-red-600 ml-0.5">*</span><span class="sr-only">required</span></label>
+            <div class="flex-1 min-w-0">
+              <input id="cat-fit-r3" type="text" value="POL-22?" aria-describedby="cat-fit-r3-help" class="w-full min-h-[44px] px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150">
+              <p id="cat-fit-r3-help" class="mt-1 text-xs text-stone-500">Confirm with caller — partial value detected.</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-on-surface-variant">Status icon column auto-derives from <code class="filepath">value</code> (empty → unchecked circle, filled → green check). Pass <code class="filepath">status="warning"</code> explicitly to flag the field.</p>
+      </section>
+
+      <!-- FORM INPUT TEXTAREA -->
+      <section id="form-input-textarea" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Form Input Textarea</h4>
+          <span class="filepath">core/partials/atoms/form_input_textarea.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">
+          Multi-line text input sibling to <code class="filepath">form_input_text</code>. Same vertical / row layouts, same status icon semantics, same a11y wiring. Adds <code class="filepath">rows</code>, <code class="filepath">maxlength</code>, <code class="filepath">resize</code>, and an optional static character counter (<code class="filepath">show_counter</code>) that renders at template-render time — no JS.
+        </p>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-2">Vertical layout (default)</h5>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant max-w-md space-y-4 mb-8">
+          <!-- Basic -->
+          <div>
+            <label for="cat-fita-1" class="block text-sm font-medium text-stone-700 mb-1">Notes</label>
+            <textarea id="cat-fita-1" rows="4" placeholder="Anything else worth capturing about the caller…" class="w-full px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150 resize-y"></textarea>
+          </div>
+          <!-- With character counter -->
+          <div>
+            <label for="cat-fita-2" class="block text-sm font-medium text-stone-700 mb-1">Case summary<span aria-hidden="true" class="text-red-600 ml-0.5">*</span><span class="sr-only">required</span></label>
+            <textarea id="cat-fita-2" rows="5" maxlength="500" aria-describedby="cat-fita-2-help" placeholder="Brief description of the incident, parties involved, and the client's stated injuries." class="w-full px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150 resize-y">Rear-end collision on I-35 north of downtown. Client driving alone, two occupants in other vehicle. Reported neck and lower back pain at scene; declined ambulance.</textarea>
+            <div id="cat-fita-2-help" class="mt-1 flex items-start justify-between gap-3">
+              <p class="text-xs text-stone-500">Include incident summary, parties, and stated injuries.</p>
+              <p class="text-xs text-stone-400 shrink-0" aria-live="off">192 / 500</p>
+            </div>
+          </div>
+          <!-- Error -->
+          <div>
+            <label for="cat-fita-3" class="block text-sm font-medium text-stone-700 mb-1">Incident narrative<span aria-hidden="true" class="text-red-600 ml-0.5">*</span><span class="sr-only">required</span></label>
+            <textarea id="cat-fita-3" rows="3" aria-invalid="true" aria-describedby="cat-fita-3-error" class="w-full px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150 resize-y"></textarea>
+            <p id="cat-fita-3-error" class="mt-1 text-xs text-red-600 flex items-center gap-1">
+              <span class="material-icons" aria-hidden="true" style="font-size: 14px;">error</span>
+              Narrative is required before sync.
+            </p>
+          </div>
+          <!-- Readonly -->
+          <div>
+            <label for="cat-fita-4" class="block text-sm font-medium text-stone-700 mb-1">AI summary</label>
+            <div id="cat-fita-4" class="px-3 py-2 text-sm text-stone-900 bg-stone-50 border border-stone-200 rounded-md whitespace-pre-wrap">Linda Park, 34, reports rear-end collision on I-35 northbound. Single-vehicle injuries described; declined EMS. Wants legal options before insurance contact.</div>
+          </div>
+        </div>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-2">Row layout (intake form pattern)</h5>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant mb-2">
+          <!-- Empty -->
+          <div class="flex items-start gap-3 py-2">
+            <div class="shrink-0 w-6 pt-2.5 flex items-center justify-center" aria-hidden="true">
+              <span class="material-icons text-stone-300" style="font-size: 20px;">radio_button_unchecked</span>
+            </div>
+            <label for="cat-fita-r1" class="shrink-0 pt-2.5 text-sm font-medium text-stone-700" style="width: 240px;">Notes for case team</label>
+            <div class="flex-1 min-w-0">
+              <textarea id="cat-fita-r1" rows="3" placeholder="Internal notes — not sent to client." class="w-full px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150 resize-y"></textarea>
+            </div>
+          </div>
+          <!-- Filled -->
+          <div class="flex items-start gap-3 py-2">
+            <div class="shrink-0 w-6 pt-2.5 flex items-center justify-center" aria-hidden="true">
+              <span class="material-icons text-green-600" style="font-size: 20px;">check_circle</span>
+            </div>
+            <label for="cat-fita-r2" class="shrink-0 pt-2.5 text-sm font-medium text-stone-700" style="width: 240px;">Incident description</label>
+            <div class="flex-1 min-w-0">
+              <textarea id="cat-fita-r2" rows="4" class="w-full px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150 resize-y">Rear-end at 35mph. Other driver admitted fault at scene. Police report filed. Client reports neck pain onset within 30 minutes of impact.</textarea>
+            </div>
+          </div>
+          <!-- Warning + counter -->
+          <div class="flex items-start gap-3 py-2">
+            <div class="shrink-0 w-6 pt-2.5 flex items-center justify-center" aria-hidden="true">
+              <span class="material-icons text-amber-600" style="font-size: 20px;">error_outline</span>
+            </div>
+            <label for="cat-fita-r3" class="shrink-0 pt-2.5 text-sm font-medium text-stone-700" style="width: 240px;">Client statement<span aria-hidden="true" class="text-red-600 ml-0.5">*</span><span class="sr-only">required</span></label>
+            <div class="flex-1 min-w-0">
+              <textarea id="cat-fita-r3" rows="3" maxlength="500" aria-describedby="cat-fita-r3-help" class="w-full px-3 py-2 text-sm bg-white text-stone-900 rounded-md border border-stone-300 focus:border-slate-900 focus:ring-2 focus:ring-slate-200 focus:outline-none placeholder:text-stone-400 transition-colors duration-150 resize-y">Going to send the details over once I hear back from my husband.</textarea>
+              <div id="cat-fita-r3-help" class="mt-1 flex items-start justify-between gap-3">
+                <p class="text-xs text-stone-500">Looks partial — confirm with caller.</p>
+                <p class="text-xs text-stone-400 shrink-0" aria-live="off">63 / 500</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-on-surface-variant">Counter is render-time only. For live char-count updates, wire HTMX or a small vanilla JS handler at the call site — atom stays JS-free.</p>
+      </section>
+
+      <!-- SEARCH BOX -->
+      <section id="search-box" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Search Box</h4>
+          <span class="filepath">core/partials/atoms/search_box.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Search input with leading icon and clear button. Connects via <code class="filepath">#node-search-input</code>.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+          <div class="relative inline-block">
+            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" style="font-size:18px">search</span>
+            <input type="text" placeholder="Search nodes" class="pl-9 pr-9 py-2 border border-outline-variant rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-accent" style="min-width:250px; height:36px;">
+            <button class="material-icons absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" style="font-size:18px; background:none; border:none; padding:0; cursor:pointer;">close</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABS -->
+      <section id="tabs" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Tabs</h4>
+          <span class="filepath">core/partials/atoms/tab_*.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">One file per tab: <code class="filepath">tab_audit</code> · <code class="filepath">tab_files</code> · <code class="filepath">tab_messages</code> · <code class="filepath">tab_notes</code> · <code class="filepath">tab_settings</code> · <code class="filepath">tab_workflow</code> · <code class="filepath">tab_docgen</code> · <code class="filepath">tab_summary</code> · <code class="filepath">tab_pre_trial</code></p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+          <div class="flex border-b border-outline-variant gap-1">
+            <button class="tab-active py-2 px-4 text-sm font-medium whitespace-nowrap">Notes</button>
+            <button class="py-2 px-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Files</button>
+            <button class="py-2 px-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Messages</button>
+            <button class="py-2 px-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Workflow</button>
+            <button class="py-2 px-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Settings</button>
+            <button class="py-2 px-4 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Audit</button>
+          </div>
+          <div class="pt-4 text-sm text-on-surface-variant">Active tab content renders here via HTMX into <code class="filepath">#tab-content-container</code></div>
+        </div>
+      </section>
+
+      <!-- CHIP -->
+      <section id="chip" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Chip</h4>
+          <span class="filepath">core/partials/atoms/chip.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Status / category label with three styles. Pass <code class="filepath">text</code>, optional <code class="filepath">variant</code>, <code class="filepath">style</code> (soft default | bold | outlined), <code class="filepath">size</code> (sm | md), <code class="filepath">icon</code>, <code class="filepath">truncate</code>, <code class="filepath">extra_classes</code>. Variant accepts status semantic aliases (<code>default</code>, <code>info</code>, <code>success</code>, <code>warning</code>, <code>error</code>) or any category color name.</p>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-2">Status chips</h5>
+
+        <div class="space-y-4 mb-8">
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Soft (default style)</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-gray-100 border border-gray-300 text-gray-800">Default</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-blue-100 border border-blue-300 text-blue-800">Info</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-emerald-100 border border-emerald-300 text-emerald-800">Success</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-amber-100 border border-amber-300 text-amber-900">Warning</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-red-100 border border-red-300 text-red-800">Error</span>
+            </div>
+          </div>
+
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Bold</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-gray-500 text-white">Default</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-blue-500 text-white">Info</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-emerald-600 text-white">Success</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-amber-600 text-white">Warning</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-red-500 text-white">Error</span>
+            </div>
+          </div>
+
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Outlined</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-gray-300 text-gray-700">Default</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-blue-300 text-blue-700">Info</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-emerald-300 text-emerald-700">Success</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-amber-300 text-amber-800">Warning</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-red-300 text-red-700">Error</span>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-2">Category chips <span class="text-xs font-normal text-on-surface-variant">(rotation order — adjacent colors stay distinct)</span></h5>
+
+        <div class="space-y-4 mb-8">
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Soft</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-blue-100 border border-blue-300 text-blue-800">Blue</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-emerald-100 border border-emerald-300 text-emerald-800">Emerald</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-purple-100 border border-purple-300 text-purple-700">Purple</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-amber-100 border border-amber-300 text-amber-900">Amber</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-pink-100 border border-pink-300 text-pink-700">Pink</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-teal-100 border border-teal-300 text-teal-700">Teal</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-indigo-100 border border-indigo-300 text-indigo-700">Indigo</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-rose-100 border border-rose-300 text-rose-700">Rose</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-cyan-100 border border-cyan-300 text-cyan-700">Cyan</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-violet-100 border border-violet-300 text-violet-700">Violet</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-lime-100 border border-lime-300 text-lime-800">Lime</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-fuchsia-100 border border-fuchsia-300 text-fuchsia-700">Fuchsia</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-sky-100 border border-sky-300 text-sky-700">Sky</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-orange-100 border border-orange-300 text-orange-700">Orange</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-slate-100 border border-slate-300 text-slate-700">Slate</span>
+            </div>
+          </div>
+
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Bold</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-blue-500 text-white">Blue</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-emerald-600 text-white">Emerald</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-purple-500 text-white">Purple</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-amber-600 text-white">Amber</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-pink-500 text-white">Pink</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-teal-500 text-white">Teal</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-indigo-500 text-white">Indigo</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-rose-500 text-white">Rose</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-cyan-500 text-white">Cyan</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-violet-500 text-white">Violet</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-lime-600 text-white">Lime</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-fuchsia-500 text-white">Fuchsia</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-sky-500 text-white">Sky</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-orange-500 text-white">Orange</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-slate-500 text-white">Slate</span>
+            </div>
+          </div>
+
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Outlined</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-blue-300 text-blue-700">Blue</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-emerald-300 text-emerald-700">Emerald</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-purple-300 text-purple-700">Purple</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-amber-300 text-amber-800">Amber</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-pink-300 text-pink-700">Pink</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-teal-300 text-teal-700">Teal</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-indigo-300 text-indigo-700">Indigo</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-rose-300 text-rose-700">Rose</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-cyan-300 text-cyan-700">Cyan</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-violet-300 text-violet-700">Violet</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-lime-300 text-lime-800">Lime</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-fuchsia-300 text-fuchsia-700">Fuchsia</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-sky-300 text-sky-700">Sky</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-orange-300 text-orange-700">Orange</span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-slate-300 text-slate-700">Slate</span>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-2">With icon &amp; size variants</h5>
+
+        <div class="space-y-4">
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Size sm — icon at 14px</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-amber-100 border border-amber-300 text-amber-900">
+                <span class="material-icons leading-none flex-shrink-0" style="font-size:14px">person</span>admin
+              </span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-red-100 border border-red-300 text-red-800">
+                <span class="material-icons leading-none flex-shrink-0" style="font-size:14px">pause_circle</span>Parked
+              </span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-emerald-100 border border-emerald-300 text-emerald-800">
+                <span class="material-icons leading-none flex-shrink-0" style="font-size:14px">send</span>Outgoing SMS
+              </span>
+              <span class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-blue-100 border border-blue-300 text-blue-800">
+                <span class="material-icons-outlined leading-none flex-shrink-0" style="font-size:14px">description</span>Bobby Test
+              </span>
+            </div>
+          </div>
+
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Size md — icon at 16px</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <span class="inline-flex items-center font-medium px-2 py-1 rounded-md text-sm gap-1.5 bg-blue-100 border border-blue-300 text-blue-800">Message</span>
+              <span class="inline-flex items-center font-medium px-2 py-1 rounded-md text-sm gap-1.5 bg-emerald-100 border border-emerald-300 text-emerald-800">
+                <span class="material-icons leading-none flex-shrink-0" style="font-size:16px">send</span>Outgoing SMS
+              </span>
+              <span class="inline-flex items-center font-medium px-2 py-1 rounded-md text-sm gap-1.5 bg-amber-600 text-white">
+                <span class="material-icons leading-none flex-shrink-0" style="font-size:16px">priority_high</span>Urgent
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="text-sm font-semibold text-on-surface mb-3 mt-8">Clickable <span class="text-xs font-normal text-on-surface-variant">(pass <code class="filepath">href</code> — renders as <code>&lt;a&gt;</code> with cursor + variant-aware hover)</span></h5>
+
+        <div class="space-y-4">
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Soft — hover bumps bg one shade</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-blue-100 border border-blue-300 text-blue-800 hover:bg-blue-200 cursor-pointer no-underline transition-colors">
+                <span class="material-icons-outlined leading-none flex-shrink-0" style="font-size:14px">description</span>Bobby Test
+              </a>
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-purple-100 border border-purple-300 text-purple-700 hover:bg-purple-200 cursor-pointer no-underline transition-colors">Purple link</a>
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-emerald-100 border border-emerald-300 text-emerald-800 hover:bg-emerald-200 cursor-pointer no-underline transition-colors">Success link</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-sky-100 border border-sky-300 text-sky-700 hover:bg-sky-200 cursor-pointer no-underline transition-colors">
+                External<span class="material-icons-outlined leading-none flex-shrink-0" style="font-size:14px">open_in_new</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Bold — hover darkens bg</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-blue-500 text-white hover:bg-blue-600 cursor-pointer no-underline transition-colors">Info link</a>
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-emerald-600 text-white hover:bg-emerald-700 cursor-pointer no-underline transition-colors">Success link</a>
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-purple-500 text-white hover:bg-purple-600 cursor-pointer no-underline transition-colors">Purple link</a>
+            </div>
+          </div>
+
+          <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide mb-3">Outlined — hover adds subtle fill</p>
+            <div class="flex flex-wrap gap-2 items-center">
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-blue-300 text-blue-700 hover:bg-blue-50 cursor-pointer no-underline transition-colors">Info link</a>
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-50 cursor-pointer no-underline transition-colors">Success link</a>
+              <a href="#" class="inline-flex items-center font-medium px-1.5 py-1 rounded-md text-xs gap-1 bg-white border border-purple-300 text-purple-700 hover:bg-purple-50 cursor-pointer no-underline transition-colors">Purple link</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAGE CHIP -->
+      <section id="stage-chip" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Stage Chip</h4>
+          <span class="filepath">core/partials/atoms/stage_chip.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Clickable badge that opens a stage transition dropdown. Requires <code class="filepath">node</code>, <code class="filepath">current_stage_name</code>, <code class="filepath">available_transitions</code>.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant flex gap-4 items-center">
+          <!-- Set -->
+          <div class="relative" onclick="this.classList.toggle('dropdown-open')">
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium cursor-pointer bg-indigo-100 text-indigo-800 hover:bg-indigo-200 select-none">
+              Discovery<span class="material-icons text-sm">expand_more</span>
+            </span>
+            <div class="dropdown-menu absolute z-10 top-full mt-1 w-48 bg-white rounded border border-gray-200 shadow-menu py-1">
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">Negotiation</button>
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">Closed Won</button>
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">Closed Lost</button>
+            </div>
+          </div>
+          <!-- Unset -->
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium cursor-pointer bg-gray-100 text-gray-600 hover:bg-gray-200">
+            Set Stage<span class="material-icons text-sm">expand_more</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- WORKFLOW BADGE -->
+      <section id="badge" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Workflow Type Badge</h4>
+          <span class="filepath">core/partials/atoms/workflow_type_badge.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Generic pill badge. Pass <code class="filepath">badge_label</code> and <code class="filepath">badge_css</code> (Tailwind classes).</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant flex flex-wrap gap-3 items-center">
+          <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800">Litigation</span>
+          <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-purple-100 text-purple-800">Contract</span>
+          <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">Compliance</span>
+          <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-800">Advisory</span>
+          <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-100 text-red-800">Dispute</span>
+          <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-700">General</span>
+        </div>
+      </section>
+
+      <!-- TOOLTIP -->
+      <section id="tooltip" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Tooltip</h4>
+          <span class="filepath">core/partials/atoms/tooltip_info.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Info icon that reveals a tooltip on hover. Pass <code class="filepath">tooltip_text</code>.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant">
+          <div class="flex items-center gap-1 text-sm text-on-surface">
+            <span>Billing cycle</span>
+            <span class="relative inline-flex items-center group tooltip-wrap">
+              <span class="material-icons text-on-surface-variant" style="font-size:14px; cursor:help">info_outline</span>
+              <span role="tooltip" class="tooltip-content absolute left-1/2 -translate-x-1/2 top-full mt-1 px-3 py-2 rounded bg-gray-900 text-white text-xs whitespace-nowrap shadow-lg z-50">
+                Billing resets on the 1st of each month.
+                <span class="absolute left-1/2 -translate-x-1/2 bottom-full border-4 border-transparent border-b-gray-900"></span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOAST -->
+      <section id="toast" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Toast</h4>
+          <span class="filepath">core/partials/atoms/toast.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">4 variants · 4 positions · auto-dismiss · optional CTA. Dispatched by <code class="filepath">molecules/flash_messages.html</code>.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant space-y-3">
+          <!-- Success -->
+          <div class="toast flex items-start gap-3 p-4 rounded-lg border max-w-sm bg-success-container border-success text-success-on-container shadow">
+            <span class="material-icons text-success" style="font-size:20px">check_circle</span>
+            <div>
+              <p class="text-sm font-medium">Changes saved</p>
+              <p class="text-xs mt-0.5 text-success-on-container opacity-80">Your updates have been applied.</p>
+            </div>
+            <button class="ml-auto text-success-on-container opacity-60 hover:opacity-100"><span class="material-icons" style="font-size:18px">close</span></button>
+          </div>
+          <!-- Error -->
+          <div class="toast flex items-start gap-3 p-4 rounded-lg border max-w-sm bg-error-container border-error text-error-on-container shadow">
+            <span class="material-icons text-error" style="font-size:20px">error</span>
+            <div>
+              <p class="text-sm font-medium">Upload failed</p>
+              <p class="text-xs mt-0.5 text-error-on-container opacity-80">File exceeds the 50MB limit.</p>
+            </div>
+            <button class="ml-auto text-error-on-container opacity-60 hover:opacity-100"><span class="material-icons" style="font-size:18px">close</span></button>
+          </div>
+          <!-- Warning -->
+          <div class="toast flex items-start gap-3 p-4 rounded-lg border max-w-sm bg-warning-container border-warning text-warning-on-container shadow">
+            <span class="material-icons text-warning" style="font-size:20px">warning</span>
+            <div>
+              <p class="text-sm font-medium">Storage nearly full</p>
+              <p class="text-xs mt-0.5 text-warning-on-container opacity-80">You've used 90% of your quota.</p>
+            </div>
+            <button class="ml-auto text-warning-on-container opacity-60 hover:opacity-100"><span class="material-icons" style="font-size:18px">close</span></button>
+          </div>
+          <!-- Info -->
+          <div class="toast flex items-start gap-3 p-4 rounded-lg border max-w-sm bg-info-container border-info text-info-on-container shadow">
+            <span class="material-icons text-info" style="font-size:20px">info</span>
+            <div>
+              <p class="text-sm font-medium">Sync in progress</p>
+              <p class="text-xs mt-0.5 text-info-on-container opacity-80">This may take a few minutes.</p>
+            </div>
+            <button class="ml-auto text-info-on-container opacity-60 hover:opacity-100"><span class="material-icons" style="font-size:18px">close</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOGGLE -->
+      <section id="toggle" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Toggle</h4>
+          <span class="filepath">core/partials/atoms/toggle.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Accessible on/off switch backed by a hidden checkbox. Supports label, help text, disabled state, and tooltip via the <code>title</code> attribute. Ships TA-1092.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant space-y-4">
+          <!-- Off -->
+          <label class="inline-flex items-start gap-3 cursor-pointer">
+            <span class="relative inline-flex shrink-0 mt-0.5">
+              <span class="w-9 h-5 rounded-full bg-outline-variant"></span>
+              <span class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-surface shadow"></span>
+            </span>
+            <span class="flex flex-col">
+              <span class="text-sm font-medium text-on-surface">Privileged Information</span>
+              <span class="text-xs text-on-surface-variant">Excluded from Node Audits CSV by default.</span>
+            </span>
+          </label>
+          <!-- On -->
+          <label class="inline-flex items-start gap-3 cursor-pointer">
+            <span class="relative inline-flex shrink-0 mt-0.5">
+              <span class="w-9 h-5 rounded-full bg-accent"></span>
+              <span class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-surface shadow translate-x-4"></span>
+            </span>
+            <span class="flex flex-col">
+              <span class="text-sm font-medium text-on-surface">Include Privileged Information</span>
+              <span class="text-xs text-on-surface-variant">Tick to include privileged notes in this export.</span>
+            </span>
+          </label>
+          <!-- Disabled -->
+          <label class="inline-flex items-start gap-3 cursor-not-allowed opacity-60">
+            <span class="relative inline-flex shrink-0 mt-0.5">
+              <span class="w-9 h-5 rounded-full bg-outline-variant"></span>
+              <span class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-surface shadow"></span>
+            </span>
+            <span class="flex flex-col">
+              <span class="text-sm font-medium text-on-surface">Read-only (non-admin)</span>
+              <span class="text-xs text-on-surface-variant">Disabled state — admin permission required.</span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <!-- FEATURE LIST -->
+      <section id="feature-list" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Feature List</h4>
+          <span class="filepath">core/partials/atoms/feature_list.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Used inside Empty State. Pass <code class="filepath">features</code> (list of <code class="filepath">{icon_name, feature_description}</code>) and optional <code class="filepath">title</code>.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant max-w-sm">
+          <div class="rounded-lg border p-6 border-accent" style="background-color: rgba(37,99,235,0.05)">
+            <h4 class="text-sm font-medium text-on-surface mb-4">What you can do:</h4>
+            <ul class="text-sm text-on-surface-variant space-y-4">
+              <li class="flex items-start gap-3">
+                <span class="material-icons-outlined text-accent" style="font-size:20px">folder_open</span>
+                <span>Organize all case materials in one place</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="material-icons-outlined text-accent" style="font-size:20px">edit_note</span>
+                <span>Add notes and track important updates</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="material-icons-outlined text-accent" style="font-size:20px">share</span>
+                <span>Collaborate with your team in real time</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABLE CELLS -->
+      <section id="table-cells" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Table Cells</h4>
+          <span class="filepath">core/partials/atoms/cell_*.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6"><code class="filepath">cell_node_name</code> · <code class="filepath">cell_file_name</code> · <code class="filepath">cell_created_by</code> · <code class="filepath">cell_active_status</code> · <code class="filepath">cell_updated_at</code> · <code class="filepath">cell_actions</code> · <code class="filepath">cell_description</code> · <code class="filepath">cell_organization</code> · <code class="filepath">cell_generic</code></p>
+        <div class="bg-surface rounded-lg border border-outline-variant overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-outline-variant bg-surface-variant">
+                <th class="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant uppercase tracking-wide">Node Name</th>
+                <th class="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant uppercase tracking-wide">Created By</th>
+                <th class="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant uppercase tracking-wide">Status</th>
+                <th class="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant uppercase tracking-wide">Updated</th>
+                <th class="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant uppercase tracking-wide">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+              <tr class="hover:bg-surface-variant transition-colors">
+                <td class="px-4 py-3 font-medium text-on-surface">Smith v. Acme Corp</td>
+                <td class="px-4 py-3 text-on-surface-variant">J. Hernandez</td>
+                <td class="px-4 py-3"><span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-green-100 text-green-800">Active</span></td>
+                <td class="px-4 py-3 text-on-surface-variant text-xs">Apr 18, 2025</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-1">
+                    <button class="p-1 rounded hover:bg-gray-100 text-on-surface-variant"><span class="material-icons" style="font-size:18px">edit</span></button>
+                    <button class="p-1 rounded hover:bg-gray-100 text-on-surface-variant"><span class="material-icons" style="font-size:18px">delete</span></button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="hover:bg-surface-variant transition-colors">
+                <td class="px-4 py-3 font-medium text-on-surface">Johnson Estate Trust</td>
+                <td class="px-4 py-3 text-on-surface-variant">M. Patel</td>
+                <td class="px-4 py-3"><span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600">Inactive</span></td>
+                <td class="px-4 py-3 text-on-surface-variant text-xs">Apr 12, 2025</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-1">
+                    <button class="p-1 rounded hover:bg-gray-100 text-on-surface-variant"><span class="material-icons" style="font-size:18px">edit</span></button>
+                    <button class="p-1 rounded hover:bg-gray-100 text-on-surface-variant"><span class="material-icons" style="font-size:18px">delete</span></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ───────────────────────────────────────────
+           MOLECULES
+      ─────────────────────────────────────────── -->
+      <div class="mb-3 mt-4">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Molecules</h3>
+        <div class="h-px bg-outline-variant mt-2"></div>
+      </div>
+
+      <!-- CONTROLS BAR -->
+      <section id="controls-bar" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Controls Bar</h4>
+          <span class="filepath">core/partials/molecules/controls_bar.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Search + Add row. Pass <code class="filepath">show_crm_features=True</code> to show Columns and Views controls on the right.</p>
+
+        <div class="mb-4">
+          <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-3">Default (docs-only mode)</p>
+          <div class="p-4 bg-surface rounded-lg border border-outline-variant">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-2">
+                <div class="relative">
+                  <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" style="font-size:18px">search</span>
+                  <input type="text" placeholder="Search nodes" class="pl-9 pr-3 py-2 border border-outline-variant rounded-lg text-sm" style="min-width:220px; height:36px;">
+                </div>
+                <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">
+                  <span class="material-icons leading-none" style="font-size:20px">add</span>Add node
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-3">CRM mode (<code class="filepath">show_crm_features=True</code>)</p>
+          <div class="p-4 bg-surface rounded-lg border border-outline-variant">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-2">
+                <div class="relative">
+                  <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" style="font-size:18px">search</span>
+                  <input type="text" placeholder="Search nodes" class="pl-9 pr-3 py-2 border border-outline-variant rounded-lg text-sm" style="min-width:220px; height:36px;">
+                </div>
+                <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white cursor-pointer">
+                  <span class="material-icons leading-none" style="font-size:20px">add</span>Add
+                </button>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="inline-flex items-center gap-2 font-medium rounded-md transition-all h-9 px-3 text-sm text-stone-900 hover:bg-stone-100 cursor-pointer">
+                  <span class="material-icons text-on-surface-variant" style="font-size:20px">view_column</span>Columns
+                </button>
+                <button class="flex items-center gap-2 px-3 py-2 border border-outline-variant rounded-md text-sm min-w-36 justify-between hover:bg-surface-variant cursor-pointer">
+                  <span>Default view</span><span class="material-icons text-sm">expand_more</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EMPTY STATE -->
+      <section id="empty-state" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Empty State</h4>
+          <span class="filepath">core/partials/molecules/empty_state.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Used when a list or section has no content. Supports icon, title, description, CTA button, and optional feature list.</p>
+        <div class="bg-surface rounded-lg border border-outline-variant">
+          <div class="flex flex-col items-center justify-center py-16 px-4 text-center">
+            <div class="mb-6 rounded-full p-4 flex items-center justify-center w-12 h-12" style="background-color: rgba(37,99,235,0.1)">
+              <span class="material-icons-outlined text-accent" style="font-size:24px">folder_open</span>
+            </div>
+            <h2 class="text-2xl font-semibold mb-3 text-on-surface">No cases yet</h2>
+            <p class="mb-6 max-w-sm text-base text-on-surface-variant">Create your first case to start organizing client matters and documents.</p>
+            <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">
+              <span class="material-icons leading-none" style="font-size:20px">add</span>Create case
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL -->
+      <section id="modal" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Modal</h4>
+          <span class="filepath">core/partials/molecules/modal_base.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Consistent modal scaffold. Body and footer are injected as separate sub-templates. Escape key and backdrop click both close it. Sizes: <code class="filepath">sm</code> · <code class="filepath">md</code> (default) · <code class="filepath">lg</code>.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant flex gap-4 items-center flex-wrap">
+          <button onclick="document.getElementById('demo-modal').classList.remove('hidden')" class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">Open modal demo</button>
+        </div>
+        <!-- Demo modal -->
+        <div id="demo-modal" class="hidden fixed inset-0 z-50">
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75" onclick="document.getElementById('demo-modal').classList.add('hidden')"></div>
+          <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:max-w-md z-50">
+            <div class="bg-white rounded-lg shadow-xl" role="dialog" aria-modal="true">
+              <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-on-surface">Confirm action</h2>
+                <button onclick="document.getElementById('demo-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                  <span class="material-icons">close</span>
+                </button>
+              </div>
+              <div class="px-6 py-6 text-sm text-on-surface-variant">
+                This is the <strong>modal body</strong> — injected via <code class="filepath">modal_body_template</code>. Put your form or content here.
+              </div>
+              <div class="px-6 py-4 flex justify-end gap-3 border-t border-gray-200">
+                <button onclick="document.getElementById('demo-modal').classList.add('hidden')" class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent text-stone-500 hover:bg-stone-100 hover:text-stone-900 cursor-pointer">Cancel</button>
+                <button class="inline-flex items-center justify-center font-medium rounded-md transition-all h-9 px-4 text-sm gap-2 border border-transparent bg-primary text-white hover:bg-primary-light cursor-pointer">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTE CARD -->
+      <section id="note-card" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Note Card</h4>
+          <span class="filepath">core/partials/molecules/note_card.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Displays a note with author, timestamp, and hover-revealed actions (pin, edit, delete). Edit and delete are admin-gated via <code class="filepath">user_is_admin</code>. Pinned notes show a blue left border.</p>
+        <div class="bg-surface rounded-lg border border-outline-variant divide-y divide-outline-variant overflow-hidden">
+          <!-- Pinned note -->
+          <div class="note-card group relative flex flex-col gap-2 p-4 border-l-4 border-l-blue-500">
+            <div class="note-actions absolute top-4 right-4 flex items-center gap-2">
+              <button class="p-1.5 rounded-full hover:bg-gray-100"><span class="material-icons text-amber-500" style="font-size:20px">push_pin</span></button>
+              <button class="p-1.5 rounded-full hover:bg-gray-100"><span class="material-icons text-on-surface-variant" style="font-size:20px">edit</span></button>
+              <button class="p-1.5 rounded-full hover:bg-gray-100"><span class="material-icons text-on-surface-variant" style="font-size:20px">delete</span></button>
+            </div>
+            <div class="text-sm text-on-surface leading-relaxed pr-24">
+              Spoke with opposing counsel today — they're open to mediation before the hearing date. Need to follow up on the discovery timeline by EOW.
+            </div>
+            <div class="flex items-center gap-4 text-xs text-on-surface-variant">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:16px">person</span>J. Hernandez</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:16px">schedule</span>Apr 18, 2025 · 2:34 PM</span>
+            </div>
+          </div>
+          <!-- Regular note -->
+          <div class="note-card group relative flex flex-col gap-2 p-4">
+            <div class="note-actions absolute top-4 right-4 flex items-center gap-2">
+              <button class="p-1.5 rounded-full hover:bg-gray-100"><span class="material-icons text-on-surface-variant" style="font-size:20px">push_pin</span></button>
+              <button class="p-1.5 rounded-full hover:bg-gray-100"><span class="material-icons text-on-surface-variant" style="font-size:20px">edit</span></button>
+              <button class="p-1.5 rounded-full hover:bg-gray-100"><span class="material-icons text-on-surface-variant" style="font-size:20px">delete</span></button>
+            </div>
+            <div class="text-sm text-on-surface leading-relaxed pr-24">
+              Filed motion for summary judgment. Court date set for June 3rd.
+            </div>
+            <div class="flex items-center gap-4 text-xs text-on-surface-variant">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:16px">person</span>M. Patel</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:16px">schedule</span>Apr 12, 2025 · 10:15 AM <span class="italic opacity-60 ml-1">(edited)</span></span>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-on-surface-variant mt-2">Hover a card to reveal actions.</p>
+      </section>
+
+      <!-- DROPDOWN -->
+      <section id="dropdown" class="section-anchor mb-12">
+        <div class="flex items-baseline gap-3 mb-1">
+          <h4 class="text-lg font-semibold text-on-surface">Dropdown</h4>
+          <span class="filepath">core/partials/atoms/dropdown.html</span>
+        </div>
+        <p class="text-sm text-on-surface-variant mb-6">Use via <code class="filepath">{% load dropdown_tags %}{% dropdown %}</code> template tag — not as a raw include. Supports custom trigger slot, icon, text, chevron, and position.</p>
+        <div class="p-6 bg-surface rounded-lg border border-outline-variant flex gap-6 items-start">
+          <!-- Icon trigger -->
+          <div class="relative" onclick="this.classList.toggle('dropdown-open')">
+            <button class="inline-flex items-center p-2 rounded-md hover:bg-surface-variant text-on-surface-variant cursor-pointer">
+              <span class="material-icons">more_horiz</span>
+            </button>
+            <div class="dropdown-menu absolute z-10 left-0 top-full mt-1 bg-white rounded border border-gray-200 shadow-menu py-1 w-44">
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">View details</button>
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">Edit</button>
+              <button class="block px-4 py-2 text-sm w-full text-left text-red-600 hover:bg-red-50">Delete</button>
+            </div>
+          </div>
+          <!-- Text + chevron trigger -->
+          <div class="relative" onclick="this.classList.toggle('dropdown-open')">
+            <button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-md border border-outline-variant hover:bg-surface-variant text-sm cursor-pointer">
+              Options<span class="material-icons text-base transition-transform">expand_more</span>
+            </button>
+            <div class="dropdown-menu absolute z-10 left-0 top-full mt-1 bg-white rounded border border-gray-200 shadow-menu py-1 w-44">
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">Export CSV</button>
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">Print</button>
+              <button class="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100">Share link</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <div class="border-t border-outline-variant pt-8 pb-16 text-xs text-on-surface-variant space-y-1">
+        <p>Component library: <code class="filepath">templates/core/partials/atoms/</code> + <code class="filepath">templates/core/partials/molecules/</code></p>
+        <p>Design tokens: <code class="filepath">.claude/rules/design-system.md</code></p>
+        <p>Claude rule: <code class="filepath">.claude/rules/design-system.md</code></p>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('[onclick*="dropdown-open"]')) {
+        document.querySelectorAll('.dropdown-open').forEach(el => el.classList.remove('dropdown-open'));
+      }
+    });
+    // Nav highlight on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
