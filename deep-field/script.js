@@ -720,7 +720,12 @@
   $$('.project__link').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      openDetail();
+      const target = btn.dataset.caseStudy;
+      if (target) {
+        window.location.href = target;
+      } else {
+        openDetail();
+      }
     });
   });
 
