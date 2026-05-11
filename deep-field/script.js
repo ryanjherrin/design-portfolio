@@ -442,6 +442,18 @@
     }
   });
 
+  // Wheel scroll → project navigation (gallery only)
+  let lastWheelTime = 0;
+  document.addEventListener('wheel', (e) => {
+    if (state.phase !== 'gallery' || state.overlayOpen || state.orbCardOpen || state.lightboxOpen) return;
+    if (Math.abs(e.deltaY) < 8) return;
+    const now = Date.now();
+    if (now - lastWheelTime < TRANSITION_MS) return;
+    lastWheelTime = now;
+    if (e.deltaY > 0) goNext();
+    else goPrev();
+  }, { passive: true });
+
   // Touch swipe
   let touchStartX = 0;
   document.addEventListener('touchstart', (e) => {
