@@ -2356,9 +2356,10 @@ html.case-study-page body::after {
 .detail-page__shot--frame img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top left;
+  object-fit: contain;
+  object-position: center;
   display: block;
+  background: #191919;
 }
 
 .mockup__screen--frame {
