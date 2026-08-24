@@ -61,16 +61,16 @@
     </div>
 
     <nav class="detail-page__toc" aria-label="Project sections">
-      <a href="#design-system" class="toc-card">
-        <span class="toc-card__number">01</span>
-        <h3 class="toc-card__title">Design System</h3>
-        <p class="toc-card__desc">Modeled as standalone HTML with our codebase in context, shipped as HTMX + Tailwind with Claude inside Cursor. No drift between design and code.</p>
-        <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
-      </a>
       <a href="#ai-chat" class="toc-card">
-        <span class="toc-card__number">02</span>
+        <span class="toc-card__number">01</span>
         <h3 class="toc-card__title">AI Chat UX</h3>
         <p class="toc-card__desc">Case-grounded AI answers with linked source documents, plus a running risk/opportunity summary for every case.</p>
+        <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
+      </a>
+      <a href="#design-system" class="toc-card">
+        <span class="toc-card__number">02</span>
+        <h3 class="toc-card__title">Design System</h3>
+        <p class="toc-card__desc">Modeled as standalone HTML with our codebase in context, shipped as HTMX + Tailwind with Claude inside Cursor. No drift between design and code.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
       <a href="#lead-intake" class="toc-card">
@@ -81,24 +81,8 @@
       </a>
     </nav>
 
-    <section id="design-system" class="detail-page__section">
-      <div class="detail-page__section-label">01 &mdash; Design System</div>
-      <h2 class="detail-page__section-title">A component library, in production from week one.</h2>
-      <div class="detail-page__section-body">
-        <p>Engineering was already shipping UI before I got there. Every day without a system was more inconsistency I'd have to clean up later. So I built one in flight: mocked components as standalone HTML with our actual codebase in context, then wired them into production HTMX and Tailwind with Claude inside Cursor. Same branch, same PR, same review as the feature work.</p>
-        <p>Design files and production code don't drift, because they're built the same way now. The library covers the basics (buttons, inputs, tables, modals, toasts) plus LawGoat-specific stuff: case cards, AI message blocks, document viewers.</p>
-      </div>
-      <div class="detail-page__shot detail-page__shot--frame">
-        <img src="images/lawgoat-component-catalog.png" alt="LawGoat — Component Catalog" loading="lazy">
-      </div>
-    </section>
-
-    <blockquote class="detail-page__quote">
-      The fastest way to ship a design system is to be the one writing the code.
-    </blockquote>
-
     <section id="ai-chat" class="detail-page__section">
-      <div class="detail-page__section-label">02 &mdash; AI Chat UX</div>
+      <div class="detail-page__section-label">01 &mdash; AI Chat UX</div>
       <h2 class="detail-page__section-title">Designing trust into a conversational AI for attorneys.</h2>
       <div class="detail-page__section-body">
         <p>A generic chatbot would&rsquo;ve gotten laughed out of the first demo. So every AI answer in LawGoat pulls its dates, providers, and documents straight from the case file, and every claim links back to a source document. No vague summaries.</p>
@@ -106,6 +90,22 @@
       </div>
       <div class="detail-page__shot detail-page__shot--frame">
         <img src="images/lawgoat-case-summary-chat.png" alt="LawGoat &mdash; AI case summary and chat" loading="lazy">
+      </div>
+    </section>
+
+    <blockquote class="detail-page__quote">
+      The fastest way to ship a design system is to be the one writing the code.
+    </blockquote>
+
+    <section id="design-system" class="detail-page__section">
+      <div class="detail-page__section-label">02 &mdash; Design System</div>
+      <h2 class="detail-page__section-title">A component library, in production from week one.</h2>
+      <div class="detail-page__section-body">
+        <p>Engineering was already shipping UI before I got there. Every day without a system was more inconsistency I'd have to clean up later. So I built one in flight: mocked components as standalone HTML with our actual codebase in context, then wired them into production HTMX and Tailwind with Claude inside Cursor. Same branch, same PR, same review as the feature work.</p>
+        <p>Design files and production code don't drift, because they're built the same way now. The library covers the basics (buttons, inputs, tables, modals, toasts) plus LawGoat-specific stuff: case cards, AI message blocks, document viewers.</p>
+      </div>
+      <div class="detail-page__shot detail-page__shot--frame">
+        <img src="images/lawgoat-component-catalog.png" alt="LawGoat — Component Catalog" loading="lazy">
       </div>
     </section>
 
