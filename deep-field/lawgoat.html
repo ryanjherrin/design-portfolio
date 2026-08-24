@@ -56,14 +56,15 @@
 
     <div class="detail-page__intro">
       <p>LawGoat is Belva&rsquo;s AI platform for law firms. One workspace for talking to clients, reviewing documents, and killing the busywork in intake, scheduling, and case management.</p>
-      <p>I joined as the first product designer. Built the design language, the component library, and most of the production UI from scratch. Three pieces of that below.</p>
+      <p>I joined as the first product designer, then built and led the design team from there. Built the design language, the component library, and most of the production UI from scratch.</p>
+      <p>I also changed how we work: instead of iterating in Figma, we build directly in standalone HTML files, with AI and our actual codebase in context. Three pieces of that below.</p>
     </div>
 
     <nav class="detail-page__toc" aria-label="Project sections">
       <a href="#design-system" class="toc-card">
         <span class="toc-card__number">01</span>
         <h3 class="toc-card__title">Design System</h3>
-        <p class="toc-card__desc">Modeled in Figma, shipped as HTMX + Tailwind with Claude inside Cursor. No drift between design and code.</p>
+        <p class="toc-card__desc">Modeled as standalone HTML with our codebase in context, shipped as HTMX + Tailwind with Claude inside Cursor. No drift between design and code.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
       <a href="#ai-chat" class="toc-card">
@@ -84,7 +85,7 @@
       <div class="detail-page__section-label">01 &mdash; Design System</div>
       <h2 class="detail-page__section-title">A component library, in production from week one.</h2>
       <div class="detail-page__section-body">
-        <p>Engineering was already shipping UI before I got there. Every day without a system was more inconsistency I'd have to clean up later. So I built one in flight: modeled components in Figma, then translated them straight into HTMX and Tailwind with Claude inside Cursor. Same branch, same PR, same review as the feature work.</p>
+        <p>Engineering was already shipping UI before I got there. Every day without a system was more inconsistency I'd have to clean up later. So I built one in flight: mocked components as standalone HTML with our actual codebase in context, then wired them into production HTMX and Tailwind with Claude inside Cursor. Same branch, same PR, same review as the feature work.</p>
         <p>Design files and production code don't drift, because they're built the same way now. The library covers the basics (buttons, inputs, tables, modals, toasts) plus LawGoat-specific stuff: case cards, AI message blocks, document viewers.</p>
       </div>
       <div class="detail-page__shot detail-page__shot--frame">
