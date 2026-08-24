@@ -29,10 +29,10 @@
       Back to work
     </a>
 
-    <div class="detail-page__kicker">LawGoat — Belva</div>
+    <div class="detail-page__kicker">LawGoat at Belva</div>
 
     <h1 class="detail-page__deck">
-      Building <em>LawGoat</em> &mdash; the design system, the AI surfaces, and the code &mdash; all from one chair.
+      Building <em>LawGoat</em>: the design system, the AI surfaces, and the code, all from one chair.
     </h1>
 
     <div class="detail-page__meta">
@@ -55,21 +55,21 @@
     </div>
 
     <div class="detail-page__intro">
-      <p>LawGoat is Belva&rsquo;s AI platform for law firms &mdash; one workspace where attorneys communicate with clients, analyze documents, and automate the repetitive parts of intake, scheduling, and case management.</p>
-      <p>I joined as the first product designer and built the design language, component library, and most of the production UI from zero. Three pieces of work below.</p>
+      <p>LawGoat is Belva&rsquo;s AI platform for law firms: one workspace where attorneys talk to clients, review documents, and automate the repetitive parts of intake, scheduling, and case management.</p>
+      <p>I joined as the first product designer and built the design language, component library, and most of the production UI from scratch. Three pieces of that work below.</p>
     </div>
 
     <nav class="detail-page__toc" aria-label="Project sections">
       <a href="#design-system" class="toc-card">
         <span class="toc-card__number">01</span>
         <h3 class="toc-card__title">Design System</h3>
-        <p class="toc-card__desc">Component library modeled in Figma and shipped as HTMX + Tailwind via Claude inside Cursor &mdash; zero drift between design and code.</p>
+        <p class="toc-card__desc">Component library modeled in Figma and shipped as HTMX + Tailwind with Claude inside Cursor, so there's no drift between design and code.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
       <a href="#ai-chat" class="toc-card">
         <span class="toc-card__number">02</span>
         <h3 class="toc-card__title">AI Chat UX</h3>
-        <p class="toc-card__desc">Case-grounded AI answers with linked source documents, plus a standing risk/opportunity summary per case.</p>
+        <p class="toc-card__desc">Case-grounded AI answers with linked source documents, plus a running risk/opportunity summary for every case.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
       <a href="#case-management" class="toc-card">
@@ -84,8 +84,8 @@
       <div class="detail-page__section-label">01 &mdash; Design System</div>
       <h2 class="detail-page__section-title">A component library, in production from week one.</h2>
       <div class="detail-page__section-body">
-        <p>Engineering was already shipping UI before I arrived. Every day without a system was another round of inconsistency to clean up later. So I built one in flight &mdash; modeling components in Figma, then translating them to HTMX + Tailwind using Claude inside Cursor on the same branch, same PR, same review.</p>
-        <p>Result: zero drift between design files and production code. The library covers buttons, inputs, tables, modals, toasts, and the LawGoat-specific patterns &mdash; case cards, AI message blocks, document viewers.</p>
+        <p>Engineering was already shipping UI before I arrived, so every day without a system meant more inconsistency to clean up later. I built one in flight: modeling components in Figma, then translating them into HTMX and Tailwind with Claude inside Cursor, on the same branch, same PR, same review.</p>
+        <p>The payoff is zero drift between design files and production code. The library covers buttons, inputs, tables, modals, toasts, and LawGoat-specific patterns like case cards, AI message blocks, and document viewers.</p>
       </div>
       <div class="detail-page__shot detail-page__shot--frame">
         <img src="images/lawgoat-component-catalog.png" alt="LawGoat — Component Catalog" loading="lazy">
@@ -100,8 +100,8 @@
       <div class="detail-page__section-label">02 &mdash; AI Chat UX</div>
       <h2 class="detail-page__section-title">Designing trust into a conversational AI for attorneys.</h2>
       <div class="detail-page__section-body">
-        <p>Attorneys don&rsquo;t trust black boxes. A generic chatbot would have been dismissed in the first demo. Every AI answer in LawGoat is grounded in the specific case &mdash; dates, providers, and documents pulled straight from the file &mdash; and every claim it makes is traceable back to a linked source document, not a vague summary.</p>
-        <p>The case summary view takes this further: a standing analysis that separates Risks from Opportunities in plain, color-coded blocks, so an attorney can scan a case&rsquo;s exposure and leverage in seconds instead of re-reading the file.</p>
+        <p>Attorneys don&rsquo;t trust black boxes; a generic chatbot would&rsquo;ve been dismissed in the first demo. Every AI answer in LawGoat is grounded in the specific case, with dates, providers, and documents pulled straight from the file, and every claim it makes links back to a source document instead of a vague summary.</p>
+        <p>The case summary view takes this further, with a running analysis that separates Risks from Opportunities into plain, color-coded blocks, so an attorney can scan a case&rsquo;s exposure and leverage instead of re-reading the whole file.</p>
       </div>
       <div class="detail-page__shot detail-page__shot--frame">
         <img src="images/lawgoat-case-summary-chat.png" alt="LawGoat &mdash; AI case summary and chat" loading="lazy">
@@ -112,7 +112,7 @@
       <div class="detail-page__section-label">03 &mdash; Case Management</div>
       <h2 class="detail-page__section-title">A workflow flexible enough for every practice area.</h2>
       <div class="detail-page__section-body">
-        <p>Legal workflows are non-linear and vary wildly between practice areas. A rigid pipeline would have broken for half our users. The case-management surface is a configurable table with stages defined per practice area, drag-to-reorder columns and rows, and a document system that keeps every file &mdash; medical records, correspondence, evidence &mdash; tagged and searchable against the case it belongs to.</p>
+        <p>Legal workflows are non-linear and vary wildly between practice areas, and a rigid pipeline would&rsquo;ve broken for half our users. The case-management surface is a configurable table with stages defined per practice area, drag-to-reorder columns and rows, and a document system that keeps every file (medical records, correspondence, evidence) tagged and searchable against the case it belongs to.</p>
       </div>
       <div class="detail-page__shot detail-page__shot--frame">
         <img src="images/lawgoat-case-stages.png" alt="LawGoat &mdash; configurable case stage pipeline" loading="lazy">
