@@ -11,12 +11,6 @@
 </head>
 <body>
 
-  <!--
-    TODO (content): VMware narrative needs rewrite.
-    Existing portfolio copy frames this as multi-cloud management.
-    Real work was Global Search. Update kicker / deck / sections accordingly.
-  -->
-
   <canvas class="void" id="void"></canvas>
 
   <nav class="nav">
@@ -35,10 +29,10 @@
       Back to work
     </a>
 
-    <div class="detail-page__kicker">VMware: Enterprise</div>
+    <div class="detail-page__kicker">VMware: Global Search</div>
 
     <h1 class="detail-page__deck">
-      Working on <em>VMware</em>: reducing cognitive load in enterprise cloud tools.
+      New users get lost the second they land in VMware&rsquo;s cloud console. <em>Global Search</em> finds their way back.
     </h1>
 
     <div class="detail-page__meta">
@@ -48,80 +42,82 @@
       </div>
       <div class="detail-page__meta-item">
         <span class="detail-page__meta-label">Year</span>
-        <span class="detail-page__meta-value">TBD</span>
+        <span class="detail-page__meta-value">Mar 2023 &mdash; Nov 2023</span>
       </div>
       <div class="detail-page__meta-item">
         <span class="detail-page__meta-label">Focus</span>
-        <span class="detail-page__meta-value">Enterprise UX &middot; Design Systems &middot; Data Density</span>
+        <span class="detail-page__meta-value">Search UX &middot; Research &middot; Enterprise Cloud</span>
       </div>
     </div>
 
     <div class="detail-page__hero" style="background: linear-gradient(160deg, #060e18, #0c2038 40%, #134a5e 70%, #00b7c3);">
-      <span class="detail-page__shot-label">Hero shot: VMware</span>
+      <span class="detail-page__shot-label">Hero shot: Global Search, live in the Cloud Services Console</span>
     </div>
 
     <div class="detail-page__intro">
-      <p>Placeholder: intro paragraphs to be rewritten with the real scope of work. The portfolio card currently frames this as multi-cloud management; the actual work was Global Search.</p>
-      <p>The section structure below follows the same template as the LawGoat case study. Swap in real section labels and bodies once the narrative is locked.</p>
+      <p>VMware&rsquo;s cloud ecosystem is a pile of separate services and consoles, and there was no way to search across any of it. New users got lost immediately: everything required already knowing where to look.</p>
+      <p>I ran competitive analysis on how peer companies handled search, then built a proof of concept inside the Cloud Services Console to see if the idea actually held up before anyone committed more time to it.</p>
+      <p>A survey a month after launch told me who to bring in for usability testing next, and confirmed I was solving the right problem. Three pieces of that below.</p>
     </div>
 
     <nav class="detail-page__toc" aria-label="Project sections">
-      <a href="#section-01" class="toc-card">
+      <a href="#research" class="toc-card">
         <span class="toc-card__number">01</span>
-        <h3 class="toc-card__title">Section title TBD</h3>
-        <p class="toc-card__desc">One-sentence summary of the first piece of work on this project.</p>
+        <h3 class="toc-card__title">What Users Actually Wanted</h3>
+        <p class="toc-card__desc">A post-launch survey turned a hunch about lost users into hard numbers, and surfaced a request nobody asked about.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
-      <a href="#section-02" class="toc-card">
+      <a href="#search-ux" class="toc-card">
         <span class="toc-card__number">02</span>
-        <h3 class="toc-card__title">Section title TBD</h3>
-        <p class="toc-card__desc">One-sentence summary of the second piece of work on this project.</p>
+        <h3 class="toc-card__title">Search, Front and Center</h3>
+        <p class="toc-card__desc">A side panel would've shipped faster. I pushed for the centered search bar instead, and here's why.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
-      <a href="#section-03" class="toc-card">
+      <a href="#impact" class="toc-card">
         <span class="toc-card__number">03</span>
-        <h3 class="toc-card__title">Section title TBD</h3>
-        <p class="toc-card__desc">One-sentence summary of the third piece of work on this project.</p>
+        <h3 class="toc-card__title">What It Actually Changed</h3>
+        <p class="toc-card__desc">The proof of concept did more than validate a feature: it settled a team disagreement and moved the roadmap.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
     </nav>
 
-    <section id="section-01" class="detail-page__section">
-      <div class="detail-page__section-label">01 &mdash; Section TBD</div>
-      <h2 class="detail-page__section-title">Headline for the first piece of work.</h2>
+    <section id="research" class="detail-page__section">
+      <div class="detail-page__section-label">01 &mdash; What Users Actually Wanted</div>
+      <h2 class="detail-page__section-title">Confirming the problem before designing the fix.</h2>
       <div class="detail-page__section-body">
-        <p>Body paragraph one: the problem, the constraint, the why.</p>
-        <p>Body paragraph two: the design move, what shipped, the outcome.</p>
+        <p>The working theory was that new users felt lost, but a theory isn't enough to justify the build. So I ran a survey a month after the proof of concept launched, and it confirmed the theory, then went further than I expected: 76% of customers wanted results pulled from every service, not just whichever console they happened to be in, and 89% said search would be the thing they used most.</p>
+        <p>Nobody was asked about resource management directly. Multiple customers brought it up anyway, unprompted, in their own words: they wanted one place to manage everything instead of a separate login for every service.</p>
       </div>
       <div class="detail-page__shot">
-        <span class="detail-page__shot-label">Shot: TBD</span>
+        <span class="detail-page__shot-label">Shot: survey results, satisfaction by service area</span>
       </div>
     </section>
 
     <blockquote class="detail-page__quote">
-      A one-line takeaway from this project, the kind of sentence you&rsquo;d want a reader to remember.
+      &ldquo;I would be able to quickly and easily find the resources and information I need without having to browse through different menus and pages.&rdquo;
     </blockquote>
 
-    <section id="section-02" class="detail-page__section">
-      <div class="detail-page__section-label">02 &mdash; Section TBD</div>
-      <h2 class="detail-page__section-title">Headline for the second piece of work.</h2>
+    <section id="search-ux" class="detail-page__section">
+      <div class="detail-page__section-label">02 &mdash; Search, Front and Center</div>
+      <h2 class="detail-page__section-title">The faster option wasn't the right one.</h2>
       <div class="detail-page__section-body">
-        <p>Body paragraph one: what was hard about it.</p>
-        <p>Body paragraph two: how it landed.</p>
+        <p>Two options were on the table. A side panel would've shipped faster, since it leaned on infrastructure that already existed. A centered search bar meant more work, but it gave results room to breathe and matched a pattern people already knew from using search literally everywhere else.</p>
+        <p>I pushed for the centered bar. Familiarity was the whole point: new users were already lost, and the last thing they needed was an unfamiliar interaction to learn on top of that.</p>
       </div>
       <div class="detail-page__shot">
-        <span class="detail-page__shot-label">Shot: TBD</span>
+        <span class="detail-page__shot-label">Shot: centered search, typeahead results across services</span>
       </div>
     </section>
 
-    <section id="section-03" class="detail-page__section">
-      <div class="detail-page__section-label">03 &mdash; Section TBD</div>
-      <h2 class="detail-page__section-title">Headline for the third piece of work.</h2>
+    <section id="impact" class="detail-page__section">
+      <div class="detail-page__section-label">03 &mdash; What It Actually Changed</div>
+      <h2 class="detail-page__section-title">A proof of concept that did more than prove the concept.</h2>
       <div class="detail-page__section-body">
-        <p>Body paragraph one.</p>
+        <p>The POC was enough to get stakeholders to commit. It also did something I didn't expect: it settled an internal disagreement about priorities, and helped shift the roadmap toward resource management instead of away from it.</p>
+        <p>Over 100 customers signed up to keep testing with us afterward, on a feature they'd only seen as a proof of concept. That's the number that told me VMware's services could feel like one product instead of a pile of separate ones.</p>
       </div>
       <div class="detail-page__shot">
-        <span class="detail-page__shot-label">Shot: TBD</span>
+        <span class="detail-page__shot-label">Shot: no-results state and search entry point</span>
       </div>
     </section>
 
