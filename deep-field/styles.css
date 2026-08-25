@@ -2259,6 +2259,38 @@ html.case-study-page body::after {
   gap: 14px;
 }
 
+.detail-page__live-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 12px 22px;
+  border: 1px solid rgba(232, 230, 225, 0.25);
+  border-radius: 999px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(232, 230, 225, 0.85);
+  transition: border-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
+}
+
+.detail-page__live-link:hover {
+  border-color: var(--project-color);
+  color: var(--project-color);
+  gap: 14px;
+}
+
+.detail-page__live-link .detail-page__next-arrow {
+  font-size: 0.85em;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.detail-page__live-link:hover .detail-page__next-arrow {
+  transform: translateX(4px);
+}
+
 .detail-page__kicker {
   margin-top: 80px;
   font-family: 'Syne', sans-serif;
