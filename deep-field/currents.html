@@ -33,7 +33,7 @@
     <div class="detail-page__kicker">Currents: Personal</div>
 
     <h1 class="detail-page__deck">
-      I wanted ocean data to feel like something worth reading, not a dashboard. That&rsquo;s <em>Currents</em>.
+      254,000 mesh nodes of tidal data, and no way to see any of it move. So I built a map that shows the ocean actually flowing.
     </h1>
 
     <div class="detail-page__meta">
@@ -43,11 +43,11 @@
       </div>
       <div class="detail-page__meta-item">
         <span class="detail-page__meta-label">Year</span>
-        <span class="detail-page__meta-value">TBD</span>
+        <span class="detail-page__meta-value">2026</span>
       </div>
       <div class="detail-page__meta-item">
         <span class="detail-page__meta-label">Stack</span>
-        <span class="detail-page__meta-value">D3.js &middot; WebGL &middot; Editorial Design</span>
+        <span class="detail-page__meta-value">MapLibre GL &middot; WebGL &middot; FastAPI &middot; NumPy</span>
       </div>
     </div>
 
@@ -56,73 +56,76 @@
     </div>
 
     <div class="detail-page__intro">
-      <p>Currents is an interactive visualization platform for ocean current data: real-time thermal maps, flow simulations, scientific datasets. Presented with an editorial eye, not the usual dashboard look.</p>
-      <p>The brief, from myself: make scientific data readable without dumbing it down. Three pieces of that below.</p>
+      <p>The ADCIRC tidal database has harmonic constituents for the entire US Atlantic coast, Gulf of Mexico, and Caribbean: amplitude and phase for tidal elevation and current velocity at roughly 254,000 mesh nodes. It's public. Almost nobody outside of coastal engineering has ever seen it, because it ships as raw Fortran-era binary files, not something you can look at.</p>
+      <p>I built the pipeline to parse it, a FastAPI server to serve it, and a map that renders it as particles actually drifting with the tide, at any point on the coast, at any time, past or future. No account, no login, just a map that shows you what the water near you is doing right now.</p>
+      <p>Three pieces of that below.</p>
     </div>
 
     <nav class="detail-page__toc" aria-label="Project sections">
-      <a href="#thermal" class="toc-card">
+      <a href="#pipeline" class="toc-card">
         <span class="toc-card__number">01</span>
-        <h3 class="toc-card__title">Thermal Mapping</h3>
-        <p class="toc-card__desc">Interactive heat maps visualizing ocean temperature anomalies across global regions.</p>
+        <h3 class="toc-card__title">Reading the Ocean's Handwriting</h3>
+        <p class="toc-card__desc">Turning a 76 MB Fortran-format tidal database into harmonic constituents the browser can reconstruct on its own.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
-      <a href="#storytelling" class="toc-card">
+      <a href="#map" class="toc-card">
         <span class="toc-card__number">02</span>
-        <h3 class="toc-card__title">Data Storytelling</h3>
-        <p class="toc-card__desc">Raw scientific datasets turned into editorial-quality narratives with annotated charts.</p>
+        <h3 class="toc-card__title">Water That Actually Moves</h3>
+        <p class="toc-card__desc">Particles, arrows, streamlines, and a WebGL heatmap, all reading off the same synthesized velocity field.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
-      <a href="#feeds" class="toc-card">
+      <a href="#anywhere" class="toc-card">
         <span class="toc-card__number">03</span>
-        <h3 class="toc-card__title">Real-Time Feeds</h3>
-        <p class="toc-card__desc">Live data panels streaming current speed, direction, and temperature with sparklines.</p>
+        <h3 class="toc-card__title">Any Coastline, Any Hour</h3>
+        <p class="toc-card__desc">Search a location, scrub a 24-hour window, or drop a pin and get a current forecast for that exact point.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
     </nav>
 
-    <section id="thermal" class="detail-page__section">
-      <div class="detail-page__section-label">01 &mdash; Thermal Mapping</div>
-      <h2 class="detail-page__section-title">Heat maps that show anomalies before they need explaining.</h2>
+    <section id="pipeline" class="detail-page__section">
+      <div class="detail-page__section-label">01 &mdash; Reading the Ocean's Handwriting</div>
+      <h2 class="detail-page__section-title">The data existed. Nobody had made it legible.</h2>
       <div class="detail-page__section-body">
-        <p>Placeholder: describe the visualization choices (color scale, projection, interaction model). What does a reader learn just by looking?</p>
-        <p>Body paragraph two: the design move and the technical lift behind it.</p>
+        <p>The raw ADCIRC files are a mesh definition and two binary constituent tables: harmonic amplitude and phase for tidal elevation and depth-averaged velocity, for eight constituents (M2, S2, N2, K1, O1, P1, M4, M6), at every one of those 254,000 nodes. There's no viewer for it. You either write a parser or the data stays theoretical.</p>
+        <p>I wrote the parser, then went further than just displaying it: rather than pre-rendering current speed for fixed timestamps, the server can hand the browser the raw harmonic constituents themselves. The client reconstructs velocity at any timestamp on its own, using the same astronomical tide-prediction math (Schureman, Meeus) that coastal engineers use, no external tidal library required. That's the difference between a map with a few saved snapshots and a map that can show you any hour you ask for.</p>
       </div>
       <div class="detail-page__shot">
-        <span class="detail-page__shot-label">Thermal map: Pacific anomalies</span>
+        <span class="detail-page__shot-label">Constituent data: mesh + harmonic amplitude/phase</span>
       </div>
     </section>
 
     <blockquote class="detail-page__quote">
-      Scientific data doesn&rsquo;t need to feel scientific to be true.
+      A dataset nobody can look at might as well not exist.
     </blockquote>
 
-    <section id="storytelling" class="detail-page__section">
-      <div class="detail-page__section-label">02 &mdash; Data Storytelling</div>
-      <h2 class="detail-page__section-title">Annotated charts that read like prose.</h2>
+    <section id="map" class="detail-page__section">
+      <div class="detail-page__section-label">02 &mdash; Water That Actually Moves</div>
+      <h2 class="detail-page__section-title">Four ways to look at the same current, because one wasn't enough.</h2>
       <div class="detail-page__section-body">
-        <p>Placeholder: the editorial framing decisions (annotations, callouts, pacing through scroll).</p>
+        <p>The default view is particles: thousands of points drifting across a MapLibre map at the speed and direction the water is actually moving, rendered through a WebGL layer so it stays smooth at full zoom. Arrows, streamlines, and a color heatmap are the same underlying velocity field, just read differently, since a fisherman scanning a bay wants something different from an engineer checking shear near a channel.</p>
+        <p>A scrubber along the bottom moves the whole map through a 24-hour window, and the ocean visibly changes as the tide turns. Density, speed, and opacity sliders exist so the view doesn't turn into visual noise at high zoom, where a few hundred meters can pack in thousands of mesh nodes.</p>
       </div>
       <div class="detail-page__shot">
-        <span class="detail-page__shot-label">Editorial layout: scrolling narrative</span>
+        <span class="detail-page__shot-label">Live map: particle flow with time scrubber</span>
       </div>
     </section>
 
-    <section id="feeds" class="detail-page__section">
-      <div class="detail-page__section-label">03 &mdash; Real-Time Feeds</div>
-      <h2 class="detail-page__section-title">Live streams without the dashboard noise.</h2>
+    <section id="anywhere" class="detail-page__section">
+      <div class="detail-page__section-label">03 &mdash; Any Coastline, Any Hour</div>
+      <h2 class="detail-page__section-title">From "here's a map" to "here's what my dock will feel like at 3pm."</h2>
       <div class="detail-page__section-body">
-        <p>Placeholder: how the live data panels avoid feeling like a control room (typography, sparklines, motion restraint).</p>
+        <p>Search a location or hit "use my location" and the map flies there, already loaded. Drop a pin anywhere in the coverage area and a virtual current gauge interpolates a full time series for that exact point, current speed and direction at 10-minute resolution, from the surrounding mesh nodes, using the same barycentric math the renderer uses to color the map itself.</p>
+        <p>That's the point of the whole thing: raw scientific data that used to require a coastal engineering background now just answers a question anyone standing on a dock actually has.</p>
       </div>
       <div class="detail-page__shot">
-        <span class="detail-page__shot-label">Live panel: current speed and temperature</span>
+        <span class="detail-page__shot-label">Virtual current gauge: point forecast</span>
       </div>
     </section>
 
     <div class="detail-page__next">
       <div class="detail-page__next-label">Next project</div>
       <a href="ms95.html" class="detail-page__next-link">
-        Microsoft 1995 Rebuilt
+        Windows 95 Rebuilt
         <span class="detail-page__next-arrow">&rarr;</span>
       </a>
     </div>
