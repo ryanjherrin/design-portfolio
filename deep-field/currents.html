@@ -57,7 +57,7 @@
 
     <div class="detail-page__intro">
       <p>The ADCIRC tidal database has harmonic constituents for the entire US Atlantic coast, Gulf of Mexico, and Caribbean: amplitude and phase for tidal elevation and current velocity at roughly 254,000 mesh nodes. It's public. Almost nobody outside of coastal engineering has ever seen it, because it ships as raw Fortran-era binary files, not something you can look at.</p>
-      <p>I built the pipeline to parse it, a FastAPI server to serve it, and a map that renders it as particles actually drifting with the tide, at any point on the coast, at any time, past or future. No account, no login, just a map that shows you what the water near you is doing right now.</p>
+      <p>I built the pipeline to parse it, a FastAPI server to serve it, and a map that renders it as color and motion actually tracking the tide, at any point on the coast, at any time, past or future. No account, no login, just a map that shows you what the water near you is doing right now.</p>
       <p>Three pieces of that below.</p>
     </div>
 
@@ -76,7 +76,7 @@
       </a>
       <a href="#anywhere" class="toc-card">
         <span class="toc-card__number">03</span>
-        <h3 class="toc-card__title">Any Coastline, Any Hour</h3>
+        <h3 class="toc-card__title">Four Numbers, Nothing Else</h3>
         <p class="toc-card__desc">Drop a pin anywhere and get back exactly four readings: coordinates, speed, direction, depth. Nothing else made the cut.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
@@ -111,7 +111,7 @@
     </section>
 
     <section id="anywhere" class="detail-page__section">
-      <div class="detail-page__section-label">03 &mdash; Any Coastline, Any Hour</div>
+      <div class="detail-page__section-label">03 &mdash; Four Numbers, Nothing Else</div>
       <h2 class="detail-page__section-title">The hardest part was everything I left out.</h2>
       <div class="detail-page__section-body">
         <p>Drop a pin on the mesh and the dataset can answer almost anything about that point: full harmonic decomposition, all eight constituents, elevation on top of velocity. My first pass showed most of it, and it read like a research console, not something a person standing on a dock would ever open twice.</p>
