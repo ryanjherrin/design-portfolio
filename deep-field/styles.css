@@ -457,6 +457,18 @@ body::after {
   margin-bottom: 1rem;
 }
 
+.orb-card__body a {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(232, 230, 225, 0.35);
+  transition: text-decoration-color 0.25s ease;
+}
+
+.orb-card__body a:hover {
+  text-decoration-color: var(--white);
+}
+
 .orb-card__body .orb-pills {
   display: flex;
   flex-wrap: wrap;

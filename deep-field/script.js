@@ -232,15 +232,15 @@
   const ORB_CONTENT = {
     photo: {
       title: 'That’s Me',
-      body: '<img src="images/ryan-headshot.jpeg" alt="Ryan Herrin"><p>AI-focused Product Designer. Head of Product Design at Belva.</p>',
+      body: '<img src="images/ryan-headshot.jpeg" alt="Ryan Herrin">',
     },
     story: {
       title: 'My Story',
-      body: '<p>I’ve spent the past year and a half as Head of Product Design at Belva, building LawGoat from scratch — an AI-powered legal platform that helps attorneys communicate with clients, analyze documents, and automate their workflows. I designed the entire system end-to-end, from research to shipped product. I’m drawn to the intersection of AI and complex software — where good design makes powerful tools feel simple.</p>',
+      body: '<p>I started as a design researcher, watching people struggle through software that was supposedly built for them. That\'s where the pull came from: I love bringing a moment of delight to a task where technology usually just frustrates people. Complex software is where that matters most, since it\'s the hardest to understand and the most starved for good UX.</p><p>That pull is what led me to Belva, where I\'m now Head of Product Design building LawGoat, an AI-powered legal platform, from scratch. Different stage of my career, same reason I got into this: make the hard thing feel simple for the person actually using it.</p>',
     },
     tools: {
       title: 'Tools & Tech',
-      body: '<div class="orb-pills"><span class="orb-pill">Figma</span><span class="orb-pill">Design Systems</span><span class="orb-pill">Cursor</span><span class="orb-pill">Claude</span><span class="orb-pill">HTMX</span><span class="orb-pill">Tailwind</span><span class="orb-pill">Python</span><span class="orb-pill">AI Product Design</span><span class="orb-pill">User Research</span><span class="orb-pill">Prototyping</span></div>',
+      body: '<div class="orb-pills"><span class="orb-pill">Figma</span><span class="orb-pill">Design Systems</span><span class="orb-pill">User Research</span><span class="orb-pill">Prototyping</span><span class="orb-pill">VS Code</span><span class="orb-pill">Cursor</span><span class="orb-pill">Claude</span><span class="orb-pill">Python</span><span class="orb-pill">FastAPI</span><span class="orb-pill">HTMX</span><span class="orb-pill">Tailwind</span><span class="orb-pill">Next.js</span><span class="orb-pill">TypeScript</span><span class="orb-pill">WebGL</span><span class="orb-pill">MapLibre GL</span></div>',
     },
     fact: {
       title: 'Fun Fact',
@@ -252,7 +252,7 @@
     },
     hobby: {
       title: 'After Hours',
-      body: '<p>When I’m not pushing pixels, I’m usually outside with a telescope and a camera. Astrophotography is my reset button — there’s something humbling about spending three hours tracking a nebula only to realize your lens cap was on for the first twenty minutes. I’ve been chasing the Milky Way across Texas hill country for five years now.</p>',
+      body: '<p>Outside of work I mentor kids through <a href="https://theresilientproject.org/" target="_blank" rel="noopener">The Resilient Project</a>, spearfish along the coast, and I\'m currently training for another Ironman.</p>',
     },
   };
 
