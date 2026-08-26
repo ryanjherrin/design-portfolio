@@ -240,15 +240,15 @@
     },
     tools: {
       title: 'Tools & Tech',
-      body: '<div class="orb-pills"><span class="orb-pill">Figma</span><span class="orb-pill">Design Systems</span><span class="orb-pill">User Research</span><span class="orb-pill">Prototyping</span><span class="orb-pill">VS Code</span><span class="orb-pill">Cursor</span><span class="orb-pill">Claude</span><span class="orb-pill">Python</span><span class="orb-pill">FastAPI</span><span class="orb-pill">HTMX</span><span class="orb-pill">Tailwind</span><span class="orb-pill">Next.js</span><span class="orb-pill">TypeScript</span><span class="orb-pill">WebGL</span><span class="orb-pill">MapLibre GL</span></div>',
+      body: '<div class="orb-pills"><span class="orb-pill">Figma</span><span class="orb-pill">Design Systems</span><span class="orb-pill">User Research</span><span class="orb-pill">Prototyping</span><span class="orb-pill">VSCode</span><span class="orb-pill">Cursor</span><span class="orb-pill">Claude</span><span class="orb-pill">Python</span><span class="orb-pill">FastAPI</span><span class="orb-pill">HTMX</span><span class="orb-pill">Tailwind</span><span class="orb-pill">Next.js</span><span class="orb-pill">TypeScript</span><span class="orb-pill">WebGL</span><span class="orb-pill">MapLibre GL</span></div>',
     },
     fact: {
       title: 'Fun Fact',
-      body: '<p>I once redesigned an entire restaurant menu the night before their grand opening because the original designer ghosted. Printed at 3 AM at a 24-hour copy shop. The owner still sends me free tacos every year as a thank-you.</p>',
+      body: '<p>I once pet an octopus while diving in Neah Bay, WA.</p>',
     },
     quote: {
       title: 'Favorite Quote',
-      body: '<blockquote>“The details are not the details. They make the design.”<cite>— Charles Eames</cite></blockquote>',
+      body: '<blockquote>“The world is charged with the grandeur of God.”<cite>— Gerard Manley Hopkins</cite></blockquote>',
     },
     hobby: {
       title: 'After Hours',
