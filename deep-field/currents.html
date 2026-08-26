@@ -89,8 +89,8 @@
         <p>The raw ADCIRC files are a mesh definition and two binary constituent tables: harmonic amplitude and phase for tidal elevation and depth-averaged velocity, for eight constituents (M2, S2, N2, K1, O1, P1, M4, M6), at every one of those 254,000 nodes. There's no viewer for it. You either write a parser or the data stays theoretical.</p>
         <p>I wrote the parser, then went further than just displaying it: rather than pre-rendering current speed for fixed timestamps, the server can hand the browser the raw harmonic constituents themselves. The client reconstructs velocity at any timestamp on its own, using the same astronomical tide-prediction math (Schureman, Meeus) that coastal engineers use, no external tidal library required. That's the difference between a map with a few saved snapshots and a map that can show you any hour you ask for.</p>
       </div>
-      <div class="detail-page__shot">
-        <span class="detail-page__shot-label">Constituent data: mesh + harmonic amplitude/phase</span>
+      <div class="detail-page__shot detail-page__shot--frame">
+        <img src="images/currents-pipeline-diagram.png" alt="Currents &mdash; pipeline from raw ADCIRC files to client-side tidal synthesis" loading="lazy">
       </div>
     </section>
 
