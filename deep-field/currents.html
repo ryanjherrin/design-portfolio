@@ -52,7 +52,7 @@
     </div>
 
     <div class="detail-page__hero detail-page__hero--frame">
-      <img src="images/currents-live-map.png" alt="Currents &mdash; live tidal streamlines and heatmap over Puget Sound" loading="lazy">
+      <img src="images/currents-splash.png" alt="Currents &mdash; landing screen with location search" loading="lazy">
     </div>
 
     <div class="detail-page__intro">
@@ -71,7 +71,7 @@
       <a href="#map" class="toc-card">
         <span class="toc-card__number">02</span>
         <h3 class="toc-card__title">Water That Actually Moves</h3>
-        <p class="toc-card__desc">Particles, arrows, streamlines, and a WebGL heatmap, all reading off the same synthesized velocity field.</p>
+        <p class="toc-card__desc">A WebGL heatmap for magnitude, with particles, arrows, or streamlines layered on top to show direction.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
       <a href="#anywhere" class="toc-card">
@@ -100,10 +100,10 @@
 
     <section id="map" class="detail-page__section">
       <div class="detail-page__section-label">02 &mdash; Water That Actually Moves</div>
-      <h2 class="detail-page__section-title">Four ways to look at the same current, because one wasn't enough.</h2>
+      <h2 class="detail-page__section-title">A color field for magnitude, motion on top of it for direction.</h2>
       <div class="detail-page__section-body">
-        <p>The default view is particles: thousands of points drifting across a MapLibre map at the speed and direction the water is actually moving, rendered through a WebGL layer so it stays smooth at full zoom. Arrows, streamlines, and a color heatmap are the same underlying velocity field, just read differently, since a fisherman scanning a bay wants something different from an engineer checking shear near a channel.</p>
-        <p>A scrubber along the bottom moves the whole map through a 24-hour window, and the ocean visibly changes as the tide turns. Density, speed, and opacity sliders exist so the view doesn't turn into visual noise at high zoom, where a few hundred meters can pack in thousands of mesh nodes.</p>
+        <p>A WebGL heatmap sits underneath everything, a triangulated mesh colored by current speed, so you can read magnitude at a glance before anything even starts moving. On top of that, a switchable overlay, particles, arrows, or streamlines, shows where the water is actually headed. Streamlines end up being the one I reach for most: they read like something already drawn by the current itself, and the eye follows them the way it follows a river on a map.</p>
+        <p>A scrubber along the bottom moves the whole map through a 24-hour window, and both layers update together as the tide turns. Density, speed, and opacity sliders exist so the view doesn't turn into visual noise at high zoom, where a few hundred meters can pack in thousands of mesh nodes.</p>
       </div>
       <div class="detail-page__shot detail-page__shot--frame">
         <img src="images/currents-live-map.png" alt="Currents &mdash; streamline and heatmap view with time scrubber" loading="lazy">
