@@ -451,6 +451,8 @@ body::after {
 
 .orb-card__body img {
   width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
 }

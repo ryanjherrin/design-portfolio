@@ -232,7 +232,7 @@
   const ORB_CONTENT = {
     photo: {
       title: 'That’s Me',
-      body: '<img src="https://placehold.co/360x240/0a0a0c/e8e6e1?text=RH" alt="Ryan Herrin"><p>AI-focused Product Designer. Head of Product Design at Belva.</p>',
+      body: '<img src="images/ryan-headshot.jpeg" alt="Ryan Herrin"><p>AI-focused Product Designer. Head of Product Design at Belva.</p>',
     },
     story: {
       title: 'My Story',
