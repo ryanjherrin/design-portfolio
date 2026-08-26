@@ -112,10 +112,11 @@
 
     <section id="anywhere" class="detail-page__section">
       <div class="detail-page__section-label">03 &mdash; Any Coastline, Any Hour</div>
-      <h2 class="detail-page__section-title">Four numbers, and every one of them earns its spot.</h2>
+      <h2 class="detail-page__section-title">The hardest part was everything I left out.</h2>
       <div class="detail-page__section-body">
-        <p>Drop a pin anywhere in the coverage area and you get exactly four readings back: coordinates, speed, direction, depth. Speed and direction are the whole reason the project exists, interpolated for that precise point at 10-minute resolution from the surrounding mesh nodes, using the same barycentric math the renderer uses to color the map itself. Depth rides along because current behavior only makes sense next to it: a strong reading over a shallow shelf means something different than the same number over a channel.</p>
-        <p>Nothing else made the cut. No confidence intervals, no station metadata, no unit toggles nobody asked for. Raw scientific data that used to require a coastal engineering background now fits in a box the size of a business card, and answers the one question anyone standing on a dock actually has.</p>
+        <p>Drop a pin on the mesh and the dataset can answer almost anything about that point: full harmonic decomposition, all eight constituents, elevation on top of velocity. My first pass showed most of it, and it read like a research console, not something a person standing on a dock would ever open twice.</p>
+        <p>So I cut it down to four numbers: coordinates, speed, direction, depth. Speed and direction are the whole reason the project exists, interpolated for that exact point at 10-minute resolution from the surrounding mesh nodes, using the same barycentric math the renderer uses to color the map itself. Depth stayed because a current reading means something different over a shallow shelf than it does over a channel, and without it the number is just a number.</p>
+        <p>Everything else got cut. Raw scientific data that used to require a coastal engineering background now fits in a box the size of a business card, and it answers the one question anyone standing on that dock actually came for.</p>
       </div>
       <div class="detail-page__shot detail-page__shot--frame">
         <img src="images/currents-gauge-readout.png" alt="Currents &mdash; point readout: coordinates, speed, direction, depth" loading="lazy">
