@@ -248,7 +248,7 @@
     },
     quote: {
       title: 'Favorite Quote',
-      body: '<blockquote>“The world is charged with the grandeur of God.”<cite>— Gerard Manley Hopkins</cite></blockquote>',
+      body: '<blockquote>“The world will never starve for want of wonders, but only for want of wonder.”<cite>— G.K. Chesterton</cite></blockquote>',
     },
     hobby: {
       title: 'After Hours',
