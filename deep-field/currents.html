@@ -89,8 +89,70 @@
         <p>The raw ADCIRC files are a mesh definition and two binary constituent tables: harmonic amplitude and phase for tidal elevation and depth-averaged velocity, for eight constituents (M2, S2, N2, K1, O1, P1, M4, M6), at every one of those 254,000 nodes. There's no viewer for it. You either write a parser or the data stays theoretical.</p>
         <p>I wrote the parser, then went further than just displaying it: rather than pre-rendering current speed for fixed timestamps, the server can hand the browser the raw harmonic constituents themselves. The client reconstructs velocity at any timestamp on its own, using the same astronomical tide-prediction math (Schureman, Meeus) that coastal engineers use, no external tidal library required. That's the difference between a map with a few saved snapshots and a map that can show you any hour you ask for.</p>
       </div>
-      <div class="detail-page__shot detail-page__shot--frame">
-        <img src="images/currents-pipeline-diagram.png" alt="Currents &mdash; pipeline from raw ADCIRC files to client-side tidal synthesis" loading="lazy">
+      <div class="pipeline-diagram">
+        <div class="pipeline-diagram__label">From Fortran Binary to Live Tide</div>
+
+        <div class="pipeline-diagram__stage">
+          <div class="pipeline-diagram__icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          </div>
+          <div>
+            <div class="pipeline-diagram__num">01</div>
+            <div class="pipeline-diagram__title">Raw ADCIRC Files</div>
+            <div class="pipeline-diagram__desc">Mesh, elevation, and velocity harmonics for 254,000 nodes.</div>
+            <div class="pipeline-diagram__tag">fort.14 &middot; fort.53 &middot; fort.54</div>
+          </div>
+        </div>
+
+        <div class="pipeline-diagram__stage">
+          <div class="pipeline-diagram__icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div>
+            <div class="pipeline-diagram__num">02</div>
+            <div class="pipeline-diagram__title">Parse &amp; Extract</div>
+            <div class="pipeline-diagram__desc">Decode Fortran-format binaries into per-node amplitude and phase.</div>
+            <div class="pipeline-diagram__tag">process_adcirc.py</div>
+          </div>
+        </div>
+
+        <div class="pipeline-diagram__stage">
+          <div class="pipeline-diagram__icon">
+            <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <div>
+            <div class="pipeline-diagram__num">03</div>
+            <div class="pipeline-diagram__title">Harmonic Constituents</div>
+            <div class="pipeline-diagram__desc">8 tidal constituents per node, compressed to portable arrays.</div>
+            <div class="pipeline-diagram__tag">M2 &middot; S2 &middot; K1 &middot; O1 &middot; &hellip;</div>
+          </div>
+        </div>
+
+        <div class="pipeline-diagram__stage">
+          <div class="pipeline-diagram__icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16v6H4z"/><path d="M4 14h16v6H4z"/><line x1="8" y1="7" x2="8" y2="7"/><line x1="8" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <div class="pipeline-diagram__num">04</div>
+            <div class="pipeline-diagram__title">FastAPI Server</div>
+            <div class="pipeline-diagram__desc">Streams binary mesh and harmonic data for any bounding box.</div>
+            <div class="pipeline-diagram__tag">/api/v1/mesh-harmonics</div>
+          </div>
+        </div>
+
+        <div class="pipeline-diagram__stage">
+          <div class="pipeline-diagram__icon">
+            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div>
+            <div class="pipeline-diagram__num">05</div>
+            <div class="pipeline-diagram__title">Client-Side Synthesis</div>
+            <div class="pipeline-diagram__desc">The browser reconstructs velocity at any timestamp, no server round-trip.</div>
+            <div class="pipeline-diagram__tag">Schureman &middot; Meeus</div>
+          </div>
+        </div>
+
+        <div class="pipeline-diagram__footnote">Same pipeline, <strong>any hour</strong>: past, present, or forecast, computed live in the browser.</div>
       </div>
     </section>
 
