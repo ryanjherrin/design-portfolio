@@ -23,6 +23,12 @@
     `rgba(${projectColor.r}, ${projectColor.g}, ${projectColor.b}, 0.18)`
   );
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const backLink = document.querySelector('.detail-page__back');
+    if (backLink) window.location.href = backLink.getAttribute('href');
+  });
+
   const canvas = document.getElementById('void');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
