@@ -396,6 +396,7 @@
       if (state.lightboxOpen) { closeLightbox(); return; }
       if (state.orbCardOpen) { closeOrbCard(); return; }
       if (state.overlayOpen) { closeOverlay(); return; }
+      if (state.phase === 'gallery') { goHome(); return; }
       return;
     }
 
