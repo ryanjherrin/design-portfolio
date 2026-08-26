@@ -1862,6 +1862,15 @@ body::after {
   margin-bottom: 32px;
 }
 
+.overlay__photo {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 24px;
+  border: 1px solid rgba(232, 230, 225, 0.15);
+}
+
 .overlay__body p {
   font-size: 16px;
   line-height: 1.7;
