@@ -335,7 +335,7 @@
     if (!slug) return false;
     const idx = projects.findIndex((p) => {
       const btn = p.querySelector('.project__link[data-case-study]');
-      return btn && btn.dataset.caseStudy === slug + '.html';
+      return btn && btn.dataset.caseStudy === '/' + slug;
     });
     if (idx < 0) return false;
 
