@@ -70,27 +70,27 @@
     <nav class="detail-page__toc" aria-label="Project sections">
       <a href="#pipeline" class="toc-card">
         <span class="toc-card__number">01</span>
-        <h3 class="toc-card__title">Reading the Ocean's Handwriting</h3>
+        <h3 class="toc-card__title">Data Pipeline</h3>
         <p class="toc-card__desc">Turning a 76 MB Fortran-format tidal database into harmonic constituents the browser can reconstruct on its own.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
       <a href="#map" class="toc-card">
         <span class="toc-card__number">02</span>
-        <h3 class="toc-card__title">Water That Actually Moves</h3>
+        <h3 class="toc-card__title">Map Rendering</h3>
         <p class="toc-card__desc">A WebGL heatmap for magnitude, with particles, arrows, or streamlines layered on top to show direction.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
       <a href="#anywhere" class="toc-card">
         <span class="toc-card__number">03</span>
-        <h3 class="toc-card__title">Four Numbers, Nothing Else</h3>
+        <h3 class="toc-card__title">Point Readout</h3>
         <p class="toc-card__desc">Drop a pin anywhere and get back exactly four readings: coordinates, speed, direction, depth. Nothing else made the cut.</p>
         <span class="toc-card__cta">Jump <span class="toc-card__cta-arrow">&darr;</span></span>
       </a>
     </nav>
 
     <section id="pipeline" class="detail-page__section">
-      <div class="detail-page__section-label">01 &mdash; Reading the Ocean's Handwriting</div>
-      <h2 class="detail-page__section-title">The data existed. Nobody had made it legible.</h2>
+      <div class="detail-page__section-label">01 &mdash; Data Pipeline</div>
+      <h2 class="detail-page__section-title">Parsing the ADCIRC tidal database</h2>
       <div class="detail-page__section-body">
         <p>The raw ADCIRC files are a mesh definition and two binary constituent tables: harmonic amplitude and phase for tidal elevation and depth-averaged velocity, for eight constituents (M2, S2, N2, K1, O1, P1, M4, M6), at every one of those 254,000 nodes. There's no viewer for it. You either write a parser or the data stays theoretical.</p>
         <p>I wrote the parser, then went further than just displaying it: rather than pre-rendering current speed for fixed timestamps, the server can hand the browser the raw harmonic constituents themselves. The client reconstructs velocity at any timestamp on its own, using the same astronomical tide-prediction math (Schureman, Meeus) that coastal engineers use, no external tidal library required. That's the difference between a map with a few saved snapshots and a map that can show you any hour you ask for.</p>
@@ -167,8 +167,8 @@
     </blockquote>
 
     <section id="map" class="detail-page__section">
-      <div class="detail-page__section-label">02 &mdash; Water That Actually Moves</div>
-      <h2 class="detail-page__section-title">A color field for magnitude, motion on top of it for direction.</h2>
+      <div class="detail-page__section-label">02 &mdash; Map Rendering</div>
+      <h2 class="detail-page__section-title">Showing current speed and direction on the map</h2>
       <div class="detail-page__section-body">
         <p>A WebGL heatmap sits underneath everything, a triangulated mesh colored by current speed, so you can read magnitude at a glance before anything even starts moving. On top of that, a switchable overlay, particles, arrows, or streamlines, shows where the water is actually headed. Streamlines end up being the one I reach for most: they read like something already drawn by the current itself, and the eye follows them the way it follows a river on a map.</p>
         <p>A scrubber along the bottom moves the whole map through a 24-hour window, and both layers update together as the tide turns. Density, speed, and opacity sliders exist so the view doesn't turn into visual noise at high zoom, where a few hundred meters can pack in thousands of mesh nodes.</p>
@@ -179,8 +179,8 @@
     </section>
 
     <section id="anywhere" class="detail-page__section">
-      <div class="detail-page__section-label">03 &mdash; Four Numbers, Nothing Else</div>
-      <h2 class="detail-page__section-title">The hardest part was everything I left out.</h2>
+      <div class="detail-page__section-label">03 &mdash; Point Readout</div>
+      <h2 class="detail-page__section-title">Reducing the point readout to four numbers</h2>
       <div class="detail-page__section-body">
         <p>Drop a pin on the mesh and the dataset can answer almost anything about that point: full harmonic decomposition, all eight constituents, elevation on top of velocity. My first pass showed most of it, and it read like a research console, not something a person standing on a dock would ever open twice.</p>
         <p>So I cut it down to four numbers: coordinates, speed, direction, depth. Speed and direction are the whole reason the project exists, interpolated for that exact point at 10-minute resolution from the surrounding mesh nodes, using the same barycentric math the renderer uses to color the map itself. Depth stayed because a current reading means something different over a shallow shelf than it does over a channel, and without it the number is just a number.</p>
